@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,24 +30,19 @@ public class ProductService {
     }
 
     public List<ProductVariant> getAllProductVariantsByCategory(String category) {
-        // Chuyển đổi encoding của category nếu cần
-        String fixedCategory = new String(category.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        Optional<Product> product = productRepository.findByCategory(category);
 
-        // Tìm sản phẩm theo category đã được fix encoding
-        Optional<Product> product = productRepository.findByCategory(fixedCategory);
-
-        // Nếu tìm thấy sản phẩm, lấy danh sách variants
         return product.map(value -> {
             List<ProductVariant> variants = productVariantRepository.findAllByProductId(value.getId());
 
-            // Fix lỗi encoding trong mô tả, màu sắc của mỗi variant
+            // Fix lỗi encoding cho từng trường trong ProductVariant
             variants.forEach(variant -> {
                 variant.setDescription(new String(variant.getDescription().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                 variant.setColor(new String(variant.getColor().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
             });
 
             return variants;
-        }).orElse(null);
+        }).orElse(Collections.emptyList());
     }
 
 
