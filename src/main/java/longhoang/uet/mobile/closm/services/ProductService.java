@@ -29,10 +29,26 @@ public class ProductService {
     }
 
     public List<ProductVariant> getAllProductVariantsByCategory(String category) {
-        Optional<Product> product = productRepository.findByCategory(category);
-        return product.map(value -> productVariantRepository.findAllByProductId(value.getId())).orElse(null);
+        // Chuyển đổi encoding của category nếu cần
+        String fixedCategory = new String(category.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
+        // Tìm sản phẩm theo category đã được fix encoding
+        Optional<Product> product = productRepository.findByCategory(fixedCategory);
+
+        // Nếu tìm thấy sản phẩm, lấy danh sách variants
+        return product.map(value -> {
+            List<ProductVariant> variants = productVariantRepository.findAllByProductId(value.getId());
+
+            // Fix lỗi encoding trong mô tả, màu sắc của mỗi variant
+            variants.forEach(variant -> {
+                variant.setDescription(new String(variant.getDescription().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
+                variant.setColor(new String(variant.getColor().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
+            });
+
+            return variants;
+        }).orElse(null);
     }
+
 
 
 }
