@@ -37,6 +37,7 @@ public class ProductService {
 
             // Fix lỗi encoding cho từng trường trong ProductVariant
             variants.forEach(variant -> {
+//                System.out.println(variant);
                 variant.setDescription(new String(variant.getDescription().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                 variant.setColor(new String(variant.getColor().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
             });

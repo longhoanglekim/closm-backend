@@ -14,7 +14,7 @@ CREATE TABLE products (
 CREATE TABLE product_variants (
                                   id BIGINT PRIMARY KEY AUTO_INCREMENT,
                                   product_id BIGINT NOT NULL,
-                                  price DECIMAL(10,2) NOT NULL CHECK (price >= 0), -- Đảm bảo giá không âm
+                                  price DECIMAL(10,2) NOT NULL CHECK (price >= 0),
                                   image_url VARCHAR(255),
                                   size VARCHAR(25) NOT NULL,
                                   color VARCHAR(30) NOT NULL,
