@@ -1,16 +1,16 @@
--- Xóa database cũ nếu tồn tại và tạo mới
+-- Delete the old database if it exists and create a new one
 DROP DATABASE IF EXISTS closm;
 CREATE DATABASE closm CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE closm;
 
--- Bảng sản phẩm
+-- Products table
 CREATE TABLE products (
                           id BIGINT PRIMARY KEY AUTO_INCREMENT,
                           name VARCHAR(255) NOT NULL,
                           category VARCHAR(255) NOT NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Bảng biến thể sản phẩm (Product Variants)
+-- Product variants table
 CREATE TABLE product_variants (
                                   id BIGINT PRIMARY KEY AUTO_INCREMENT,
                                   product_id BIGINT NOT NULL,
@@ -18,50 +18,61 @@ CREATE TABLE product_variants (
                                   image_url VARCHAR(255),
                                   size VARCHAR(25) NOT NULL,
                                   color VARCHAR(30) NOT NULL,
-                                  quantity INT NOT NULL CHECK (quantity >= 0), -- Số lượng không âm
-                                  description TEXT, -- Dùng TEXT thay vì VARCHAR(255) nếu mô tả dài
+                                  quantity INT NOT NULL CHECK (quantity >= 0),
+                                  description TEXT,
                                   FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Bảng đơn hàng
-CREATE TABLE orders (
-                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                        customer_id VARCHAR(255) NOT NULL,
-                        order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-                        order_status ENUM('Pending', 'Shipped', 'Delivered', 'Cancelled') NOT NULL DEFAULT 'Pending',
-                        total_price DECIMAL(10,2) NOT NULL CHECK (total_price >= 0), -- Tổng giá không âm
-                        payment_status ENUM('Paid', 'Unpaid', 'Refunded') NOT NULL DEFAULT 'Unpaid',
-                        shipping_address TEXT NOT NULL
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- Bảng liên kết đơn hàng - sản phẩm
-CREATE TABLE orders_products (
-                                 id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                                 order_id BIGINT NOT NULL,
-                                 product_variant_id BIGINT NOT NULL,
-                                 FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-                                 FOREIGN KEY (product_variant_id) REFERENCES product_variants(id) ON DELETE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- Chèn dữ liệu mẫu cho bảng sản phẩm
+-- Insert sample products data
 INSERT INTO products (name, category) VALUES
-                                          ('Áo Thun Cơ Bản', 'Áo Thun'),
-                                          ('Áo Hoodie Ấm Áp', 'Áo Hoodie'),
-                                          ('Quần Jean Slim Fit', 'Quần Jean');
+                                          ('Basic T-Shirt', 'T-Shirt'),
+                                          ('Hoodie', 'Hoodie'),
+                                          ('High Socks', 'Socks'),
+                                          ('Turtleneck Sweater', 'Sweater'),
+                                          ('Kaki Shorts', 'Shorts'),
+                                          ('Ripped Jeans', 'Jeans'),
+                                          ('Winter Pants', 'Winter Pants');
 
--- Chèn dữ liệu mẫu cho bảng biến thể sản phẩm
+-- Insert sample product variants
 INSERT INTO product_variants (product_id, price, image_url, size, color, quantity, description) VALUES
-                                                                                                    (1, 199000, 'https://example.com/tshirt1.jpg', 'M', 'Đỏ', 50, 'Áo thun cotton chất lượng cao'),
-                                                                                                    (1, 199000, 'https://example.com/tshirt2.jpg', 'L', 'Xanh', 30, 'Áo thun cotton chất lượng cao'),
-                                                                                                    (2, 399000, 'https://example.com/hoodie1.jpg', 'L', 'Đen', 20, 'Áo hoodie dày dặn, giữ ấm tốt'),
-                                                                                                    (3, 499000, 'https://example.com/jeans1.jpg', '32', 'Xanh', 40, 'Quần jean dáng ôm thời trang');
+                                                                                                    -- Variants for T-Shirt
+                                                                                                    (1, 199000, 'https://picsum.photos/200', 'M', 'Red', 50, 'High-quality cotton T-shirt'),
+                                                                                                    (1, 199000, 'https://picsum.photos/200', 'L', 'Blue', 30, 'High-quality cotton T-shirt'),
+                                                                                                    (1, 199000, 'https://picsum.photos/200', 'XL', 'White', 40, 'Breathable cotton T-shirt'),
+                                                                                                    (1, 199000, 'https://picsum.photos/200', 'S', 'Black', 20, 'Trendy style T-shirt'),
 
--- Chèn dữ liệu mẫu cho bảng đơn hàng
-INSERT INTO orders (customer_id, order_status, total_price, payment_status, shipping_address) VALUES
-                                                                                                  ('101', 'Pending', 199000, 'Unpaid', '123 Đường Chính, Thành phố A'),
-                                                                                                  ('102', 'Shipped', 399000, 'Paid', '456 Đường Elm, Thành phố B');
+                                                                                                    -- Variants for Hoodie
+                                                                                                    (2, 399000, 'https://picsum.photos/200', 'M', 'Gray', 20, 'Thick hoodie, excellent for warmth'),
+                                                                                                    (2, 399000, 'https://picsum.photos/200', 'L', 'Black', 25, 'Thick hoodie, excellent for warmth'),
+                                                                                                    (2, 399000, 'https://picsum.photos/200', 'XL', 'Navy Blue', 30, 'Sporty style hoodie'),
+                                                                                                    (2, 399000, 'https://picsum.photos/200', 'S', 'Burgundy', 15, 'Oversized hoodie'),
 
--- Chèn dữ liệu mẫu cho bảng liên kết đơn hàng - sản phẩm
-INSERT INTO orders_products (order_id, product_variant_id) VALUES
-                                                               (1, 1), -- Đơn hàng 1 chứa Áo Thun Cơ Bản (M, Đỏ)
-                                                               (2, 3); -- Đơn hàng 2 chứa Áo Hoodie Ấm Áp (L, Đen)
+                                                                                                    -- Variants for Socks
+                                                                                                    (3, 599000, 'https://picsum.photos/200', 'L', 'Olive Green', 15, 'Long socks for winter warmth'),
+                                                                                                    (3, 599000, 'https://picsum.photos/200', 'M', 'Black', 18, 'Sweat-absorbing sports socks'),
+                                                                                                    (3, 599000, 'https://picsum.photos/200', 'XL', 'White', 22, 'Comfortable cotton socks'),
+                                                                                                    (3, 599000, 'https://picsum.photos/200', 'S', 'Blue', 12, 'High-quality knit socks'),
+
+                                                                                                    -- Variants for Sweater
+                                                                                                    (4, 299000, 'https://picsum.photos/200', 'M', 'Red', 20, 'Warm turtleneck sweater'),
+                                                                                                    (4, 299000, 'https://picsum.photos/200', 'L', 'Navy Blue', 15, 'Soft knitted sweater'),
+                                                                                                    (4, 299000, 'https://picsum.photos/200', 'XL', 'White', 25, 'Minimalist round-neck sweater'),
+                                                                                                    (4, 299000, 'https://picsum.photos/200', 'S', 'Beige', 18, 'Oversized sweater for comfort'),
+
+                                                                                                    -- Variants for Shorts
+                                                                                                    (5, 199000, 'https://picsum.photos/200', 'M', 'Beige', 40, 'Trendy kaki shorts'),
+                                                                                                    (5, 199000, 'https://picsum.photos/200', 'L', 'Green', 35, 'Comfortable shorts for summer'),
+                                                                                                    (5, 199000, 'https://picsum.photos/200', 'XL', 'Black', 25, 'Cooling sports shorts'),
+                                                                                                    (5, 199000, 'https://picsum.photos/200', 'S', 'Brown', 28, 'Beach shorts'),
+
+                                                                                                    -- Variants for Jeans
+                                                                                                    (6, 499000, 'https://picsum.photos/200', '32', 'Distressed Blue', 30, 'Streetwear ripped jeans'),
+                                                                                                    (6, 499000, 'https://picsum.photos/200', '34', 'Dark Blue', 25, 'Slim-fit stylish jeans'),
+                                                                                                    (6, 499000, 'https://picsum.photos/200', '30', 'Light Blue', 20, 'Straight-leg trendy jeans'),
+                                                                                                    (6, 499000, 'https://picsum.photos/200', '28', 'White', 18, 'Basic jeans for easy matching'),
+
+                                                                                                    -- Variants for Winter Pants
+                                                                                                    (7, 599000, 'https://picsum.photos/200', 'M', 'Black', 20, 'Thermal pants for winter'),
+                                                                                                    (7, 599000, 'https://picsum.photos/200', 'L', 'Gray', 15, 'Soft and cozy winter pants'),
+                                                                                                    (7, 599000, 'https://picsum.photos/200', 'XL', 'Olive Green', 10, 'Wind-resistant warm pants'),
+                                                                                                    (7, 599000, 'https://picsum.photos/200', 'S', 'Brown', 8, 'Lightly lined winter pants');
