@@ -1,5 +1,10 @@
 package longhoang.uet.mobile.closm.services;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import longhoang.uet.mobile.closm.dtos.ProductOverViewDTO;
+import longhoang.uet.mobile.closm.dtos.VariantOverviewDTO;
 import longhoang.uet.mobile.closm.models.Product;
 import longhoang.uet.mobile.closm.models.ProductVariant;
 import longhoang.uet.mobile.closm.repositories.ProductRepository;
@@ -46,6 +51,31 @@ public class ProductService {
         }).orElse(Collections.emptyList());
     }
 
+    public List<VariantOverviewDTO> getLimitedVariantsByCategory(String category) {
+        Optional<Product> productOpt = productRepository.findByCategory(category);
+        if (productOpt.isEmpty()) {
+            return Collections.emptyList();  // Trả về danh sách rỗng nếu không tìm thấy sản phẩm
+        }
 
+        Long productId = productOpt.get().getId();
+        List<ProductVariant> variants = productVariantRepository.findTop4VariantsByProductId(productId);
+        if (variants.isEmpty()) {
+            return Collections.emptyList();  // Không có biến thể => trả về danh sách rỗng
+        }
 
+        List<VariantOverviewDTO> dtos = new ArrayList<>();
+        for (ProductVariant variant : variants) {
+            VariantOverviewDTO dto = new VariantOverviewDTO();
+            dto.setId(variant.getId());
+            dto.setImageUrl(variant.getImageUrl());
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    public ProductOverViewDTO getProductOverviewDTO(String category) {
+        List<VariantOverviewDTO> dtos = getLimitedVariantsByCategory(category);
+        return new ProductOverViewDTO(category, dtos);  // Dù DTO rỗng, vẫn trả về để xử lý ngoài controller
+    }
 }
+

@@ -1,18 +1,16 @@
 package longhoang.uet.mobile.closm.dtos;
 
 
-public class ProductOverviewDTO {
-    private String name;
-    private double price;
-    private String category;
-    private String image;
-    private double rating;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public ProductOverviewDTO(String name, double price, String category, String image, double rating) {
-        this.name = name;
-        this.price = price;
-        this.category = category;
-        this.image = image;
-        this.rating = rating;
-    }
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductOverViewDTO {
+    private String category;
+    private List<VariantOverviewDTO> variants;
 }
