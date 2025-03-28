@@ -36,16 +36,16 @@ INSERT INTO products (name, category) VALUES
 -- Insert sample product variants
 INSERT INTO product_variants (product_id, price, image_url, size, color, quantity, description) VALUES
                                                                                                     -- Variants for T-Shirt
-                                                                                                    (1, 199000, 'https://picsum.photos/200', 'M', 'Red', 50, 'High-quality cotton T-shirt'),
-                                                                                                    (1, 199000, 'https://picsum.photos/200', 'L', 'Blue', 30, 'High-quality cotton T-shirt'),
-                                                                                                    (1, 199000, 'https://picsum.photos/200', 'XL', 'White', 40, 'Breathable cotton T-shirt'),
-                                                                                                    (1, 199000, 'https://picsum.photos/200', 'S', 'Black', 20, 'Trendy style T-shirt'),
+                                                                                                    (1, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147982/cac-mau-ao-t-shirt-copy_ixklfd.jpg', 'M', 'Red', 50, 'High-quality cotton T-shirt'),
+                                                                                                    (1, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147981/sgc13_cb1417b06f2c4de2a4afac376a3c5c22_master_flzg6c.webp', 'L', 'Blue', 30, 'High-quality cotton T-shirt'),
+                                                                                                    (1, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147981/ao-t-shirt-nam-loai-tron-mot-mau_hwydbo.webp', 'XL', 'White', 40, 'Breathable cotton T-shirt'),
+                                                                                                    (1, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147981/T-Shirt-la-gi-11_lvvhmd.jpg', 'S', 'Black', 20, 'Trendy style T-shirt'),
 
                                                                                                     -- Variants for Hoodie
-                                                                                                    (2, 399000, 'https://picsum.photos/200', 'M', 'Gray', 20, 'Thick hoodie, excellent for warmth'),
-                                                                                                    (2, 399000, 'https://picsum.photos/200', 'L', 'Black', 25, 'Thick hoodie, excellent for warmth'),
-                                                                                                    (2, 399000, 'https://picsum.photos/200', 'XL', 'Navy Blue', 30, 'Sporty style hoodie'),
-                                                                                                    (2, 399000, 'https://picsum.photos/200', 'S', 'Burgundy', 15, 'Oversized hoodie'),
+                                                                                                    (2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148505/3c52b7ca81a9db8d0ddd590e56b0d42db1057612_cvsetq.avif', 'M', 'Gray', 20, 'Thick hoodie, excellent for warmth'),
+                                                                                                    (2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148505/mat-truoc-ao-hoodie-form-rong-mau-kem-c2e31eca-8c40-46af-a0b3-8f844bdde7e1_n4fcql.webp', 'L', 'Black', 25, 'Thick hoodie, excellent for warmth'),
+                                                                                                    (2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148505/C0027D_ryifjz.jpg', 'XL', 'Navy Blue', 30, 'Sporty style hoodie'),
+                                                                                                    (2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148504/ao_hoodie_sst_colorblock_djo_iy4859_21_model_7a9de26acfa640a2a1e1a7d36e012c01_master_mdjva1.jpg', 'S', 'Burgundy', 15, 'Oversized hoodie'),
 
                                                                                                     -- Variants for Socks
                                                                                                     (3, 599000, 'https://picsum.photos/200', 'L', 'Olive Green', 15, 'Long socks for winter warmth'),
