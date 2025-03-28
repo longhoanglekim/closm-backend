@@ -16,5 +16,5 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
     @Query(value = "SELECT * FROM product_variants WHERE LOWER(product_id) = LOWER(:productId) LIMIT 4", nativeQuery = true)
     List<ProductVariant> findTop4VariantsByProductId(@Param("productId") Long productId);
 
-    ProductVariant findById(long id);
+    int countProductVariantByProductId(Long productId);
 }

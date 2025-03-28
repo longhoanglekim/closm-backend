@@ -65,10 +65,12 @@ public class ProductService {
 
         List<VariantOverviewDTO> dtos = new ArrayList<>();
         for (ProductVariant variant : variants) {
+            productVariantRepository.countProductVariantByProductId(productId);
             VariantOverviewDTO dto = new VariantOverviewDTO();
             dto.setId(variant.getId());
             dto.setName(variant.getName());
             dto.setImageUrl(variant.getImageUrl());
+            dto.setQuantity(variant.getQuantity());
             dtos.add(dto);
         }
         return dtos;
@@ -76,7 +78,11 @@ public class ProductService {
 
     public ProductOverViewDTO getProductOverviewDTO(String category) {
         List<VariantOverviewDTO> dtos = getLimitedVariantsByCategory(category);
-        return new ProductOverViewDTO(category, dtos);  // Dù DTO rỗng, vẫn trả về để xử lý ngoài controller
+        int totalVariants = 0;
+        for (VariantOverviewDTO dto : dtos) {
+            totalVariants += dto.getQuantity();
+        }
+        return new ProductOverViewDTO(category, totalVariants, dtos);  // Dù DTO rỗng, vẫn trả về để xử lý ngoài controller
     }
 
     public ProductVariant findProductVariantById(Long id) {

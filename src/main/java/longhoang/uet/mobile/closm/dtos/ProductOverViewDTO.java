@@ -12,5 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductOverViewDTO {
     private String category;
+    private int quantity;
     private List<VariantOverviewDTO> variants;
 }
