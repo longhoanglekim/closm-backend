@@ -20,8 +20,9 @@ public class ProductVariant {
     private Long productId;
     private BigDecimal price;
     private String imageUrl;
-    private String description;
+    private String name;
     private String size;
     private String color;
+    private String description;
     private int quantity;
 }

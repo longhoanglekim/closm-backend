@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class VariantOverviewDTO {
     private Long id;
+    private String name;
     private String imageUrl;
 }

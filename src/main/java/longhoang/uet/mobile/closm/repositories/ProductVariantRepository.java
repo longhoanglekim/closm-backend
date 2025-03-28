@@ -15,4 +15,6 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
     // Native query để lấy 4 biến thể đầu tiên theo product_id (không phân biệt chữ hoa chữ thường)
     @Query(value = "SELECT * FROM product_variants WHERE LOWER(product_id) = LOWER(:productId) LIMIT 4", nativeQuery = true)
     List<ProductVariant> findTop4VariantsByProductId(@Param("productId") Long productId);
+
+    ProductVariant findById(long id);
 }
