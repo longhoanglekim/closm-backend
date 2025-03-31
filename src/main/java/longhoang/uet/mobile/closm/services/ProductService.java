@@ -75,15 +75,27 @@ public class ProductService {
         }
         return dtos;
     }
-
+    // t thêm ở đây nhé
     public ProductOverViewDTO getProductOverviewDTO(String category) {
-        List<VariantOverviewDTO> dtos = getLimitedVariantsByCategory(category);
-        int totalVariants = 0;
-        for (VariantOverviewDTO dto : dtos) {
-            totalVariants += dto.getQuantity();
-        }
-        return new ProductOverViewDTO(category, totalVariants, dtos);  // Dù DTO rỗng, vẫn trả về để xử lý ngoài controller
+        List<ProductVariant> variants = productVariantRepository.findByCategory(category);
+    
+        List<VariantOverviewDTO> variantDTOs = variants.stream()
+            .map(variant -> new VariantOverviewDTO(
+                variant.getId(),
+                variant.getName(),
+                variant.getQuantity(),
+                variant.getImageUrl(),
+                variant.getSize(),
+                variant.getColor(),
+                variant.getDescription(),
+                variant.getPrice() != null ? variant.getPrice().doubleValue() : 0
+            )).toList();
+    
+        int totalQuantity = variants.stream().mapToInt(ProductVariant::getQuantity).sum();
+    
+        return new ProductOverViewDTO(category, totalQuantity, variantDTOs);
     }
+    
 
     public ProductVariant findProductVariantById(Long id) {
         return productVariantRepository.findById(id).orElse(null);

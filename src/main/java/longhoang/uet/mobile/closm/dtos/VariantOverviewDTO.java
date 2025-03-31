@@ -13,4 +13,9 @@ public class VariantOverviewDTO {
     private String name;
     private int quantity;
     private String imageUrl;
+    private String size;
+    private String color;
+    private String description;
+    private double price;
 }
+
