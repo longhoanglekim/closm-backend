@@ -48,16 +48,15 @@ public class ProductService {
         if (productOpt.isEmpty()) {
             return Collections.emptyList();  // Trả về danh sách rỗng nếu không tìm thấy sản phẩm
         }
+        Product product = productOpt.get();
 
-        Long productId = productOpt.get().getId();
-        List<ProductVariant> variants = productVariantRepository.findTop4VariantsByProductId(productId);
+        List<ProductVariant> variants = product.getProductVariants().stream().limit(4).toList();
         if (variants.isEmpty()) {
             return Collections.emptyList();  // Không có biến thể => trả về danh sách rỗng
         }
 
         List<VariantOverviewDTO> dtos = new ArrayList<>();
         for (ProductVariant variant : variants) {
-            productVariantRepository.countProductVariantByProductId(productId);
             VariantOverviewDTO dto = new VariantOverviewDTO();
             dto.setId(variant.getId());
             dto.setImageUrl(variant.getImageUrl());
@@ -81,7 +80,8 @@ public class ProductService {
     }
 
     public ProductDetailsDTO getProductDetails(String category) {
-        List<ProductVariant> variants = productVariantRepository.findByCategory(category);
+        Optional<Product> productOpt = productRepository.findByCategory(category);
+        List<ProductVariant> variants = productOpt.get().getProductVariants();
     
         List<VariantDetailsDTO> variantDTOs = variants.stream()
             .map(variant -> new VariantDetailsDTO(
