@@ -10,6 +10,7 @@ import longhoang.uet.mobile.closm.enums.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -22,8 +23,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "customer_id", nullable = false)
-    private String customerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "order_date", nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime orderDate = LocalDateTime.now();
@@ -39,5 +41,8 @@ public class Order {
     private PaymentStatus paymentStatus = PaymentStatus.UNPAID;
 
     private String shippingAddress;
+
+    @OneToMany(mappedBy = "order")
+    private List<ProductVariant> productVariants;
 
 }
