@@ -4,6 +4,7 @@ import longhoang.uet.mobile.closm.dtos.ProductDetailsDTO;
 import longhoang.uet.mobile.closm.dtos.ProductOverviewDTO;
 import longhoang.uet.mobile.closm.dtos.VariantDetailsDTO;
 import longhoang.uet.mobile.closm.dtos.VariantOverviewDTO;
+import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
 import longhoang.uet.mobile.closm.models.Product;
 import longhoang.uet.mobile.closm.models.ProductVariant;
 import longhoang.uet.mobile.closm.repositories.ProductRepository;
@@ -57,10 +58,7 @@ public class ProductService {
 
         List<VariantOverviewDTO> dtos = new ArrayList<>();
         for (ProductVariant variant : variants) {
-            VariantOverviewDTO dto = new VariantOverviewDTO();
-            dto.setId(variant.getId());
-            dto.setImageUrl(variant.getImageUrl());
-            dto.setQuantity(variant.getQuantity());
+            VariantOverviewDTO dto = ProductVariantMapper.mapToVariantOverviewDTO(variant);
             dtos.add(dto);
         }
         return dtos;

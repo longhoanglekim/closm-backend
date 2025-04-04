@@ -2,6 +2,7 @@ package longhoang.uet.mobile.closm.mappers;
 
 
 import longhoang.uet.mobile.closm.dtos.VariantDetailsDTO;
+import longhoang.uet.mobile.closm.dtos.VariantOverviewDTO;
 import longhoang.uet.mobile.closm.models.ProductVariant;
 
 public class ProductVariantMapper {
@@ -16,6 +17,14 @@ public class ProductVariantMapper {
         variantDetailsDTO.setQuantity(productVariant.getQuantity());
         variantDetailsDTO.setImageUrl(productVariant.getImageUrl());
         return variantDetailsDTO;
+    }
 
+    public static VariantOverviewDTO mapToVariantOverviewDTO(ProductVariant productVariant) {
+        VariantOverviewDTO variantOverviewDTO = new VariantOverviewDTO();
+        variantOverviewDTO.setId(productVariant.getId());
+        variantOverviewDTO.setName(productVariant.getName());
+        variantOverviewDTO.setImageUrl(productVariant.getImageUrl());
+        variantOverviewDTO.setQuantity(productVariant.getQuantity());
+        return variantOverviewDTO;
     }
 }
