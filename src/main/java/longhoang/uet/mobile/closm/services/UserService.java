@@ -30,6 +30,7 @@ public class UserService {
         newUser.setEmail(registerInput.getEmail());
         newUser.setPassword(registerInput.getPassword());
         newUser.setFullName(registerInput.getFullName());
+        newUser.setPhone(registerInput.getPhone());
         return userRepository.save(newUser);
     }
 }

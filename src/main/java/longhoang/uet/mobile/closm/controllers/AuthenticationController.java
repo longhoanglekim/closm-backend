@@ -1,5 +1,6 @@
 package longhoang.uet.mobile.closm.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.auth.LoginInput;
 import longhoang.uet.mobile.closm.dtos.auth.LoginResponse;
 import longhoang.uet.mobile.closm.dtos.auth.RegisterInput;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthenticationController {
     @Autowired
     private UserService userService;
@@ -42,6 +44,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterInput input) {
         try {
+            log.debug("Register user: {}", input);
             userService.register(input);
             return ResponseEntity.ok().body(new RegisterResponse("Dang ky thanh cong email " + input.getEmail(), null));
         } catch (Exception e) {
