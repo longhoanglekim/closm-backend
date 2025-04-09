@@ -5,15 +5,11 @@ import longhoang.uet.mobile.closm.dtos.ProductDetailsDTO;
 import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
 import longhoang.uet.mobile.closm.models.ProductVariant;
 import longhoang.uet.mobile.closm.services.ProductService;
+import longhoang.uet.mobile.closm.services.ProductVariantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -21,7 +17,8 @@ import java.util.List;
 public class ProductVariantController {
     @Autowired
     private ProductService productService;
-
+    @Autowired
+    private ProductVariantService productVariantService;
     @GetMapping("/{id}")
     public ResponseEntity<?> getVariantDetails(@PathVariable long id) {
         ProductVariant productVariant = productService.findProductVariantById(id);
@@ -29,5 +26,13 @@ public class ProductVariantController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(ProductVariantMapper.mapToVariantDetailsDTO(productVariant));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getVariantsByVariantName(@RequestParam String variantName) {
+        if (variantName == null || variantName.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productVariantService.findByProductName(variantName));
     }
 }
