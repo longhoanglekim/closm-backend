@@ -1,5 +1,6 @@
 package longhoang.uet.mobile.closm.services;
 
+import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.*;
 import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
 import longhoang.uet.mobile.closm.models.Product;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class ProductService {
     @Autowired
@@ -76,17 +78,17 @@ public class ProductService {
 
     public ProductDetailsDTO getProductDetails(String category) {
         Optional<Product> productOpt = productRepository.findByCategory(category);
-//        List<ProductVariant> variants = productOpt.get().getProductVariants();
-//
-//        List<VariantDetailsDTO> variantDTOs = new ArrayList<>();
-//        for (ProductVariant variant : variants) {
-//            variantDTOs.add(ProductVariantMapper.mapToVariantDetailsDTO(variant));
-//        }
-//
+        log.debug("------------------------------------------------------");
+        if (productOpt.isEmpty()) {
+            log.debug("Product" + category +  "not found");
+            return null;
+        }
         List<String> variantTags = productVariantRepository.findAllDistinctTagByProductId(productOpt.get().getId());
         List<VariantDistinctByTagDTO> variantDistinctByTagDTOS = new ArrayList<>();
         int totalQuantity = 0;
         for (String tag : variantTags) {
+            log.debug("------------------------------------------------------");
+            log.debug(tag);
             VariantDistinctByTagDTO dto = ProductVariantMapper.mapToVariantDistinctByTagDTO(productVariantRepository.findAllByTag(tag));
             variantDistinctByTagDTOS.add(dto);
             totalQuantity += dto.getQuantity();

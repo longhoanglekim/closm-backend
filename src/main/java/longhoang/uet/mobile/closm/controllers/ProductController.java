@@ -1,6 +1,7 @@
 package longhoang.uet.mobile.closm.controllers;
 
 
+import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.ProductDetailsDTO;
 import longhoang.uet.mobile.closm.dtos.ProductOverviewDTO;
 import longhoang.uet.mobile.closm.models.Product;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
@@ -35,7 +37,6 @@ public class ProductController {
     @GetMapping("/overview")
     public ResponseEntity<?> getProductOverview() {
         List<ProductOverviewDTO> shopList = new ArrayList<>();
-
         List<String> categoryList = productService.getAllCategories();
         for (String category : categoryList) {
 //            log.info(category);
@@ -56,7 +57,8 @@ public class ProductController {
 
         List<String> categoryList = productService.getAllCategories();
         for (String category : categoryList) {
-//            log.info(category);
+
+            log.info(category);
             ProductDetailsDTO productDetails = productService.getProductDetails(category);
             if (productDetails != null && !productDetails.getVariants().isEmpty()) {
                 shopList.add(productDetails);  // Chỉ thêm vào danh sách nếu có biến thể
