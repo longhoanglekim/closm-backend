@@ -57,9 +57,9 @@ public class ProductController {
         List<String> categoryList = productService.getAllCategories();
         for (String category : categoryList) {
 //            log.info(category);
-            ProductDetailsDTO productOverview = productService.getProductDetails(category);
-            if (productOverview != null && !productOverview.getVariants().isEmpty()) {
-                shopList.add(productOverview);  // Chỉ thêm vào danh sách nếu có biến thể
+            ProductDetailsDTO productDetails = productService.getProductDetails(category);
+            if (productDetails != null && !productDetails.getVariants().isEmpty()) {
+                shopList.add(productDetails);  // Chỉ thêm vào danh sách nếu có biến thể
             }
         }
         if (shopList.isEmpty()) {

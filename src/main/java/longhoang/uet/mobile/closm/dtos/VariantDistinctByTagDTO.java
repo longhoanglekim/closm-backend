@@ -4,18 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class VariantDetailsDTO {
-
+public class VariantDistinctByTagDTO {
     private Long id;
     private String tag;
+    private String imgUrl;
     private int quantity;
-    private String imageUrl;
-    private String size;
-    private String color;
-    private String description;
-    private double price;
+    private double minPrice;
+    private double maxPrice;
 }
-

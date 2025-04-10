@@ -1,9 +1,6 @@
 package longhoang.uet.mobile.closm.services;
 
-import longhoang.uet.mobile.closm.dtos.ProductDetailsDTO;
-import longhoang.uet.mobile.closm.dtos.ProductOverviewDTO;
-import longhoang.uet.mobile.closm.dtos.VariantDetailsDTO;
-import longhoang.uet.mobile.closm.dtos.VariantOverviewDTO;
+import longhoang.uet.mobile.closm.dtos.*;
 import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
 import longhoang.uet.mobile.closm.models.Product;
 import longhoang.uet.mobile.closm.models.ProductVariant;
@@ -79,23 +76,23 @@ public class ProductService {
 
     public ProductDetailsDTO getProductDetails(String category) {
         Optional<Product> productOpt = productRepository.findByCategory(category);
-        List<ProductVariant> variants = productOpt.get().getProductVariants();
+//        List<ProductVariant> variants = productOpt.get().getProductVariants();
+//
+//        List<VariantDetailsDTO> variantDTOs = new ArrayList<>();
+//        for (ProductVariant variant : variants) {
+//            variantDTOs.add(ProductVariantMapper.mapToVariantDetailsDTO(variant));
+//        }
+//
+        List<String> variantTags = productVariantRepository.findAllDistinctTagByProductId(productOpt.get().getId());
+        List<VariantDistinctByTagDTO> variantDistinctByTagDTOS = new ArrayList<>();
+        int totalQuantity = 0;
+        for (String tag : variantTags) {
+            VariantDistinctByTagDTO dto = ProductVariantMapper.mapToVariantDistinctByTagDTO(productVariantRepository.findAllByTag(tag));
+            variantDistinctByTagDTOS.add(dto);
+            totalQuantity += dto.getQuantity();
+        }
     
-        List<VariantDetailsDTO> variantDTOs = variants.stream()
-            .map(variant -> new VariantDetailsDTO(
-                variant.getId(),
-                variant.getName(),
-                variant.getQuantity(),
-                variant.getImageUrl(),
-                variant.getSize(),
-                variant.getColor(),
-                variant.getDescription(),
-                variant.getPrice() != null ? variant.getPrice().doubleValue() : 0
-            )).toList();
-    
-        int totalQuantity = variants.stream().mapToInt(ProductVariant::getQuantity).sum();
-    
-        return new ProductDetailsDTO(category, totalQuantity, variantDTOs);
+        return new ProductDetailsDTO(category, totalQuantity, variantDistinctByTagDTOS);
     }
     
 

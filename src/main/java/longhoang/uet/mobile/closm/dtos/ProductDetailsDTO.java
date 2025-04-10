@@ -13,5 +13,5 @@ import java.util.List;
 public class ProductDetailsDTO {
     private String category;
     private int quantity;
-    private List<VariantDetailsDTO> variants;
+    private List<VariantDistinctByTagDTO> variants;
 }

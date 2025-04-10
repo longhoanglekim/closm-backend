@@ -16,7 +16,7 @@ public class ProductVariantService {
     private ProductVariantRepository productVariantRepository;
 
     public VariantFullDTO findByProductName(String Name) {
-        List<ProductVariant> productVariants = productVariantRepository.findDistinctByName(Name);
+        List<ProductVariant> productVariants = productVariantRepository.findDistinctByTag(Name);
         return ProductVariantMapper.mapToVariantFullDTO(productVariants);
     }
 }

@@ -38,7 +38,7 @@ CREATE TABLE product_variants (
     size VARCHAR(25) NOT NULL,
     color VARCHAR(30) NOT NULL,
     quantity INT NOT NULL CHECK (quantity >= 0),
-    name VARCHAR(50),
+    tag VARCHAR(50),
     description VARCHAR(255),
     order_id BIGINT,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
@@ -56,7 +56,7 @@ INSERT INTO products (name, category) VALUES
 ('Winter Pants', 'Winter Pants');
 
 -- Insert sample product variants with updated image links
-INSERT INTO product_variants (product_id, price, image_url, size, color, quantity, name, description) VALUES
+INSERT INTO product_variants (product_id, price, image_url, size, color, quantity, tag, description) VALUES
 -- T-Shirts
 (1, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147982/cac-mau-ao-t-shirt-copy_ixklfd.jpg', 'M', 'Red', 50, 'Basic T-Shirt', 'High-quality cotton T-shirt'),
 (1, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147981/sgc13_cb1417b06f2c4de2a4afac376a3c5c22_master_flzg6c.webp', 'L', 'Blue', 30, 'Basic T-Shirt', 'High-quality cotton T-shirt'),

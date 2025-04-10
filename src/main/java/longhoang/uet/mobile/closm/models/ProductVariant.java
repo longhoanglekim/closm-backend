@@ -20,7 +20,7 @@ public class ProductVariant {
 
     private BigDecimal price;
     private String imageUrl;
-    private String name;
+    private String tag;
     private String size;
     private String color;
     private String description;
