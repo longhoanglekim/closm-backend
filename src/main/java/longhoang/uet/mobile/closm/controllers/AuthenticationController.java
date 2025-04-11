@@ -6,7 +6,9 @@ import longhoang.uet.mobile.closm.dtos.auth.LoginResponse;
 import longhoang.uet.mobile.closm.dtos.auth.RegisterInput;
 import longhoang.uet.mobile.closm.dtos.auth.RegisterResponse;
 import longhoang.uet.mobile.closm.models.User;
+import longhoang.uet.mobile.closm.services.UserDetailsImpl;
 import longhoang.uet.mobile.closm.services.UserService;
+import longhoang.uet.mobile.closm.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,19 +26,18 @@ import java.util.UUID;
 public class AuthenticationController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private JwtUtil jwtUtil;
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody LoginInput input) {
         try {
-            Optional<User> user = userService.login(input);
-            if (user.isPresent()) {
-                String token = UUID.randomUUID().toString();
-                LoginResponse loginResponse = new LoginResponse();
-                loginResponse.setToken(token);
-                loginResponse.setError(null);
-                loginResponse.setEmail(user.get().getEmail());
-                return ResponseEntity.ok(loginResponse);
-            }
-            throw new Exception("Invalid username or password");
+            User user = userService.authenticate(input);
+            String token = jwtUtil.generateToken(new UserDetailsImpl(user));
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setToken(token);
+            loginResponse.setEmail(user.getEmail());
+            return ResponseEntity.ok(loginResponse);
+
         }
         catch (Exception e) {
             LoginResponse response = new LoginResponse();

@@ -7,12 +7,21 @@ import longhoang.uet.mobile.closm.mappers.UserMapper;
 import longhoang.uet.mobile.closm.models.User;
 import longhoang.uet.mobile.closm.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class UserService {
+    @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
     public Optional<User> login(LoginInput loginInput) throws Exception {
@@ -30,10 +39,17 @@ public class UserService {
         }
         User newUser = new User();
         newUser.setEmail(registerInput.getEmail());
-        newUser.setPassword(registerInput.getPassword());
+        newUser.setPassword(passwordEncoder.encode(registerInput.getPassword()));
         newUser.setFullName(registerInput.getFullName());
         newUser.setPhone(registerInput.getPhone());
         return userRepository.save(newUser);
+    }
+    public User authenticate(LoginInput loginInput) throws BadCredentialsException {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginInput.getEmail(), loginInput.getPassword()));
+        if (authentication.isAuthenticated()) {
+            return userRepository.findByEmail(loginInput.getEmail()).get();
+        }
+        throw new BadCredentialsException("Invalid email or password");
     }
 
     public UserDTO getUserDTO(String email) throws Exception {
