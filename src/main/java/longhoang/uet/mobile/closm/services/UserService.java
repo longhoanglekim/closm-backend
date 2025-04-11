@@ -1,7 +1,9 @@
 package longhoang.uet.mobile.closm.services;
 
+import longhoang.uet.mobile.closm.dtos.UserDTO;
 import longhoang.uet.mobile.closm.dtos.auth.LoginInput;
 import longhoang.uet.mobile.closm.dtos.auth.RegisterInput;
+import longhoang.uet.mobile.closm.mappers.UserMapper;
 import longhoang.uet.mobile.closm.models.User;
 import longhoang.uet.mobile.closm.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +34,14 @@ public class UserService {
         newUser.setFullName(registerInput.getFullName());
         newUser.setPhone(registerInput.getPhone());
         return userRepository.save(newUser);
+    }
+
+    public UserDTO getUserDTO(String email) throws Exception {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            return UserMapper.userToUserDTO(user);
+        }
+        throw new Exception("User not found");
     }
 }

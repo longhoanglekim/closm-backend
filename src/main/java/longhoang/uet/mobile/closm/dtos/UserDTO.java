@@ -1,4 +1,4 @@
-package longhoang.uet.mobile.closm.dtos.auth;
+package longhoang.uet.mobile.closm.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponse {
+public class UserDTO {
+    private String fullName;
     private String email;
-    private String token;
-    private Long expiresIn;
-    private String error;
+    private String phone;
 }

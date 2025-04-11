@@ -55,7 +55,7 @@ public class ProductVariantMapper {
         dto.setTag(productVariant.get(0).getTag());
         dto.setImgUrl(productVariant.get(0).getImageUrl());
         double maxPrice = 0;
-        double minPrice = 0;
+        double minPrice = productVariant.get(0).getPrice().doubleValue();
         int totalVariants = 0;
         for (ProductVariant variant : productVariant) {
             if (variant.getPrice().doubleValue() > maxPrice) {

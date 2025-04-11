@@ -30,7 +30,11 @@ public class AuthenticationController {
             Optional<User> user = userService.login(input);
             if (user.isPresent()) {
                 String token = UUID.randomUUID().toString();
-                return ResponseEntity.ok(new LoginResponse(token, Long.getLong("3600000"), null));
+                LoginResponse loginResponse = new LoginResponse();
+                loginResponse.setToken(token);
+                loginResponse.setError(null);
+                loginResponse.setEmail(user.get().getEmail());
+                return ResponseEntity.ok(loginResponse);
             }
             throw new Exception("Invalid username or password");
         }

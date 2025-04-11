@@ -33,6 +33,7 @@ public class ProductVariantController {
         if (variantName == null || variantName.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        log.info("Get Variant by Variant Name: {}", variantName);
         return ResponseEntity.ok().body(productVariantService.findByProductName(variantName));
     }
 }

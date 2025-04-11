@@ -78,17 +78,15 @@ public class ProductService {
 
     public ProductDetailsDTO getProductDetails(String category) {
         Optional<Product> productOpt = productRepository.findByCategory(category);
-        log.debug("------------------------------------------------------");
+
         if (productOpt.isEmpty()) {
-            log.debug("Product" + category +  "not found");
             return null;
         }
         List<String> variantTags = productVariantRepository.findAllDistinctTagByProductId(productOpt.get().getId());
         List<VariantDistinctByTagDTO> variantDistinctByTagDTOS = new ArrayList<>();
         int totalQuantity = 0;
         for (String tag : variantTags) {
-            log.debug("------------------------------------------------------");
-            log.debug(tag);
+
             VariantDistinctByTagDTO dto = ProductVariantMapper.mapToVariantDistinctByTagDTO(productVariantRepository.findAllByTag(tag));
             variantDistinctByTagDTOS.add(dto);
             totalQuantity += dto.getQuantity();
