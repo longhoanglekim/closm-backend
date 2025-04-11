@@ -2,9 +2,8 @@ package longhoang.uet.mobile.closm.controllers;
 
 
 import lombok.extern.slf4j.Slf4j;
-import longhoang.uet.mobile.closm.dtos.ProductDetailsDTO;
-import longhoang.uet.mobile.closm.dtos.ProductOverviewDTO;
-import longhoang.uet.mobile.closm.models.Product;
+import longhoang.uet.mobile.closm.dtos.response.ProductDetailsDTO;
+import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
 import longhoang.uet.mobile.closm.models.ProductVariant;
 import longhoang.uet.mobile.closm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

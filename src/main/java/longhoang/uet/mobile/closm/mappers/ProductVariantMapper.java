@@ -1,7 +1,7 @@
 package longhoang.uet.mobile.closm.mappers;
 
 
-import longhoang.uet.mobile.closm.dtos.*;
+import longhoang.uet.mobile.closm.dtos.response.*;
 import longhoang.uet.mobile.closm.models.ProductVariant;
 
 import java.util.List;
@@ -31,6 +31,7 @@ public class ProductVariantMapper {
 
     public static VariantInfo mapToVariantInfoDTO(ProductVariant productVariant) {
         VariantInfo variantInfoDTO = new VariantInfo();
+        variantInfoDTO.setId(productVariant.getId());
         variantInfoDTO.setDescription(productVariant.getDescription());
         variantInfoDTO.setSize(productVariant.getSize());
         variantInfoDTO.setPrice(productVariant.getPrice().doubleValue());

@@ -1,4 +1,4 @@
-package longhoang.uet.mobile.closm.dtos;
+package longhoang.uet.mobile.closm.dtos.response;
 
 
 import lombok.AllArgsConstructor;
@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class ProductOverviewDTO {
+@AllArgsConstructor
+public class ProductDetailsDTO {
     private String category;
     private int quantity;
-    private List<VariantOverviewDTO> variants;
-
+    private List<VariantDistinctByTagDTO> variants;
 }

@@ -1,6 +1,6 @@
 package longhoang.uet.mobile.closm.services;
 
-import longhoang.uet.mobile.closm.dtos.UserDTO;
+import longhoang.uet.mobile.closm.dtos.response.UserDTO;
 import longhoang.uet.mobile.closm.dtos.auth.LoginInput;
 import longhoang.uet.mobile.closm.dtos.auth.RegisterInput;
 import longhoang.uet.mobile.closm.mappers.UserMapper;

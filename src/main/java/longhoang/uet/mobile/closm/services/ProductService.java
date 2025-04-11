@@ -1,7 +1,10 @@
 package longhoang.uet.mobile.closm.services;
 
 import lombok.extern.slf4j.Slf4j;
-import longhoang.uet.mobile.closm.dtos.*;
+import longhoang.uet.mobile.closm.dtos.response.ProductDetailsDTO;
+import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
+import longhoang.uet.mobile.closm.dtos.response.VariantDistinctByTagDTO;
+import longhoang.uet.mobile.closm.dtos.response.VariantOverviewDTO;
 import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
 import longhoang.uet.mobile.closm.models.Product;
 import longhoang.uet.mobile.closm.models.ProductVariant;

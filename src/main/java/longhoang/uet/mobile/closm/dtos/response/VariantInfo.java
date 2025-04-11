@@ -1,16 +1,14 @@
-package longhoang.uet.mobile.closm.dtos;
+package longhoang.uet.mobile.closm.dtos.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class VariantDetailsDTO {
-
+@AllArgsConstructor
+@NoArgsConstructor
+public class VariantInfo {
     private Long id;
-    private String tag;
     private int quantity;
     private String imageUrl;
     private String size;
@@ -18,4 +16,3 @@ public class VariantDetailsDTO {
     private String description;
     private double price;
 }
-

@@ -1,7 +1,6 @@
 package longhoang.uet.mobile.closm.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import longhoang.uet.mobile.closm.dtos.ProductDetailsDTO;
 import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
 import longhoang.uet.mobile.closm.models.ProductVariant;
 import longhoang.uet.mobile.closm.services.ProductService;

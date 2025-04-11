@@ -1,6 +1,6 @@
 package longhoang.uet.mobile.closm.mappers;
 
-import longhoang.uet.mobile.closm.dtos.UserDTO;
+import longhoang.uet.mobile.closm.dtos.response.UserDTO;
 import longhoang.uet.mobile.closm.models.User;
 
 public class UserMapper {
