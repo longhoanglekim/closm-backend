@@ -1,8 +1,8 @@
 package longhoang.uet.mobile.closm.services;
 
-import longhoang.uet.mobile.closm.dtos.response.UserDTO;
 import longhoang.uet.mobile.closm.dtos.auth.LoginInput;
 import longhoang.uet.mobile.closm.dtos.auth.RegisterInput;
+import longhoang.uet.mobile.closm.dtos.response.UserInfoDTO;
 import longhoang.uet.mobile.closm.mappers.UserMapper;
 import longhoang.uet.mobile.closm.models.User;
 import longhoang.uet.mobile.closm.repositories.UserRepository;
@@ -52,7 +52,7 @@ public class UserService {
         throw new BadCredentialsException("Invalid email or password");
     }
 
-    public UserDTO getUserDTO(String email) throws Exception {
+    public UserInfoDTO getUserDTO(String email) throws Exception {
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
