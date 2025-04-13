@@ -1,6 +1,6 @@
 package longhoang.uet.mobile.closm.services;
 
-import longhoang.uet.mobile.closm.dtos.response.VariantFullDTO;
+import longhoang.uet.mobile.closm.dtos.response.VariantGroupDTO;
 import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
 import longhoang.uet.mobile.closm.models.ProductVariant;
 import longhoang.uet.mobile.closm.repositories.ProductVariantRepository;
@@ -14,7 +14,7 @@ public class ProductVariantService {
     @Autowired
     private ProductVariantRepository productVariantRepository;
 
-    public VariantFullDTO findByProductName(String Name) {
+    public VariantGroupDTO findByProductName(String Name) {
         List<ProductVariant> productVariants = productVariantRepository.findDistinctByTag(Name);
         return ProductVariantMapper.mapToVariantFullDTO(productVariants);
     }

@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VariantFullDTO {
+public class VariantGroupDTO {
     private String name;
     private List<VariantInfo> variantList = new ArrayList<>();
 }

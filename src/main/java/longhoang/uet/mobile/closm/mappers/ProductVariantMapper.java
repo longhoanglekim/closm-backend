@@ -41,8 +41,8 @@ public class ProductVariantMapper {
         return variantInfoDTO;
     }
 
-    public static VariantFullDTO mapToVariantFullDTO(List<ProductVariant> productVariant) {
-        VariantFullDTO variantFullDTO = new VariantFullDTO();
+    public static VariantGroupDTO mapToVariantFullDTO(List<ProductVariant> productVariant) {
+        VariantGroupDTO variantFullDTO = new VariantGroupDTO();
         variantFullDTO.setName(productVariant.get(0).getTag());
         for (ProductVariant variant : productVariant) {
             variantFullDTO.getVariantList().add(mapToVariantInfoDTO(variant));
@@ -50,8 +50,8 @@ public class ProductVariantMapper {
         return variantFullDTO;
     }
 
-    public static VariantDistinctByTagDTO mapToVariantDistinctByTagDTO(List<ProductVariant> productVariant) {
-        VariantDistinctByTagDTO dto = new VariantDistinctByTagDTO();
+    public static TaggedVariantOverviewDTO mapToVariantDistinctByTagDTO(List<ProductVariant> productVariant) {
+        TaggedVariantOverviewDTO dto = new TaggedVariantOverviewDTO();
         dto.setId(productVariant.get(0).getId());
         dto.setTag(productVariant.get(0).getTag());
         dto.setImgUrl(productVariant.get(0).getImageUrl());
