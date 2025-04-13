@@ -23,6 +23,7 @@ target/
 mvnw
 mvnw.cmd
 
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

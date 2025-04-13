@@ -1,8 +1,10 @@
 package longhoang.uet.mobile.closm.controllers;
 
+import longhoang.uet.mobile.closm.dtos.response.Location;
 import longhoang.uet.mobile.closm.models.Product;
 import longhoang.uet.mobile.closm.models.ProductVariant;
 import longhoang.uet.mobile.closm.repositories.ProductRepository;
+import longhoang.uet.mobile.closm.utils.EvnLoader;
 import longhoang.uet.mobile.closm.utils.LocationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,18 @@ public class TestController {
     public ResponseEntity<?> findLocation() {
         try {
             return ResponseEntity.ok().body(LocationUtil.searchLocation("48 ngõ 50 Đình Thôn, Hà Nội"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/calculateDistance")
+    public ResponseEntity<?> calculateDistance() {
+        try {
+            Location src = LocationUtil.searchLocation(EvnLoader.getShopLocation());
+            Location dst = LocationUtil.searchLocation("214 Nguyễn Xiển, Hà Nội");
+            return ResponseEntity.ok().body(LocationUtil.calculateDistanceAndDuration(src, dst));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());

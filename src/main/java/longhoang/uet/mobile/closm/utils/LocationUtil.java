@@ -3,6 +3,8 @@ package longhoang.uet.mobile.closm.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.response.Location;
+import longhoang.uet.mobile.closm.dtos.response.RouteInfo;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,12 +13,13 @@ import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+
 @Slf4j
+@Component
 public class LocationUtil {
-
-    private static final String API_URL = "https://nominatim.openstreetmap.org/search";
+    private static final String SEARCH_API_URL = "https://nominatim.openstreetmap.org/search";
     private static final String FORMAT_PARAM = "&format=json&addressdetails=1&limit=1";
-
+    private static final String DISTANCE_API_URL = "https://api.openrouteservice.org/v2/directions/driving-car/geojson";
     // Tìm kiếm địa điểm từ địa chỉ
     public static Location searchLocation(String address) {
         try {
@@ -36,7 +39,7 @@ public class LocationUtil {
     }
 
     private static BufferedReader getBufferedReader(String encodedAddress) throws IOException {
-        String fullUrl = API_URL + "?q=" + encodedAddress + FORMAT_PARAM;
+        String fullUrl = SEARCH_API_URL + "?q=" + encodedAddress + FORMAT_PARAM;
 
         HttpURLConnection conn = (HttpURLConnection) new URL(fullUrl).openConnection();
         conn.setRequestMethod("GET");
@@ -63,4 +66,65 @@ public class LocationUtil {
             return null;
         }
     }
+    public static RouteInfo calculateDistanceAndDuration(Location src, Location dst) {
+
+        try {
+            HttpURLConnection conn = (HttpURLConnection) new URL(DISTANCE_API_URL).openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", EvnLoader.getDistanceApiKey()  );
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+            double lonStartDouble = Double.parseDouble(src.getLon());
+            double latStartDouble = Double.parseDouble(src.getLat());
+            double lonEndDouble = Double.parseDouble(dst.getLon());
+            double latEndDouble = Double.parseDouble(dst.getLat());
+
+            // Sử dụng các giá trị kiểu double cho phép String.format() hoạt động đúng
+            String jsonInputString = String.format(
+                    "{\"coordinates\":[[%f,%f],[%f,%f]]}",
+                    lonStartDouble, latStartDouble, lonEndDouble, latEndDouble
+            );
+
+            StringBuilder response = getStringBuilder(conn, jsonInputString);
+
+            conn.disconnect();
+
+            // Parse kết quả JSON
+            ObjectMapper mapper = new ObjectMapper();
+            var jsonNode = mapper.readTree(response.toString());
+            var summary = jsonNode
+                    .path("features").get(0)
+                    .path("properties")
+                    .path("summary");
+
+            double distanceInKm = summary.path("distance").asDouble() / 1000.0;
+            double durationInMinutes = summary.path("duration").asDouble() / 60.0;
+
+            return new RouteInfo(distanceInKm, durationInMinutes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static StringBuilder getStringBuilder(HttpURLConnection conn, String jsonInputString) throws IOException {
+        try (var os = conn.getOutputStream()) {
+            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8)
+        );
+
+        StringBuilder response = new StringBuilder();
+        String output;
+        while ((output = br.readLine()) != null) {
+            response.append(output);
+        }
+        return response;
+    }
+
+
 }
