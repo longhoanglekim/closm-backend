@@ -5,12 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderRequestDTO {
-    private List<Long> itemIds;
+    private Map<Long, Integer> itemIds;
     private List<Long> discountIds;
 
     private String address;

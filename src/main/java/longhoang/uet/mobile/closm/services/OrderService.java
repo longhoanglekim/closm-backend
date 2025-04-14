@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -25,14 +27,16 @@ public class OrderService {
     @Autowired
     DiscountRepository discountRepository;
     public OrderPriceSummaryDTO calculateOrderPrice(OrderRequestDTO request) {
-        List<ProductVariant> productVariant = new ArrayList<>();
-        for (Long id : request.getItemIds()) {
-            productVariant.add(productVariantRepository.findById(id).get());
+        Map<ProductVariant, Integer> variantsCount = new HashMap<>();
+        Map<Long, Integer> idsCount = request.getItemIds();
+        for (Long id : idsCount.keySet()) {
+            variantsCount.put(productVariantRepository.findById(id).get(), idsCount.get(id));
         }
+
         List<Discount> discounts = new ArrayList<>();
         for (Long id : request.getDiscountIds()) {
             discounts.add(discountRepository.findById(id).get());
         }
-        return PriceUtil.calculateOrderPrice(productVariant, discounts, request.getAddress());
+        return PriceUtil.calculateOrderPrice(variantsCount, discounts, request.getAddress());
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class PriceUtil {
@@ -27,12 +28,13 @@ public class PriceUtil {
     }
 
 
-    public static OrderPriceSummaryDTO calculateOrderPrice(List<ProductVariant> productVariants, List<Discount> discounts,
-                                                              String address) {
+    public static OrderPriceSummaryDTO calculateOrderPrice(Map<ProductVariant, Integer> variantsCount, List<Discount> discounts,
+                                                           String address) {
         OrderPriceSummaryDTO orderPriceSummaryDTO = new OrderPriceSummaryDTO();
         BigDecimal price = BigDecimal.ZERO;
-        for (ProductVariant productVariant : productVariants) {
-            price = price.add(productVariant.getPrice());
+        for (ProductVariant productVariant : variantsCount.keySet()) {
+            BigDecimal quantity = BigDecimal.valueOf(variantsCount.get(productVariant));
+            price = price.add(productVariant.getPrice().multiply(quantity));
         }
         orderPriceSummaryDTO.setProductTotal(price);
         BigDecimal totalDiscountPercent = BigDecimal.ZERO;
@@ -48,6 +50,7 @@ public class PriceUtil {
         BigDecimal deliveryFee = calculateDeliverFee(routeInfo);
         price = price.add(deliveryFee);
         orderPriceSummaryDTO.setDeliveryFee(deliveryFee);
+        orderPriceSummaryDTO.setFinalPrice(price);
         return orderPriceSummaryDTO;
     }
 
