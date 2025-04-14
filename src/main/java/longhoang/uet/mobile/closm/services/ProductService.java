@@ -3,7 +3,7 @@ package longhoang.uet.mobile.closm.services;
 import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.response.ProductDetailsDTO;
 import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
-import longhoang.uet.mobile.closm.dtos.response.VariantDistinctByTagDTO;
+import longhoang.uet.mobile.closm.dtos.response.TaggedVariantOverviewDTO;
 import longhoang.uet.mobile.closm.dtos.response.VariantOverviewDTO;
 import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
 import longhoang.uet.mobile.closm.models.Product;
@@ -86,11 +86,11 @@ public class ProductService {
             return null;
         }
         List<String> variantTags = productVariantRepository.findAllDistinctTagByProductId(productOpt.get().getId());
-        List<VariantDistinctByTagDTO> variantDistinctByTagDTOS = new ArrayList<>();
+        List<TaggedVariantOverviewDTO> variantDistinctByTagDTOS = new ArrayList<>();
         int totalQuantity = 0;
         for (String tag : variantTags) {
 
-            VariantDistinctByTagDTO dto = ProductVariantMapper.mapToVariantDistinctByTagDTO(productVariantRepository.findAllByTag(tag));
+            TaggedVariantOverviewDTO dto = ProductVariantMapper.mapToVariantDistinctByTagDTO(productVariantRepository.findAllByTag(tag));
             variantDistinctByTagDTOS.add(dto);
             totalQuantity += dto.getQuantity();
         }
@@ -99,8 +99,8 @@ public class ProductService {
     }
     
 
-    public ProductVariant findProductVariantById(Long id) {
-        return productVariantRepository.findById(id).orElse(null);
+    public Optional<ProductVariant> findProductVariantById(Long id) {
+        return productVariantRepository.findById(id);
     }
 }
 

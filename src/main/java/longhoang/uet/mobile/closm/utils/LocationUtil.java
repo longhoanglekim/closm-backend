@@ -20,7 +20,7 @@ public class LocationUtil {
     private static final String SEARCH_API_URL = "https://nominatim.openstreetmap.org/search";
     private static final String FORMAT_PARAM = "&format=json&addressdetails=1&limit=1";
     private static final String DISTANCE_API_URL = "https://api.openrouteservice.org/v2/directions/driving-car/geojson";
-    // Tìm kiếm địa điểm từ địa chỉ
+
     public static Location searchLocation(String address) {
         try {
             String encodedAddress = URLEncoder.encode(address, StandardCharsets.UTF_8);
@@ -67,7 +67,6 @@ public class LocationUtil {
         }
     }
     public static RouteInfo calculateDistanceAndDuration(Location src, Location dst) {
-
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(DISTANCE_API_URL).openConnection();
             conn.setRequestMethod("POST");
@@ -107,6 +106,13 @@ public class LocationUtil {
             return null;
         }
     }
+
+    public static RouteInfo calculateDistanceFromShop (String dest) {
+        Location src =  searchLocation(EvnLoader.getShopLocation());
+        Location dst =  searchLocation(dest);
+        return calculateDistanceAndDuration(src, dst);
+    }
+
 
     private static StringBuilder getStringBuilder(HttpURLConnection conn, String jsonInputString) throws IOException {
         try (var os = conn.getOutputStream()) {

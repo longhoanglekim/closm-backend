@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VariantDistinctByTagDTO {
+public class TaggedVariantOverviewDTO {
     private Long id;
     private String tag;
     private String imgUrl;

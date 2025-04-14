@@ -44,9 +44,7 @@ public class TestController {
     @GetMapping("/calculateDistance")
     public ResponseEntity<?> calculateDistance() {
         try {
-            Location src = LocationUtil.searchLocation(EvnLoader.getShopLocation());
-            Location dst = LocationUtil.searchLocation("214 Nguyễn Xiển, Hà Nội");
-            return ResponseEntity.ok().body(LocationUtil.calculateDistanceAndDuration(src, dst));
+            return ResponseEntity.ok().body(LocationUtil.calculateDistanceFromShop("214 Nguyễn Xiển, Hà Nội"));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());

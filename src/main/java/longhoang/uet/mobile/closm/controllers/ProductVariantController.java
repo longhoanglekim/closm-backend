@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 @Slf4j
@@ -20,11 +22,11 @@ public class ProductVariantController {
     private ProductVariantService productVariantService;
     @GetMapping("/{id}")
     public ResponseEntity<?> getVariantDetails(@PathVariable long id) {
-        ProductVariant productVariant = productService.findProductVariantById(id);
-        if (productVariant == null) {
+        Optional<ProductVariant> productVariant = productService.findProductVariantById(id);
+        if (productVariant.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ProductVariantMapper.mapToVariantDetailsDTO(productVariant));
+        return ResponseEntity.ok(ProductVariantMapper.mapToVariantDetailsDTO(productVariant.get()));
     }
 
     @GetMapping
