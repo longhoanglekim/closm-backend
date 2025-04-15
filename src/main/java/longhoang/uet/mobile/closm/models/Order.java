@@ -42,7 +42,7 @@ public class Order {
 
     private String shippingAddress;
 
-    @OneToMany(mappedBy = "order")
-    private List<ProductVariant> productVariants;
+    @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<OrderVariant> orderVariants;
 
 }

@@ -34,6 +34,8 @@ public class PriceUtil {
         BigDecimal price = BigDecimal.ZERO;
         for (ProductVariant productVariant : variantsCount.keySet()) {
             BigDecimal quantity = BigDecimal.valueOf(variantsCount.get(productVariant));
+            orderPriceSummaryDTO.getProductVariantsCount().put(productVariant.getId(), quantity.intValue() );
+
             price = price.add(productVariant.getPrice().multiply(quantity));
         }
         orderPriceSummaryDTO.setProductTotal(price);
