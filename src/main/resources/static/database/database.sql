@@ -19,15 +19,20 @@ CREATE TABLE products (
 
 
 CREATE TABLE orders (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    order_status ENUM('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELED') NOT NULL DEFAULT 'PENDING',
-    total_price DECIMAL(10,2),
-    payment_status ENUM('UNPAID', 'PAID', 'REFUNDED') NOT NULL DEFAULT 'UNPAID',
-    shipping_address VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                        user_id BIGINT NOT NULL,
+                        order_date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                        order_status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
+                        items_total_price DECIMAL(19, 2),
+                        discount_amount DECIMAL(19, 2),
+                        deliver_payment DECIMAL(19, 2),
+                        final_price DECIMAL(19, 2),
+                        payment_status VARCHAR(50) NOT NULL DEFAULT 'UNPAID',
+                        shipping_address TEXT,
+
+                        CONSTRAINT fk_order_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
 
 -- Product variants table
 CREATE TABLE product_variants (
@@ -44,6 +49,23 @@ CREATE TABLE product_variants (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE TABLE orders_variants (
+                                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                 order_id BIGINT NOT NULL,
+                                 product_variant_id BIGINT NOT NULL,
+
+                                 CONSTRAINT fk_ov_order FOREIGN KEY (order_id) REFERENCES orders(id),
+                                 CONSTRAINT fk_ov_product_variant FOREIGN KEY (product_variant_id) REFERENCES product_variants(id)
+);
+CREATE TABLE discounts (
+                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                           description VARCHAR(255) NOT NULL,
+                           discount_percentage DECIMAL(5, 2) NOT NULL,  -- precision = 5, scale = 2
+                           discount_type VARCHAR(255) NOT NULL,  -- Assuming DiscountType is stored as a string
+                           start_date DATE NOT NULL,
+                           end_date DATE NOT NULL
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 
 -- Insert sample products data
 INSERT INTO products (name, category) VALUES
@@ -105,3 +127,18 @@ INSERT INTO product_variants (product_id, price, image_url, size, color, quantit
 (7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154578/images_qb4qfg.jpg', 'L', 'Gray', 15, 'Winter Winter Pants', 'Soft and cozy winter pants'),
 (7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154578/images_2_zawzxf.jpg', 'XL', 'Olive Green', 10, 'Wind-resistant Winter Pants', 'Wind-resistant warm pants'),
 (7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154577/images_1_nq9woy.jpg', 'S', 'Brown', 8, 'Lightly-lined Winter Pants', 'Lightly lined winter pants');
+
+--- INSERT DATA INTO DISCOUNT
+
+INSERT INTO discounts (description, discount_percentage, discount_type, start_date, end_date)
+VALUES
+    ('Spring Sale', 10.00, 'HOLIDAY', '2025-04-17', '2025-05-10'),
+    ('Flash Sale', 30.00, 'HOLIDAY', '2025-04-17', '2025-06-01'),
+    ('Summer Kickoff', 15.00, 'HOLIDAY', '2025-04-17', '2025-06-05'),
+    ('Holiday Discount', 20.00, 'HOLIDAY', '2025-04-17', '2025-05-25'),
+    ('Early Bird Special', 25.00, 'HOLIDAY', '2025-04-17', '2025-06-20'),
+    ('Weekend Deals', 12.50, 'HOLIDAY', '2025-04-17', '2025-06-15'),
+    ('Exclusive Offer', 18.00, 'HOLIDAY', '2025-04-17', '2025-06-10'),
+    ('Mid-Year Sale', 22.00, 'HOLIDAY', '2025-04-17', '2025-06-30'),
+    ('Spring Frenzy', 17.50, 'HOLIDAY', '2025-04-17', '2025-06-20'),
+    ('End of Season', 14.00, 'HOLIDAY', '2025-04-17', '2025-06-25');

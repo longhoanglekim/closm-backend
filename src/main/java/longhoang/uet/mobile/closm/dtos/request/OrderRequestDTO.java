@@ -12,7 +12,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class OrderRequestDTO {
     private Map<Long, Integer> itemIds;
-    private List<Long> discountIds;
 
     private String address;
 

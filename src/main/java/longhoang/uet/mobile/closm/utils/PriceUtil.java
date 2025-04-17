@@ -28,7 +28,7 @@ public class PriceUtil {
     }
 
 
-    public static OrderPriceSummaryDTO calculateOrderPrice(Map<ProductVariant, Integer> variantsCount, List<Discount> discounts,
+    public static OrderPriceSummaryDTO calculateOrderPrice(Map<ProductVariant, Integer> variantsCount,
                                                            String address) {
         OrderPriceSummaryDTO orderPriceSummaryDTO = new OrderPriceSummaryDTO();
         BigDecimal price = BigDecimal.ZERO;
@@ -40,9 +40,6 @@ public class PriceUtil {
         }
         orderPriceSummaryDTO.setProductTotal(price);
         BigDecimal totalDiscountPercent = BigDecimal.ZERO;
-        for (Discount discount : discounts) {
-            totalDiscountPercent = totalDiscountPercent.add(discount.getDiscount());
-        }
         orderPriceSummaryDTO.setDiscountAmount(totalDiscountPercent);
 
         BigDecimal discountAmount = price.multiply(totalDiscountPercent);

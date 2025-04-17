@@ -70,7 +70,7 @@ public class LocationUtil {
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(DISTANCE_API_URL).openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", EvnLoader.getDistanceApiKey()  );
+            conn.setRequestProperty("Authorization", EvnLoader.getDistanceApiKey());
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
             double lonStartDouble = Double.parseDouble(src.getLon());
