@@ -28,19 +28,18 @@ public class PriceUtil {
     }
 
 
-    public static OrderPriceSummaryDTO calculateOrderPrice(Map<ProductVariant, Integer> variantsCount, List<Discount> discounts,
+    public static OrderPriceSummaryDTO calculateOrderPrice(Map<ProductVariant, Integer> variantsCount,
                                                            String address) {
         OrderPriceSummaryDTO orderPriceSummaryDTO = new OrderPriceSummaryDTO();
         BigDecimal price = BigDecimal.ZERO;
         for (ProductVariant productVariant : variantsCount.keySet()) {
             BigDecimal quantity = BigDecimal.valueOf(variantsCount.get(productVariant));
+            orderPriceSummaryDTO.getProductVariantsCount().put(productVariant.getId(), quantity.intValue() );
+
             price = price.add(productVariant.getPrice().multiply(quantity));
         }
         orderPriceSummaryDTO.setProductTotal(price);
         BigDecimal totalDiscountPercent = BigDecimal.ZERO;
-        for (Discount discount : discounts) {
-            totalDiscountPercent = totalDiscountPercent.add(discount.getDiscount());
-        }
         orderPriceSummaryDTO.setDiscountAmount(totalDiscountPercent);
 
         BigDecimal discountAmount = price.multiply(totalDiscountPercent);

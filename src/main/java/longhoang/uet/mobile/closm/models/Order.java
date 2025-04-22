@@ -34,7 +34,10 @@ public class Order {
     @Column(name = "order_status", nullable = false)
     private OrderStatus status = OrderStatus.PENDING;
 
-    private BigDecimal totalPrice;
+    private BigDecimal itemsTotalPrice;
+    private BigDecimal discountAmount;
+    private BigDecimal deliverPayment;
+    private BigDecimal finalPrice;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status", nullable = false)
@@ -42,7 +45,7 @@ public class Order {
 
     private String shippingAddress;
 
-    @OneToMany(mappedBy = "order")
-    private List<ProductVariant> productVariants;
+    @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<OrderVariant> orderVariants;
 
 }

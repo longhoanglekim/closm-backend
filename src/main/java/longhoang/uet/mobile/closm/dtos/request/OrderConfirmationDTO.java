@@ -8,11 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class OrderRequestDTO {
-    private Map<Long, Integer> itemIds;
-
+@AllArgsConstructor
+public class OrderConfirmationDTO {
+    private String userEmail;
     private String address;
+    private Map<Long, Integer> itemIdsMap;
+    private List<Long> discountIds;
+    private SummaryOrderPrice summaryOrderPrice;
 
 }
+

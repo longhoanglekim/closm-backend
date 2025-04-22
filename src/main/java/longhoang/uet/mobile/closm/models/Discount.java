@@ -20,7 +20,8 @@ public class Discount {
     @Id
     private Long id;
     private String description;
-    private BigDecimal discount;
+    @Column(name = "discount_percentage", precision = 5, scale = 2)
+    private BigDecimal discountPercentage;
 
     @Enumerated(EnumType.STRING)
     private DiscountType discountType;

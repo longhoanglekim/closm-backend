@@ -60,4 +60,12 @@ public class UserService {
         }
         throw new Exception("User not found");
     }
+
+    public Optional<User> getUser(String email) throws Exception {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isPresent()) {
+            return userOpt;
+        }
+        throw new Exception("User not found");
+    }
 }
