@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<BaseProduct, Long> {
-    @Query(value = "SELECT DISTINCT category FROM products", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT category FROM base_products", nativeQuery = true)
     List<String> findAllProductCategories();
 
     Optional<BaseProduct> findByCategory(String category);
