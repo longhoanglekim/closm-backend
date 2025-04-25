@@ -5,11 +5,11 @@ import longhoang.uet.mobile.closm.dtos.response.ProductDetailsDTO;
 import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
 import longhoang.uet.mobile.closm.dtos.response.TaggedVariantOverviewDTO;
 import longhoang.uet.mobile.closm.dtos.response.VariantOverviewDTO;
-import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
-import longhoang.uet.mobile.closm.models.Product;
-import longhoang.uet.mobile.closm.models.ProductVariant;
+import longhoang.uet.mobile.closm.mappers.ProductItemMapper;
+import longhoang.uet.mobile.closm.models.BaseProduct;
+import longhoang.uet.mobile.closm.models.ProductItem;
 import longhoang.uet.mobile.closm.repositories.ProductRepository;
-import longhoang.uet.mobile.closm.repositories.ProductVariantRepository;
+import longhoang.uet.mobile.closm.repositories.ProductItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,17 +25,17 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private ProductVariantRepository productVariantRepository;
+    private ProductItemRepository ProductItemRepository;
 
     public List<String> getAllCategories() {
         return productRepository.findAllProductCategories();
     }
 
-    public List<ProductVariant> getAllProductVariantsByCategory(String category) {
-        Optional<Product> product = productRepository.findByCategory(category);
+    public List<ProductItem> getAllProductItemsByCategory(String category) {
+        Optional<BaseProduct> product = productRepository.findByCategory(category);
 
         return product.map(value -> {
-            List<ProductVariant> variants = productVariantRepository.findAllByProductId(value.getId());
+            List<ProductItem> variants = ProductItemRepository.findAllByBaseProductId(value.getId());
 
             variants.forEach(variant -> {
                 variant.setDescription(new String(variant.getDescription().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
@@ -47,20 +47,20 @@ public class ProductService {
     }
 
     public List<VariantOverviewDTO> getLimitedVariantsByCategory(String category) {
-        Optional<Product> productOpt = productRepository.findByCategory(category);
+        Optional<BaseProduct> productOpt = productRepository.findByCategory(category);
         if (productOpt.isEmpty()) {
             return Collections.emptyList();  // Trả về danh sách rỗng nếu không tìm thấy sản phẩm
         }
-        Product product = productOpt.get();
+        BaseProduct product = productOpt.get();
 
-        List<ProductVariant> variants = product.getProductVariants().stream().limit(4).toList();
+        List<ProductItem> variants = product.getProductItems().stream().limit(4).toList();
         if (variants.isEmpty()) {
             return Collections.emptyList();  // Không có biến thể => trả về danh sách rỗng
         }
 
         List<VariantOverviewDTO> dtos = new ArrayList<>();
-        for (ProductVariant variant : variants) {
-            VariantOverviewDTO dto = ProductVariantMapper.mapToVariantOverviewDTO(variant);
+        for (ProductItem variant : variants) {
+            VariantOverviewDTO dto = ProductItemMapper.mapToVariantOverviewDTO(variant);
             dtos.add(dto);
         }
         return dtos;
@@ -80,17 +80,17 @@ public class ProductService {
     }
 
     public ProductDetailsDTO getProductDetails(String category) {
-        Optional<Product> productOpt = productRepository.findByCategory(category);
+        Optional<BaseProduct> productOpt = productRepository.findByCategory(category);
 
         if (productOpt.isEmpty()) {
             return null;
         }
-        List<String> variantTags = productVariantRepository.findAllDistinctTagByProductId(productOpt.get().getId());
+        List<String> variantTags = ProductItemRepository.findAllDistinctTagByProductId(productOpt.get().getId());
         List<TaggedVariantOverviewDTO> variantDistinctByTagDTOS = new ArrayList<>();
         int totalQuantity = 0;
         for (String tag : variantTags) {
 
-            TaggedVariantOverviewDTO dto = ProductVariantMapper.mapToVariantDistinctByTagDTO(productVariantRepository.findAllByTag(tag));
+            TaggedVariantOverviewDTO dto = ProductItemMapper.mapToVariantDistinctByTagDTO(ProductItemRepository.findAllByTag(tag));
             variantDistinctByTagDTOS.add(dto);
             totalQuantity += dto.getQuantity();
         }
@@ -99,8 +99,8 @@ public class ProductService {
     }
     
 
-    public Optional<ProductVariant> findProductVariantById(Long id) {
-        return productVariantRepository.findById(id);
+    public Optional<ProductItem> findProductItemById(Long id) {
+        return ProductItemRepository.findById(id);
     }
 }
 

@@ -9,7 +9,7 @@ import longhoang.uet.mobile.closm.enums.OrderStatus;
 import longhoang.uet.mobile.closm.models.*;
 import longhoang.uet.mobile.closm.repositories.DiscountRepository;
 import longhoang.uet.mobile.closm.repositories.OrderRepository;
-import longhoang.uet.mobile.closm.repositories.ProductVariantRepository;
+import longhoang.uet.mobile.closm.repositories.ProductItemRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
-    ProductVariantRepository productVariantRepository;
+    ProductItemRepository ProductItemRepository;
     @Autowired
     DiscountRepository discountRepository;
     @Autowired
@@ -44,15 +44,15 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
 
         for (Long id : orderConfirmationDTO.getItemIdsMap().keySet()) {
-            OrderVariant orderVariant = new OrderVariant();
-            ProductVariant productVariant = productVariantRepository.findById(id).orElseThrow(() -> new Exception("Product variant not found with ID: " + id)); // Handle potential null product variant
+            OrderItem orderItem = new OrderItem();
+            ProductItem productItem = ProductItemRepository.findById(id).orElseThrow(() -> new Exception("Product variant not found with ID: " + id)); // Handle potential null product variant
 
-            orderVariant.setProductVariant(productVariant);
-            orderVariant.setOrder(savedOrder);
-
-            productVariant.getOrderVariants().add(orderVariant);
-            productVariantRepository.save(productVariant);
-            savedOrder.getOrderVariants().add(orderVariant);
+            orderItem.setProductItem(productItem);
+            orderItem.setOrder(savedOrder);
+            orderItem.setQuantity(orderConfirmationDTO.getItemIdsMap().get(id));
+            productItem.getOrderItems().add(orderItem);
+            ProductItemRepository.save(productItem);
+            savedOrder.getOrderItems().add(orderItem);
         }
         return orderRepository.save(savedOrder);
     }

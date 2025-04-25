@@ -1,10 +1,10 @@
 package longhoang.uet.mobile.closm.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import longhoang.uet.mobile.closm.mappers.ProductVariantMapper;
-import longhoang.uet.mobile.closm.models.ProductVariant;
+import longhoang.uet.mobile.closm.mappers.ProductItemMapper;
+import longhoang.uet.mobile.closm.models.ProductItem;
 import longhoang.uet.mobile.closm.services.ProductService;
-import longhoang.uet.mobile.closm.services.ProductVariantService;
+import longhoang.uet.mobile.closm.services.ProductItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,19 +14,19 @@ import java.util.Optional;
 
 @RestController
 @Slf4j
-@RequestMapping("/variants")
-public class ProductVariantController {
+@RequestMapping("/items")
+public class ProductItemController {
     @Autowired
     private ProductService productService;
     @Autowired
-    private ProductVariantService productVariantService;
+    private ProductItemService ProductItemService;
     @GetMapping("/{id}")
     public ResponseEntity<?> getVariantDetails(@PathVariable long id) {
-        Optional<ProductVariant> productVariant = productService.findProductVariantById(id);
-        if (productVariant.isEmpty()) {
+        Optional<ProductItem> ProductItem = productService.findProductItemById(id);
+        if (ProductItem.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ProductVariantMapper.mapToVariantDetailsDTO(productVariant.get()));
+        return ResponseEntity.ok(ProductItemMapper.mapToVariantDetailsDTO(ProductItem.get()));
     }
 
     @GetMapping
@@ -35,6 +35,6 @@ public class ProductVariantController {
             return ResponseEntity.notFound().build();
         }
         log.info("Get Variant by Variant Name: {}", variantName);
-        return ResponseEntity.ok().body(productVariantService.findByProductName(variantName));
+        return ResponseEntity.ok().body(ProductItemService.findByProductName(variantName));
     }
 }

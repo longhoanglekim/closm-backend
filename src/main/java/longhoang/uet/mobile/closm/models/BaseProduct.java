@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "base_products")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class BaseProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String category;
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductVariant> productVariants;
+    @OneToMany(mappedBy = "baseProduct")
+    private List<ProductItem> productItems = new ArrayList<>();
 }

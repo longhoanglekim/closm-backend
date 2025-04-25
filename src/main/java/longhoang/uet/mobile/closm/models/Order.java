@@ -49,6 +49,6 @@ public class Order {
     private LocalDate cancelableDate;
 
     @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<OrderVariant> orderVariants;
+    private List<OrderItem> orderItems;
 
 }

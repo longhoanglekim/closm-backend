@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "product_variants")
+@Table(name = "product_items")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductVariant {
+public class ProductItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,9 +28,9 @@ public class ProductVariant {
     private String description;
     private int quantity;
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "base_product_id")
+    private BaseProduct baseProduct;
 
-    @OneToMany(mappedBy = "productVariant", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<OrderVariant> orderVariants = new ArrayList<>();
+    @OneToMany(mappedBy = "productItem", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<OrderItem> orderItems = new ArrayList<>();
 }

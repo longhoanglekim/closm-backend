@@ -1,8 +1,8 @@
 package longhoang.uet.mobile.closm.controllers;
 
 import longhoang.uet.mobile.closm.dtos.response.Location;
-import longhoang.uet.mobile.closm.models.Product;
-import longhoang.uet.mobile.closm.models.ProductVariant;
+import longhoang.uet.mobile.closm.models.BaseProduct;
+import longhoang.uet.mobile.closm.models.ProductItem;
 import longhoang.uet.mobile.closm.repositories.ProductRepository;
 import longhoang.uet.mobile.closm.utils.EvnLoader;
 import longhoang.uet.mobile.closm.utils.LocationUtil;
@@ -23,12 +23,12 @@ public class TestController {
     @Autowired
     private ProductRepository productRepository;
     @GetMapping("/variants")
-    public List<ProductVariant> getVariants(@RequestParam(required = false) String category) {
-        Optional<Product> product = productRepository.findByCategory(category);
+    public List<ProductItem> getVariants(@RequestParam(required = false) String category) {
+        Optional<BaseProduct> product = productRepository.findByCategory(category);
         if (product.isEmpty()) {
             return new ArrayList<>();
         }
-        return product.get().getProductVariants();
+        return product.get().getProductItems();
     }
 
     @GetMapping("/location")
