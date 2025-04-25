@@ -13,6 +13,8 @@ import longhoang.uet.mobile.closm.repositories.ProductItemRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -40,7 +42,7 @@ public class OrderService {
         order.setDiscountAmount(orderConfirmationDTO.getSummaryOrderPrice().getDiscountAmount());
         order.setItemsTotalPrice(orderConfirmationDTO.getSummaryOrderPrice().getItemsTotalPrice());
         order.setFinalPrice(orderConfirmationDTO.getSummaryOrderPrice().getFinalPrice());
-
+        order.setCancelableDate(LocalDate.now().minusDays(10));
         Order savedOrder = orderRepository.save(order);
 
         for (Long id : orderConfirmationDTO.getItemIdsMap().keySet()) {
