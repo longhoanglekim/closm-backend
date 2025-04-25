@@ -4,7 +4,7 @@ package longhoang.uet.mobile.closm.controllers;
 import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.response.ProductDetailsDTO;
 import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
-import longhoang.uet.mobile.closm.models.ProductVariant;
+import longhoang.uet.mobile.closm.models.ProductItem;
 import longhoang.uet.mobile.closm.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +29,8 @@ public class ProductController {
     }
 
     @GetMapping("/variants")
-    public List<ProductVariant> getAllVariants(@RequestParam(name = "category") String category) {
-        return productService.getAllProductVariantsByCategory(category);
+    public List<ProductItem> getAllVariants(@RequestParam(name = "category") String category) {
+        return productService.getAllProductItemsByCategory(category);
     }
 
     @GetMapping("/overview")

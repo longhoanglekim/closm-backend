@@ -3,7 +3,7 @@ package longhoang.uet.mobile.closm.dtos.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import longhoang.uet.mobile.closm.models.ProductVariant;
+import longhoang.uet.mobile.closm.models.ProductItem;
 
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderPriceSummaryDTO {
-    Map<Long, Integer> productVariantsCount = new HashMap<>();
+    Map<Long, Integer> ProductItemsCount = new HashMap<>();
     private BigDecimal productTotal;     // Tổng giá sản phẩm chưa giảm
     private BigDecimal discountAmount;   // Tổng số tiền giảm
     private BigDecimal deliveryFee;      // Phí ship

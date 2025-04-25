@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "orders_variants")
+@Table(name = "orders_items")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderVariant {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,6 +20,8 @@ public class OrderVariant {
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_variant_id", nullable = false)
-    private ProductVariant productVariant;
+    @JoinColumn(name = "product_item_id", nullable = false)
+    private ProductItem productItem;
+
+    private int quantity;
 }

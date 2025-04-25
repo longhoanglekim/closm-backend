@@ -1,6 +1,6 @@
 package longhoang.uet.mobile.closm.repositories;
 
-import longhoang.uet.mobile.closm.models.Product;
+import longhoang.uet.mobile.closm.models.BaseProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<BaseProduct, Long> {
     @Query(value = "SELECT DISTINCT category FROM products", nativeQuery = true)
     List<String> findAllProductCategories();
 
-    Optional<Product> findByCategory(String category);
+    Optional<BaseProduct> findByCategory(String category);
 }

@@ -4,7 +4,7 @@ import longhoang.uet.mobile.closm.dtos.request.OrderRequestDTO;
 import longhoang.uet.mobile.closm.dtos.response.OrderPriceSummaryDTO;
 import longhoang.uet.mobile.closm.dtos.response.RouteInfo;
 import longhoang.uet.mobile.closm.models.Discount;
-import longhoang.uet.mobile.closm.models.ProductVariant;
+import longhoang.uet.mobile.closm.models.ProductItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,15 +28,15 @@ public class PriceUtil {
     }
 
 
-    public static OrderPriceSummaryDTO calculateOrderPrice(Map<ProductVariant, Integer> variantsCount,
+    public static OrderPriceSummaryDTO calculateOrderPrice(Map<ProductItem, Integer> variantsCount,
                                                            String address) {
         OrderPriceSummaryDTO orderPriceSummaryDTO = new OrderPriceSummaryDTO();
         BigDecimal price = BigDecimal.ZERO;
-        for (ProductVariant productVariant : variantsCount.keySet()) {
-            BigDecimal quantity = BigDecimal.valueOf(variantsCount.get(productVariant));
-            orderPriceSummaryDTO.getProductVariantsCount().put(productVariant.getId(), quantity.intValue() );
+        for (ProductItem ProductItem : variantsCount.keySet()) {
+            BigDecimal quantity = BigDecimal.valueOf(variantsCount.get(ProductItem));
+            orderPriceSummaryDTO.getProductItemsCount().put(ProductItem.getId(), quantity.intValue() );
 
-            price = price.add(productVariant.getPrice().multiply(quantity));
+            price = price.add(ProductItem.getPrice().multiply(quantity));
         }
         orderPriceSummaryDTO.setProductTotal(price);
         BigDecimal totalDiscountPercent = BigDecimal.ZERO;

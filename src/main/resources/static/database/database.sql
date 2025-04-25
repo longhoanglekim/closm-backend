@@ -11,7 +11,7 @@ CREATE TABLE users (
     phone VARCHAR(255) UNIQUE NOT NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- Products table
-CREATE TABLE products (
+CREATE TABLE base_products (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     category VARCHAR(255) NOT NULL
@@ -28,16 +28,16 @@ CREATE TABLE orders (
                         deliver_payment DECIMAL(19, 2),
                         final_price DECIMAL(19, 2),
                         payment_status VARCHAR(50) NOT NULL DEFAULT 'UNPAID',
-                        shipping_address TEXT,
-
+                        deliver_address TEXT,
+                        cancelable_date DATE not null,
                         CONSTRAINT fk_order_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 
--- Product variants table
-CREATE TABLE product_variants (
+-- Product items table
+CREATE TABLE product_items (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    product_id BIGINT NOT NULL,
+    base_product_id BIGINT NOT NULL,
     price DECIMAL(10,2) NOT NULL CHECK (price >= 0),
     image_url VARCHAR(255),
     size VARCHAR(25) NOT NULL,
@@ -46,16 +46,16 @@ CREATE TABLE product_variants (
     tag VARCHAR(50),
     description VARCHAR(255),
     order_id BIGINT,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (base_product_id) REFERENCES base_products(id) ON DELETE CASCADE,
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE TABLE orders_variants (
                                  id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                  order_id BIGINT NOT NULL,
-                                 product_variant_id BIGINT NOT NULL,
+                                 product_item_id BIGINT NOT NULL,
 
                                  CONSTRAINT fk_ov_order FOREIGN KEY (order_id) REFERENCES orders(id),
-                                 CONSTRAINT fk_ov_product_variant FOREIGN KEY (product_variant_id) REFERENCES product_variants(id)
+                                 CONSTRAINT fk_ov_product_item FOREIGN KEY (product_item_id) REFERENCES product_items(id)
 );
 CREATE TABLE discounts (
                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -68,7 +68,7 @@ CREATE TABLE discounts (
 
 
 -- Insert sample products data
-INSERT INTO products (name, category) VALUES
+INSERT INTO base_products (name, category) VALUES
 ('Basic T-Shirt', 'T-Shirt'),
 ('Hoodie', 'Hoodie'),
 ('High Socks', 'Socks'),
@@ -79,7 +79,7 @@ INSERT INTO products (name, category) VALUES
 
 -- Insert sample product variants with updated tags including category
 
-INSERT INTO product_variants (product_id, price, image_url, size, color, quantity, tag, description) VALUES
+INSERT INTO product_items (base_product_id, price, image_url, size, color, quantity, tag, description) VALUES
 -- T-Shirts (product_id = 1, category = T-Shirt)
 (1, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147982/cac-mau-ao-t-shirt-copy_ixklfd.jpg', 'M', 'Red', 50, 'Basic T-Shirt', 'High-quality cotton T-shirt'),
 (1, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147981/sgc13_cb1417b06f2c4de2a4afac376a3c5c22_master_flzg6c.webp', 'L', 'Blue', 30, 'Basic T-Shirt', 'High-quality cotton T-shirt'),

@@ -9,7 +9,9 @@ import longhoang.uet.mobile.closm.enums.OrderStatus;
 import longhoang.uet.mobile.closm.enums.PaymentStatus;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -43,9 +45,10 @@ public class Order {
     @Column(name = "payment_status", nullable = false)
     private PaymentStatus paymentStatus = PaymentStatus.UNPAID;
 
-    private String shippingAddress;
+    private String deliverAddress;
+    private LocalDate cancelableDate;
 
     @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<OrderVariant> orderVariants;
+    private List<OrderItem> orderItems;
 
 }
