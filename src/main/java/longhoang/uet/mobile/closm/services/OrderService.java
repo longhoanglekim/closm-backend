@@ -43,6 +43,7 @@ public class OrderService {
         order.setItemsTotalPrice(orderConfirmationDTO.getSummaryOrderPrice().getItemsTotalPrice());
         order.setFinalPrice(orderConfirmationDTO.getSummaryOrderPrice().getFinalPrice());
         order.setCancelableDate(LocalDate.now().minusDays(10));
+        order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
         Order savedOrder = orderRepository.save(order);
 
         for (Long id : orderConfirmationDTO.getItemIdsMap().keySet()) {
@@ -68,7 +69,7 @@ public class OrderService {
     }
 
     public Order cancelOrder(Order order) throws Exception {
-        order.setStatus(OrderStatus.CANCELLED);
+        order.setOrderStatus(OrderStatus.CANCELLED);
         return orderRepository.save(order);
     }
 }

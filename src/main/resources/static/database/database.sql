@@ -28,6 +28,7 @@ CREATE TABLE orders (
                         deliver_payment DECIMAL(19, 2),
                         final_price DECIMAL(19, 2),
                         payment_status VARCHAR(50) NOT NULL DEFAULT 'UNPAID',
+                        payment_method VARCHAR(50) NOT NULL DEFAULT 'CASH',
                         deliver_address TEXT,
                         cancelable_date DATE not null,
                         CONSTRAINT fk_order_user FOREIGN KEY (user_id) REFERENCES users(id)
@@ -142,3 +143,6 @@ VALUES
     ('Mid-Year Sale', 22.00, 'HOLIDAY', '2025-04-17', '2025-06-30'),
     ('Spring Frenzy', 17.50, 'HOLIDAY', '2025-04-17', '2025-06-20'),
     ('End of Season', 14.00, 'HOLIDAY', '2025-04-17', '2025-06-25');
+INSERT INTO users (full_name, email, password, phone)
+VALUES
+    ('DungBeo', 'dung@gmail.com', '$2a$10$P/JowkpBHojSdwce5pKtfufi4OVMaYl1XisH.Kk8hFna60DSKQs4W', '0901234567');
