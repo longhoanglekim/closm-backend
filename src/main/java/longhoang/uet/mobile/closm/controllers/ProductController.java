@@ -3,6 +3,7 @@ package longhoang.uet.mobile.closm.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.response.ProductDetailsDTO;
+import longhoang.uet.mobile.closm.dtos.response.ProductItemInfo;
 import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
 import longhoang.uet.mobile.closm.models.ProductItem;
 import longhoang.uet.mobile.closm.services.ProductService;
@@ -29,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/items")
-    public List<ProductItem> getAllItemsByCategory(@RequestParam(name = "category") String category) {
+    public List<ProductItemInfo> getAllItemsByCategory(@RequestParam(name = "category") String category) {
         return productService.getAllProductItemsByCategory(category);
     }
 

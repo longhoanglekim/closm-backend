@@ -1,10 +1,7 @@
 package longhoang.uet.mobile.closm.services;
 
 import lombok.extern.slf4j.Slf4j;
-import longhoang.uet.mobile.closm.dtos.response.ProductDetailsDTO;
-import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
-import longhoang.uet.mobile.closm.dtos.response.TaggedVariantOverviewDTO;
-import longhoang.uet.mobile.closm.dtos.response.VariantOverviewDTO;
+import longhoang.uet.mobile.closm.dtos.response.*;
 import longhoang.uet.mobile.closm.mappers.ProductItemMapper;
 import longhoang.uet.mobile.closm.models.BaseProduct;
 import longhoang.uet.mobile.closm.models.ProductItem;
@@ -31,7 +28,7 @@ public class ProductService {
         return productRepository.findAllProductCategories();
     }
 
-    public List<ProductItem> getAllProductItemsByCategory(String category) {
+    public List<ProductItemInfo> getAllProductItemsByCategory(String category) {
         Optional<BaseProduct> product = productRepository.findByCategory(category);
 
         return product.map(value -> {
@@ -41,8 +38,11 @@ public class ProductService {
                 variant.setDescription(new String(variant.getDescription().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                 variant.setColor(new String(variant.getColor().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
             });
-
-            return variants;
+            List<ProductItemInfo> ans = new ArrayList<>();
+            for (ProductItem productItem : variants) {
+                ans.add(ProductItemMapper.mapToProductItemInfo(productItem));
+            }
+            return ans;
         }).orElse(Collections.emptyList());
     }
 
