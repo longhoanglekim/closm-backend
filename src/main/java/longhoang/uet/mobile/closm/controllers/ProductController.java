@@ -1,6 +1,5 @@
 package longhoang.uet.mobile.closm.controllers;
 
-
 import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.response.ProductDetailsDTO;
 import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
@@ -38,10 +37,10 @@ public class ProductController {
         List<ProductOverviewDTO> shopList = new ArrayList<>();
         List<String> categoryList = productService.getAllCategories();
         for (String category : categoryList) {
-//            log.info(category);
+            // log.info(category);
             ProductOverviewDTO productOverview = productService.getProductOverview(category);
             if (productOverview != null && !productOverview.getVariants().isEmpty()) {
-                shopList.add(productOverview);  // Chỉ thêm vào danh sách nếu có biến thể
+                shopList.add(productOverview); // Chỉ thêm vào danh sách nếu có biến thể
             }
         }
         if (shopList.isEmpty()) {
@@ -58,7 +57,7 @@ public class ProductController {
         for (String category : categoryList) {
             ProductDetailsDTO productDetails = productService.getProductDetails(category);
             if (productDetails != null && !productDetails.getVariants().isEmpty()) {
-                shopList.add(productDetails);  // Chỉ thêm vào danh sách nếu có biến thể
+                shopList.add(productDetails); // Chỉ thêm vào danh sách nếu có biến thể
             }
         }
         if (shopList.isEmpty()) {
@@ -66,6 +65,5 @@ public class ProductController {
         }
         return ResponseEntity.ok(shopList);
     }
-
 
 }
