@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import longhoang.uet.mobile.closm.dtos.request.OrderConfirmationDTO;
 
 import longhoang.uet.mobile.closm.enums.OrderStatus;
+import longhoang.uet.mobile.closm.enums.PaymentStatus;
 import longhoang.uet.mobile.closm.models.*;
 import longhoang.uet.mobile.closm.repositories.DiscountRepository;
 import longhoang.uet.mobile.closm.repositories.OrderRepository;
@@ -43,6 +44,9 @@ public class OrderService {
         order.setItemsTotalPrice(orderConfirmationDTO.getSummaryOrderPrice().getItemsTotalPrice());
         order.setFinalPrice(orderConfirmationDTO.getSummaryOrderPrice().getFinalPrice());
         order.setCancelableDate(LocalDate.now().minusDays(10));
+        if (order.getPaymentMethod() == null) {
+            order.setPaymentStatus(PaymentStatus.UNPAID);
+        } else order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
         Order savedOrder = orderRepository.save(order);
 
         for (Long id : orderConfirmationDTO.getItemIdsMap().keySet()) {
@@ -68,7 +72,7 @@ public class OrderService {
     }
 
     public Order cancelOrder(Order order) throws Exception {
-        order.setStatus(OrderStatus.CANCELLED);
+        order.setOrderStatus(OrderStatus.CANCELLED);
         return orderRepository.save(order);
     }
 }

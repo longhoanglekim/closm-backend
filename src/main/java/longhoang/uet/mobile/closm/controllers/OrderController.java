@@ -25,7 +25,7 @@ public class OrderController {
             Order order = orderService.confirmOrder(orderConfirmationDTO);
             OrderConfirmResponse orderConfirmResponse = new OrderConfirmResponse();
             orderConfirmResponse.setOrderId(order.getId());
-            orderConfirmResponse.setStatus(order.getStatus());
+            orderConfirmResponse.setStatus(order.getOrderStatus());
             orderConfirmResponse.setMessage("Order number " + order.getId() + " confirmed.");
             return ResponseEntity.ok(orderConfirmResponse);
         } catch (Exception e) {
