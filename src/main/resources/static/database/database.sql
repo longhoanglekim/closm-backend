@@ -55,10 +55,11 @@ CREATE TABLE product_items (
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 5. Tạo bảng orders_variants
-CREATE TABLE orders_variants (
+CREATE TABLE orders_items (
                                  id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                  order_id BIGINT NOT NULL,
                                  product_item_id BIGINT NOT NULL,
+                                 quantity INT NOT NULL.
                                  CONSTRAINT fk_ov_order        FOREIGN KEY (order_id)        REFERENCES orders(id),
                                  CONSTRAINT fk_ov_product_item FOREIGN KEY (product_item_id) REFERENCES product_items(id)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
