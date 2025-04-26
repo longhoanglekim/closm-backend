@@ -4,6 +4,7 @@ package longhoang.uet.mobile.closm.mappers;
 import longhoang.uet.mobile.closm.dtos.response.*;
 import longhoang.uet.mobile.closm.models.ProductItem;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductItemMapper {
@@ -71,5 +72,18 @@ public class ProductItemMapper {
         dto.setMinPrice(minPrice);
         dto.setQuantity(totalVariants);
         return dto;
+    }
+
+    public static ProductItemInfo mapToProductItemInfo(ProductItem productItem) {
+        ProductItemInfo productItemInfo = new ProductItemInfo();
+        productItemInfo.setId(productItem.getId());
+        productItemInfo.setPrice(productItem.getPrice());
+        productItemInfo.setImageUrl(productItem.getImageUrl());
+        productItemInfo.setTag(productItem.getTag());
+        productItemInfo.setSize(productItem.getSize());
+        productItemInfo.setColor(productItem.getColor());
+        productItemInfo.setDescription(productItem.getDescription());
+        productItemInfo.setQuantity(productItem.getQuantity());
+        return productItemInfo;
     }
 }

@@ -38,7 +38,6 @@ public class Order {
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus = OrderStatus.PENDING;
 
-    private BigDecimal itemsTotalPrice;
     private BigDecimal discountAmount;
     private BigDecimal deliverPayment;
     private BigDecimal finalPrice;

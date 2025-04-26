@@ -41,7 +41,6 @@ public class OrderService {
         order.setDeliverAddress(orderConfirmationDTO.getAddress());
         order.setDeliverPayment(orderConfirmationDTO.getSummaryOrderPrice().getDeliveryAmount());
         order.setDiscountAmount(orderConfirmationDTO.getSummaryOrderPrice().getDiscountAmount());
-        order.setItemsTotalPrice(orderConfirmationDTO.getSummaryOrderPrice().getItemsTotalPrice());
         order.setFinalPrice(orderConfirmationDTO.getSummaryOrderPrice().getFinalPrice());
         order.setCancelableDate(LocalDate.now().minusDays(10));
         if (order.getPaymentMethod() == null) {
