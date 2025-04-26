@@ -28,8 +28,8 @@ public class ProductController {
         return productService.getAllCategories();
     }
 
-    @GetMapping("/variants")
-    public List<ProductItem> getAllVariants(@RequestParam(name = "category") String category) {
+    @GetMapping("/items")
+    public List<ProductItem> getAllItemsByCategory(@RequestParam(name = "category") String category) {
         return productService.getAllProductItemsByCategory(category);
     }
 
