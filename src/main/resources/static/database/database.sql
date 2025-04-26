@@ -66,7 +66,9 @@ CREATE TABLE discounts (
                            start_date DATE NOT NULL,
                            end_date DATE NOT NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
+INSERT INTO users(full_name, email, password, phone)
+VALUES
+    ('DungBeo', 'dung@gmail.com', '$2a$10$P/JowkpBHojSdwce5pKtfufi4OVMaYl1XisH.Kk8hFna60DSKQs4W', '0901234567');
 
 -- Insert sample products data
 INSERT INTO base_products (name, category) VALUES
@@ -143,6 +145,3 @@ VALUES
     ('Mid-Year Sale', 22.00, 'HOLIDAY', '2025-04-17', '2025-06-30'),
     ('Spring Frenzy', 17.50, 'HOLIDAY', '2025-04-17', '2025-06-20'),
     ('End of Season', 14.00, 'HOLIDAY', '2025-04-17', '2025-06-25');
-INSERT INTO users (full_name, email, password, phone)
-VALUES
-    ('DungBeo', 'dung@gmail.com', '$2a$10$P/JowkpBHojSdwce5pKtfufi4OVMaYl1XisH.Kk8hFna60DSKQs4W', '0901234567');
