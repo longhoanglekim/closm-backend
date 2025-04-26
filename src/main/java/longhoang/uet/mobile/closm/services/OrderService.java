@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import longhoang.uet.mobile.closm.dtos.request.OrderConfirmationDTO;
 
 import longhoang.uet.mobile.closm.enums.OrderStatus;
+import longhoang.uet.mobile.closm.enums.PaymentMethod;
 import longhoang.uet.mobile.closm.enums.PaymentStatus;
 import longhoang.uet.mobile.closm.models.*;
 import longhoang.uet.mobile.closm.repositories.DiscountRepository;
@@ -44,6 +45,9 @@ public class OrderService {
         order.setFinalPrice(orderConfirmationDTO.getSummaryOrderPrice().getFinalPrice());
         order.setCancelableDate(LocalDate.now().minusDays(10));
         if (order.getPaymentMethod() == null) {
+            order.setPaymentMethod(PaymentMethod.CASH);
+        } else order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
+        if (order.getPaymentStatus() == null) {
             order.setPaymentStatus(PaymentStatus.UNPAID);
         } else order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
         Order savedOrder = orderRepository.save(order);
