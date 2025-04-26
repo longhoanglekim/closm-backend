@@ -1,4 +1,4 @@
-package longhoang.uet.mobile.closm.dtos.response;
+package longhoang.uet.mobile.closm.dtos.mappers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VariantInfo {
+public class ItemInfo {
     private Long id;
     private int quantity;
     private String imageUrl;

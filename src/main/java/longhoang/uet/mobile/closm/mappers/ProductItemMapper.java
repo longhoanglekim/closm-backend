@@ -1,10 +1,11 @@
 package longhoang.uet.mobile.closm.mappers;
 
 
+import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
+import longhoang.uet.mobile.closm.dtos.mappers.ItemInfo;
 import longhoang.uet.mobile.closm.dtos.response.*;
 import longhoang.uet.mobile.closm.models.ProductItem;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductItemMapper {
@@ -30,8 +31,8 @@ public class ProductItemMapper {
         return variantOverviewDTO;
     }
 
-    public static VariantInfo mapToVariantInfoDTO(ProductItem ProductItem) {
-        VariantInfo variantInfoDTO = new VariantInfo();
+    public static ItemInfo mapToVariantInfoDTO(ProductItem ProductItem) {
+        ItemInfo variantInfoDTO = new ItemInfo();
         variantInfoDTO.setId(ProductItem.getId());
         variantInfoDTO.setDescription(ProductItem.getDescription());
         variantInfoDTO.setSize(ProductItem.getSize());

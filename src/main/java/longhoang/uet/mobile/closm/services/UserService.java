@@ -2,7 +2,7 @@ package longhoang.uet.mobile.closm.services;
 
 import longhoang.uet.mobile.closm.dtos.auth.LoginInput;
 import longhoang.uet.mobile.closm.dtos.auth.RegisterInput;
-import longhoang.uet.mobile.closm.dtos.response.UserInfoDTO;
+import longhoang.uet.mobile.closm.dtos.mappers.UserInfoDTO;
 import longhoang.uet.mobile.closm.mappers.UserMapper;
 import longhoang.uet.mobile.closm.models.User;
 import longhoang.uet.mobile.closm.repositories.UserRepository;
@@ -61,7 +61,7 @@ public class UserService {
         throw new Exception("User not found");
     }
 
-    public Optional<User> getUser(String email) throws Exception {
+    public Optional<User> getUserByEmail(String email) throws Exception {
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             return userOpt;

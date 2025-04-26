@@ -1,9 +1,8 @@
-package longhoang.uet.mobile.closm.dtos.response;
+package longhoang.uet.mobile.closm.dtos.mappers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 
@@ -12,7 +11,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductItemInfo {
     private Long id;
-
     private BigDecimal price;
     private String imageUrl;
     private String tag;
