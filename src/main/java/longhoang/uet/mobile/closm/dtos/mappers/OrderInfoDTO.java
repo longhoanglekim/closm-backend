@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import longhoang.uet.mobile.closm.dtos.response.OrderItemInfoDTO;
 import longhoang.uet.mobile.closm.enums.OrderStatus;
 import longhoang.uet.mobile.closm.enums.PaymentMethod;
 import longhoang.uet.mobile.closm.enums.PaymentStatus;
@@ -37,5 +38,5 @@ public class OrderInfoDTO {
 
     private String deliverAddress;
     private LocalDate cancelableDate;
-    Map<ProductItemInfo, Integer> itemMap = new HashMap<>();
+    List<OrderItemInfoDTO> orderItemList = new ArrayList<>();
 }

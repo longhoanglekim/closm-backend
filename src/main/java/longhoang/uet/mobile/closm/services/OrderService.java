@@ -3,6 +3,7 @@ package longhoang.uet.mobile.closm.services;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.mappers.OrderInfoDTO;
 import longhoang.uet.mobile.closm.dtos.request.OrderConfirmationDTO;
 
@@ -28,6 +29,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
@@ -95,7 +97,6 @@ public class OrderService {
     public OrderListByStatus getUserOrderListByOrderStatus(OrderStatus orderStatus, String userEmail) throws Exception {
         User user = userService.getUserByEmail(userEmail).orElseThrow(() -> new Exception("User not found"));
         List<Order> orderList = orderRepository.findByOrderStatusAndUser(orderStatus, user);
-
         List<OrderInfoDTO> orderInfoDTOList = new ArrayList<>();
         orderList.forEach(order -> {
             orderInfoDTOList.add(OrderMapper.mapToOrderInfoDTO(order));

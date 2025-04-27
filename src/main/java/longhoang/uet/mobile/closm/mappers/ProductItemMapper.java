@@ -9,8 +9,8 @@ import longhoang.uet.mobile.closm.models.ProductItem;
 import java.util.List;
 
 public class ProductItemMapper {
-    public static VariantDetailsDTO mapToVariantDetailsDTO(ProductItem ProductItem) {
-        VariantDetailsDTO variantDetailsDTO = new VariantDetailsDTO();
+    public static ItemDetailsDTO mapToItemDetailsDTO(ProductItem ProductItem) {
+        ItemDetailsDTO variantDetailsDTO = new ItemDetailsDTO();
         variantDetailsDTO.setId(ProductItem.getId());
         variantDetailsDTO.setTag(ProductItem.getTag());
         variantDetailsDTO.setDescription(ProductItem.getDescription());
@@ -22,8 +22,8 @@ public class ProductItemMapper {
         return variantDetailsDTO;
     }
 
-    public static VariantOverviewDTO mapToVariantOverviewDTO(ProductItem ProductItem) {
-        VariantOverviewDTO variantOverviewDTO = new VariantOverviewDTO();
+    public static ItemOverviewDTO mapToItemOverviewDTO(ProductItem ProductItem) {
+        ItemOverviewDTO variantOverviewDTO = new ItemOverviewDTO();
         variantOverviewDTO.setId(ProductItem.getId());
         variantOverviewDTO.setName(ProductItem.getTag());
         variantOverviewDTO.setImageUrl(ProductItem.getImageUrl());
@@ -87,4 +87,5 @@ public class ProductItemMapper {
         productItemInfo.setQuantity(productItem.getQuantity());
         return productItemInfo;
     }
+
 }

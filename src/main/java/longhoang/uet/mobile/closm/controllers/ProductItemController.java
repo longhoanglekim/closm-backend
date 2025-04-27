@@ -26,7 +26,7 @@ public class ProductItemController {
         if (ProductItem.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ProductItemMapper.mapToVariantDetailsDTO(ProductItem.get()));
+        return ResponseEntity.ok(ProductItemMapper.mapToItemDetailsDTO(ProductItem.get()));
     }
 
     @GetMapping

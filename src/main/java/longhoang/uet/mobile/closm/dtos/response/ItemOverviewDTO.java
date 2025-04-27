@@ -1,17 +1,15 @@
 package longhoang.uet.mobile.closm.dtos.response;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductOverviewDTO {
-    private String category;
+public class ItemOverviewDTO {
+    private Long id;
+    private String name;
     private int quantity;
-    private List<ItemOverviewDTO> variants;
-
+    private String imageUrl;
 }

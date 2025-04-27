@@ -1,16 +1,18 @@
 package longhoang.uet.mobile.closm.mappers;
 
+import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.mappers.OrderInfoDTO;
-import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
+
+import longhoang.uet.mobile.closm.dtos.response.OrderItemInfoDTO;
 import longhoang.uet.mobile.closm.models.Order;
 import longhoang.uet.mobile.closm.models.OrderItem;
 import longhoang.uet.mobile.closm.models.ProductItem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import java.util.List;
+
+@Slf4j
 public class OrderMapper {
     public static OrderInfoDTO mapToOrderInfoDTO(Order order) {
         OrderInfoDTO dto = new OrderInfoDTO();
@@ -25,16 +27,30 @@ public class OrderMapper {
         dto.setFinalPrice(order.getFinalPrice());
         dto.setPaymentMethod(order.getPaymentMethod());
         dto.setPaymentStatus(order.getPaymentStatus());
-        dto.setItemMap(getProductItemList(order.getOrderItems()));
+        dto.setOrderItemList(getProductItemList(order.getOrderItems()));
         return dto;
     }
 
-    private static Map<ProductItemInfo, Integer> getProductItemList(List<OrderItem> orderItemList) {
-        Map<ProductItemInfo, Integer> itemsMap = new HashMap<>();
+    private static List<OrderItemInfoDTO> getProductItemList(List<OrderItem> orderItemList) {
+        List<OrderItemInfoDTO> orderItemInfoList = new ArrayList<>();
         for (int i = 0; i < orderItemList.size(); i++) {
             OrderItem item = orderItemList.get(i);
-            itemsMap.put(ProductItemMapper.mapToProductItemInfo(item.getProductItem()), item.getQuantity());
+            orderItemInfoList.add(OrderMapper.mapToOrderItemInfo(item.getProductItem(), item.getQuantity()));
         }
-        return itemsMap;
+        return orderItemInfoList;
+    }
+
+    public static OrderItemInfoDTO mapToOrderItemInfo(ProductItem productItem, int quantity) {
+        OrderItemInfoDTO dto = new OrderItemInfoDTO();
+        dto.setId(productItem.getId());
+        dto.setId(productItem.getId());
+        dto.setImageUrl(productItem.getImageUrl());
+        dto.setTag(productItem.getTag());
+        dto.setPrice(productItem.getPrice());
+        dto.setColor(productItem.getColor());
+        dto.setSize(productItem.getSize());
+        dto.setDescription(productItem.getDescription());
+        dto.setOrderedQuantity(quantity);
+        return dto;
     }
 }
