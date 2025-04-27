@@ -3,11 +3,15 @@ package longhoang.uet.mobile.closm.services;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import longhoang.uet.mobile.closm.dtos.mappers.OrderInfoDTO;
 import longhoang.uet.mobile.closm.dtos.request.OrderConfirmationDTO;
 
+import longhoang.uet.mobile.closm.dtos.response.OrderListByStatus;
 import longhoang.uet.mobile.closm.enums.OrderStatus;
 import longhoang.uet.mobile.closm.enums.PaymentMethod;
 import longhoang.uet.mobile.closm.enums.PaymentStatus;
+import longhoang.uet.mobile.closm.mappers.OrderMapper;
 import longhoang.uet.mobile.closm.models.*;
 import longhoang.uet.mobile.closm.repositories.DiscountRepository;
 import longhoang.uet.mobile.closm.repositories.OrderRepository;
@@ -18,11 +22,14 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
@@ -38,7 +45,7 @@ public class OrderService {
     public Order confirmOrder(OrderConfirmationDTO orderConfirmationDTO) throws Exception {
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
-        order.setUser(userService.getUser(orderConfirmationDTO.getUserEmail()).orElseThrow(() -> new Exception("User not found"))); // Handle potential null user
+        order.setUser(userService.getUserByEmail(orderConfirmationDTO.getUserEmail()).orElseThrow(() -> new Exception("User not found"))); // Handle potential null user
         order.setDeliverAddress(orderConfirmationDTO.getAddress());
         order.setDeliverPayment(orderConfirmationDTO.getSummaryOrderPrice().getDeliveryAmount());
         order.setDiscountAmount(orderConfirmationDTO.getSummaryOrderPrice().getDiscountAmount());
@@ -77,5 +84,27 @@ public class OrderService {
     public Order cancelOrder(Order order) throws Exception {
         order.setOrderStatus(OrderStatus.CANCELLED);
         return orderRepository.save(order);
+    }
+
+
+    /**
+     * Todo : fix bug duplicate
+     *
+     * @param orderStatus
+     * @param userEmail
+     * @return
+     * @throws Exception
+     */
+    public OrderListByStatus getUserOrderListByOrderStatus(OrderStatus orderStatus, String userEmail) throws Exception {
+        User user = userService.getUserByEmail(userEmail).orElseThrow(() -> new Exception("User not found"));
+        List<Order> orderList = orderRepository.findByOrderStatusAndUser(orderStatus, user);
+        List<OrderInfoDTO> orderInfoDTOList = new ArrayList<>();
+        orderList.forEach(order -> {
+            orderInfoDTOList.add(OrderMapper.mapToOrderInfoDTO(order));
+        });
+        OrderListByStatus orderListByStatus = new OrderListByStatus();
+        orderListByStatus.setStatus(orderStatus);
+        orderListByStatus.setOrders(orderInfoDTOList);
+        return orderListByStatus;
     }
 }

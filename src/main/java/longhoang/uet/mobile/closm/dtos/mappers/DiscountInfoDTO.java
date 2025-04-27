@@ -1,4 +1,4 @@
-package longhoang.uet.mobile.closm.dtos.response;
+package longhoang.uet.mobile.closm.dtos.mappers;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import longhoang.uet.mobile.closm.enums.DiscountType;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor

@@ -1,6 +1,7 @@
 package longhoang.uet.mobile.closm.services;
 
 import lombok.extern.slf4j.Slf4j;
+import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
 import longhoang.uet.mobile.closm.dtos.response.*;
 import longhoang.uet.mobile.closm.mappers.ProductItemMapper;
 import longhoang.uet.mobile.closm.models.BaseProduct;
@@ -46,7 +47,7 @@ public class ProductService {
         }).orElse(Collections.emptyList());
     }
 
-    public List<VariantOverviewDTO> getLimitedVariantsByCategory(String category) {
+    public List<ItemOverviewDTO> getLimitedVariantsByCategory(String category) {
         Optional<BaseProduct> productOpt = productRepository.findByCategory(category);
         if (productOpt.isEmpty()) {
             return Collections.emptyList();  // Trả về danh sách rỗng nếu không tìm thấy sản phẩm
@@ -58,9 +59,9 @@ public class ProductService {
             return Collections.emptyList();  // Không có biến thể => trả về danh sách rỗng
         }
 
-        List<VariantOverviewDTO> dtos = new ArrayList<>();
+        List<ItemOverviewDTO> dtos = new ArrayList<>();
         for (ProductItem variant : variants) {
-            VariantOverviewDTO dto = ProductItemMapper.mapToVariantOverviewDTO(variant);
+            ItemOverviewDTO dto = ProductItemMapper.mapToItemOverviewDTO(variant);
             dtos.add(dto);
         }
         return dtos;
@@ -69,9 +70,9 @@ public class ProductService {
     public ProductOverviewDTO getProductOverview(String category) {
         ProductOverviewDTO dto = new ProductOverviewDTO();
         dto.setCategory(category);
-        List<VariantOverviewDTO> variants = getLimitedVariantsByCategory(category);
+        List<ItemOverviewDTO> variants = getLimitedVariantsByCategory(category);
         int totalQuantity = 0;
-        for (VariantOverviewDTO variant : variants) {
+        for (ItemOverviewDTO variant : variants) {
             totalQuantity += variant.getQuantity();
         }
         dto.setQuantity(totalQuantity);

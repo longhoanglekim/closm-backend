@@ -1,4 +1,4 @@
-package longhoang.uet.mobile.closm.dtos.response;
+package longhoang.uet.mobile.closm.dtos.mappers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

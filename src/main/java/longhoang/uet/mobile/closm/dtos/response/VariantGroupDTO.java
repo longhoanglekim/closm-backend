@@ -3,6 +3,7 @@ package longhoang.uet.mobile.closm.dtos.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import longhoang.uet.mobile.closm.dtos.mappers.ItemInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class VariantGroupDTO {
     private String name;
-    private List<VariantInfo> variantList = new ArrayList<>();
+    private List<ItemInfo> variantList = new ArrayList<>();
 }

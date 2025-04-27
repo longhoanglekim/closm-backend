@@ -1,6 +1,6 @@
 package longhoang.uet.mobile.closm.mappers;
 
-import longhoang.uet.mobile.closm.dtos.response.DiscountInfoDTO;
+import longhoang.uet.mobile.closm.dtos.mappers.DiscountInfoDTO;
 import longhoang.uet.mobile.closm.models.Discount;
 
 public class DiscountMapper {

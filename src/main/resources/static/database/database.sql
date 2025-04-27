@@ -145,11 +145,10 @@ INSERT INTO product_items (id,base_product_id, price, image_url, size, color, qu
 -- Thêm vào bảng orders
 INSERT INTO orders (id, user_id, order_date, order_status, discount_amount, deliver_payment, final_price, payment_status, payment_method, deliver_address, cancelable_date)
 VALUES
-    (1, 1, NOW(), 'PENDING', 0, 30000, 330000, 'UNPAID', 'CASH', '123 Example Street', CURDATE() + INTERVAL 10 DAY),
-    (2, 1, NOW(), 'PENDING', 0, 30000, 430000, 'UNPAID', 'CASH', '123 Example Street', CURDATE() + INTERVAL 10 DAY);
+    (1, 1, NOW(), 'PENDING', 0, 20000, 418000, 'UNPAID', 'CASH', '123 Example Street', CURDATE() + INTERVAL 10 DAY);
 
 -- Thêm vào bảng orders_items
 INSERT INTO orders_items (id, order_id, product_item_id, quantity)
 VALUES
-    (1, 1, 1, 2),
-    (2, 2, 2, 3);
+    (1, 1, 1, 1),
+    (2, 1, 2, 1);

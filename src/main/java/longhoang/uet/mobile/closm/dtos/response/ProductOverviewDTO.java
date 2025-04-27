@@ -12,6 +12,6 @@ import java.util.List;
 public class ProductOverviewDTO {
     private String category;
     private int quantity;
-    private List<VariantOverviewDTO> variants;
+    private List<ItemOverviewDTO> variants;
 
 }

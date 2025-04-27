@@ -3,21 +3,19 @@ package longhoang.uet.mobile.closm.dtos.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import java.math.BigDecimal;
-
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductItemInfo {
-    private Long id;
+@Data
+public class ItemDetailsDTO {
 
-    private BigDecimal price;
-    private String imageUrl;
+    private Long id;
     private String tag;
+    private int quantity;
+    private String imageUrl;
     private String size;
     private String color;
     private String description;
-    private int quantity;
+    private double price;
 }
+

@@ -4,15 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class VariantInfo {
+@AllArgsConstructor
+public class OrderItemInfoDTO {
     private Long id;
-    private int quantity;
+    private BigDecimal price;
     private String imageUrl;
+    private String tag;
     private String size;
     private String color;
     private String description;
-    private double price;
+    private int orderedQuantity;
 }

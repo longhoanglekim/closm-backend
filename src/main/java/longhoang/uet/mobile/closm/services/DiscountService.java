@@ -1,7 +1,5 @@
 package longhoang.uet.mobile.closm.services;
 
-import longhoang.uet.mobile.closm.dtos.response.DiscountInfoDTO;
-import longhoang.uet.mobile.closm.mappers.DiscountMapper;
 import longhoang.uet.mobile.closm.models.Discount;
 import longhoang.uet.mobile.closm.repositories.DiscountRepository;
 import org.springframework.beans.factory.annotation.Autowired;

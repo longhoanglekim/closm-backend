@@ -1,15 +1,16 @@
 package longhoang.uet.mobile.closm.mappers;
 
 
+import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
+import longhoang.uet.mobile.closm.dtos.mappers.ItemInfo;
 import longhoang.uet.mobile.closm.dtos.response.*;
 import longhoang.uet.mobile.closm.models.ProductItem;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductItemMapper {
-    public static VariantDetailsDTO mapToVariantDetailsDTO(ProductItem ProductItem) {
-        VariantDetailsDTO variantDetailsDTO = new VariantDetailsDTO();
+    public static ItemDetailsDTO mapToItemDetailsDTO(ProductItem ProductItem) {
+        ItemDetailsDTO variantDetailsDTO = new ItemDetailsDTO();
         variantDetailsDTO.setId(ProductItem.getId());
         variantDetailsDTO.setTag(ProductItem.getTag());
         variantDetailsDTO.setDescription(ProductItem.getDescription());
@@ -21,8 +22,8 @@ public class ProductItemMapper {
         return variantDetailsDTO;
     }
 
-    public static VariantOverviewDTO mapToVariantOverviewDTO(ProductItem ProductItem) {
-        VariantOverviewDTO variantOverviewDTO = new VariantOverviewDTO();
+    public static ItemOverviewDTO mapToItemOverviewDTO(ProductItem ProductItem) {
+        ItemOverviewDTO variantOverviewDTO = new ItemOverviewDTO();
         variantOverviewDTO.setId(ProductItem.getId());
         variantOverviewDTO.setName(ProductItem.getTag());
         variantOverviewDTO.setImageUrl(ProductItem.getImageUrl());
@@ -30,8 +31,8 @@ public class ProductItemMapper {
         return variantOverviewDTO;
     }
 
-    public static VariantInfo mapToVariantInfoDTO(ProductItem ProductItem) {
-        VariantInfo variantInfoDTO = new VariantInfo();
+    public static ItemInfo mapToVariantInfoDTO(ProductItem ProductItem) {
+        ItemInfo variantInfoDTO = new ItemInfo();
         variantInfoDTO.setId(ProductItem.getId());
         variantInfoDTO.setDescription(ProductItem.getDescription());
         variantInfoDTO.setSize(ProductItem.getSize());
@@ -86,4 +87,5 @@ public class ProductItemMapper {
         productItemInfo.setQuantity(productItem.getQuantity());
         return productItemInfo;
     }
+
 }
