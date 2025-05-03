@@ -27,7 +27,7 @@ public class OrderInfoDTO {
     private String userEmail;
     private LocalDateTime orderDate;
     private OrderStatus orderStatus;
-
+    private String orderCode;
     private BigDecimal discountAmount;
     private BigDecimal deliverPayment;
     private BigDecimal finalPrice;

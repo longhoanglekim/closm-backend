@@ -26,6 +26,7 @@ CREATE TABLE orders (
                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
                         user_id BIGINT NOT NULL,
                         order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        order_code VARCHAR(255) NOT NULL,
                         order_status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
                         discount_amount DECIMAL(19,2),
                         deliver_payment DECIMAL(19,2),
@@ -142,9 +143,9 @@ INSERT INTO product_items (id,base_product_id, price, image_url, size, color, qu
                                                                                                               (34,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154578/images_2_zawzxf.jpg', 'XL', 'Olive Green', 10, 'Wind-resistant Winter Pants', 'Wind-resistant warm pants'),
                                                                                                               (35,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154577/images_1_nq9woy.jpg', 'S', 'Brown', 8, 'Lightly-lined Winter Pants', 'Lightly lined winter pants');
 -- Thêm vào bảng orders
-INSERT INTO orders (id, user_id, order_date, order_status, discount_amount, deliver_payment, final_price, payment_status, payment_method, deliver_address, cancelable_date)
+INSERT INTO orders (id, user_id, order_code,order_date, order_status, discount_amount, deliver_payment, final_price, payment_status, payment_method, deliver_address, cancelable_date)
 VALUES
-    (1, 1, NOW(), 'PENDING', 0, 20000, 418000, 'UNPAID', 'CASH', '123 Example Street', CURDATE() + INTERVAL 10 DAY);
+    (1, 1, '20250503124530',NOW(), 'PENDING', 0, 20000, 418000, 'UNPAID', 'CASH', '123 Example Street', CURDATE() + INTERVAL 10 DAY);
 
 -- Thêm vào bảng orders_items
 INSERT INTO orders_items (id, order_id, product_item_id, quantity)

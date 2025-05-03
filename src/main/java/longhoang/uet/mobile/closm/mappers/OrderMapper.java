@@ -28,6 +28,7 @@ public class OrderMapper {
         dto.setPaymentMethod(order.getPaymentMethod());
         dto.setPaymentStatus(order.getPaymentStatus());
         dto.setOrderItemList(getProductItemList(order.getOrderItems()));
+        dto.setOrderCode(order.getOrderCode());
         return dto;
     }
 
