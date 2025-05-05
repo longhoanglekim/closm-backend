@@ -17,6 +17,7 @@ import longhoang.uet.mobile.closm.repositories.DiscountRepository;
 import longhoang.uet.mobile.closm.repositories.OrderRepository;
 import longhoang.uet.mobile.closm.repositories.ProductItemRepository;
 
+import longhoang.uet.mobile.closm.utils.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -50,6 +52,7 @@ public class OrderService {
         order.setDeliverPayment(orderConfirmationDTO.getSummaryOrderPrice().getDeliveryAmount());
         order.setDiscountAmount(orderConfirmationDTO.getSummaryOrderPrice().getDiscountAmount());
         order.setFinalPrice(orderConfirmationDTO.getSummaryOrderPrice().getFinalPrice());
+        order.setOrderCode(CodeGenerator.generateOrderCode());
         order.setCancelableDate(LocalDate.now().minusDays(10));
         if (order.getPaymentMethod() == null) {
             order.setPaymentMethod(PaymentMethod.CASH);
