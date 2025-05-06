@@ -8,6 +8,7 @@ import longhoang.uet.mobile.closm.dtos.mappers.OrderInfoDTO;
 import longhoang.uet.mobile.closm.dtos.request.OrderConfirmationDTO;
 
 import longhoang.uet.mobile.closm.dtos.response.OrderListByStatus;
+import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
 import longhoang.uet.mobile.closm.enums.OrderStatus;
 import longhoang.uet.mobile.closm.enums.PaymentMethod;
 import longhoang.uet.mobile.closm.enums.PaymentStatus;
@@ -41,6 +42,8 @@ public class OrderService {
     DiscountRepository discountRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    private ProductItemRepository productItemRepository;
 
 
     @Transactional
@@ -54,21 +57,22 @@ public class OrderService {
         order.setFinalPrice(orderConfirmationDTO.getSummaryOrderPrice().getFinalPrice());
         order.setOrderCode(CodeGenerator.generateOrderCode());
         order.setCancelableDate(LocalDate.now().minusDays(10));
-        if (order.getPaymentMethod() == null) {
+        if (orderConfirmationDTO.getPaymentMethod() == null) {
             order.setPaymentMethod(PaymentMethod.CASH);
         } else order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
-        if (order.getPaymentStatus() == null) {
+        if (orderConfirmationDTO.getPaymentStatus() == null) {
             order.setPaymentStatus(PaymentStatus.UNPAID);
         } else order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
         Order savedOrder = orderRepository.save(order);
 
         for (Long id : orderConfirmationDTO.getItemIdsMap().keySet()) {
             OrderItem orderItem = new OrderItem();
+            int quantityOrdered = orderConfirmationDTO.getItemIdsMap().get(id);
             ProductItem productItem = ProductItemRepository.findById(id).orElseThrow(() -> new Exception("Product variant not found with ID: " + id)); // Handle potential null product variant
-
+            productItem.setQuantity(productItem.getQuantity() - quantityOrdered);
             orderItem.setProductItem(productItem);
             orderItem.setOrder(savedOrder);
-            orderItem.setQuantity(orderConfirmationDTO.getItemIdsMap().get(id));
+            orderItem.setQuantity(quantityOrdered);
             productItem.getOrderItems().add(orderItem);
             ProductItemRepository.save(productItem);
             savedOrder.getOrderItems().add(orderItem);
@@ -86,11 +90,16 @@ public class OrderService {
 
     public Order cancelOrder(Order order) throws Exception {
         order.setOrderStatus(OrderStatus.CANCELLED);
+        List<OrderItem> orderItems = order.getOrderItems();
+        for (OrderItem orderItem : orderItems) {
+            ProductItem productItem = orderItem.getProductItem();
+            productItem.setQuantity(productItem.getQuantity() + orderItem.getQuantity());
+            productItemRepository.save(productItem);
+        }
         return orderRepository.save(order);
     }
 
     /**
-     * Todo : fix bug duplicate
      *
      * @param orderStatus
      * @param userEmail
