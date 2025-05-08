@@ -6,6 +6,7 @@ import longhoang.uet.mobile.closm.dtos.mappers.ItemInfo;
 import longhoang.uet.mobile.closm.dtos.response.*;
 import longhoang.uet.mobile.closm.models.ProductItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductItemMapper {
@@ -88,4 +89,11 @@ public class ProductItemMapper {
         return productItemInfo;
     }
 
+    public static List<ProductItemInfo> mapToProductItemInfos(List<ProductItem> ProductItem) {
+        List<ProductItemInfo> productItemInfos = new ArrayList<ProductItemInfo>();
+        for (ProductItem productItem : ProductItem) {
+            productItemInfos.add(mapToProductItemInfo(productItem));
+        }
+        return productItemInfos;
+    }
 }

@@ -150,5 +150,5 @@ VALUES
 -- Thêm vào bảng orders_items
 INSERT INTO orders_items (id, order_id, product_item_id, quantity)
 VALUES
-    (1, 1, 1, 1),
+    (1, 1, 1, 2),
     (2, 1, 2, 1);

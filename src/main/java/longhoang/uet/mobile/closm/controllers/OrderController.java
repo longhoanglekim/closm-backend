@@ -56,5 +56,13 @@ public class OrderController {
         }
     }
 
-
+    @GetMapping("/{orderId}")
+      public ResponseEntity<?> getOrderById(@PathVariable long orderId) {
+        try {
+            return ResponseEntity.ok().body(orderService.getOrderInfo(orderId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

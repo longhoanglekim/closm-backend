@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<BaseProduct, Long> {
+public interface BaseProductRepository extends JpaRepository<BaseProduct, Long> {
     @Query(value = "SELECT DISTINCT category FROM base_products", nativeQuery = true)
     List<String> findAllProductCategories();
 

@@ -20,6 +20,9 @@ public class ProductItemController {
     private ProductService productService;
     @Autowired
     private ProductItemService ProductItemService;
+    @Autowired
+    private ProductItemService productItemService;
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getVariantDetails(@PathVariable long id) {
         Optional<ProductItem> ProductItem = productService.findProductItemById(id);
@@ -36,5 +39,15 @@ public class ProductItemController {
         }
         log.info("Get Variant by Variant Name: {}", variantName);
         return ResponseEntity.ok().body(ProductItemService.findByProductName(variantName));
+    }
+
+    @GetMapping("/top-items")
+    public ResponseEntity<?> getTopItems() {
+        try {
+            return ResponseEntity.ok().body(productItemService.getGroupTopItemByTag());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
     }
 }

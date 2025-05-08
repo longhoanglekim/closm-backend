@@ -88,6 +88,11 @@ public class OrderService {
         throw new Exception("Order not found");
     }
 
+    public OrderInfoDTO getOrderInfo(long orderId) throws Exception {
+        Order order = getOrder(orderId);
+        return OrderMapper.mapToOrderInfoDTO(order);
+    }
+
     public Order cancelOrder(Order order) throws Exception {
         order.setOrderStatus(OrderStatus.CANCELLED);
         List<OrderItem> orderItems = order.getOrderItems();

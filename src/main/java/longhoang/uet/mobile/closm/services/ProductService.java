@@ -6,7 +6,7 @@ import longhoang.uet.mobile.closm.dtos.response.*;
 import longhoang.uet.mobile.closm.mappers.ProductItemMapper;
 import longhoang.uet.mobile.closm.models.BaseProduct;
 import longhoang.uet.mobile.closm.models.ProductItem;
-import longhoang.uet.mobile.closm.repositories.ProductRepository;
+import longhoang.uet.mobile.closm.repositories.BaseProductRepository;
 import longhoang.uet.mobile.closm.repositories.ProductItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @Service
 public class ProductService {
     @Autowired
-    private ProductRepository productRepository;
+    private BaseProductRepository productRepository;
     @Autowired
     private ProductItemRepository ProductItemRepository;
 
@@ -90,7 +90,7 @@ public class ProductService {
         List<TaggedVariantOverviewDTO> variantDistinctByTagDTOS = new ArrayList<>();
         int totalQuantity = 0;
         for (String tag : variantTags) {
-
+            log.debug(tag);
             TaggedVariantOverviewDTO dto = ProductItemMapper.mapToVariantDistinctByTagDTO(ProductItemRepository.findAllByTag(tag));
             variantDistinctByTagDTOS.add(dto);
             totalQuantity += dto.getQuantity();
@@ -103,5 +103,7 @@ public class ProductService {
     public Optional<ProductItem> findProductItemById(Long id) {
         return ProductItemRepository.findById(id);
     }
+
+
 }
 
