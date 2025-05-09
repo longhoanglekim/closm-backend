@@ -39,8 +39,6 @@ public class OrderService {
     @Autowired
     ProductItemRepository ProductItemRepository;
     @Autowired
-    DiscountRepository discountRepository;
-    @Autowired
     UserService userService;
     @Autowired
     private ProductItemRepository productItemRepository;
@@ -94,6 +92,7 @@ public class OrderService {
     }
 
     public Order cancelOrder(Order order) throws Exception {
+        log.debug("Order being cancelled");
         order.setOrderStatus(OrderStatus.CANCELLED);
         List<OrderItem> orderItems = order.getOrderItems();
         for (OrderItem orderItem : orderItems) {
@@ -101,6 +100,7 @@ public class OrderService {
             productItem.setQuantity(productItem.getQuantity() + orderItem.getQuantity());
             productItemRepository.save(productItem);
         }
+        log.debug("Order cancelled");
         return orderRepository.save(order);
     }
 

@@ -38,23 +38,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/cancel-order")
-    public ResponseEntity<?> cancelOrder(@PathVariable Long orderId) {
-        try {
-            if (orderId == null) {
-                return new ResponseEntity<>("Order id cannot be null", HttpStatus.BAD_REQUEST);
-            }
-            Order order = orderService.getOrder(orderId);
-            if (LocalDate.now().isAfter(order.getCancelableDate())) {
-                throw new Exception("Đơn hàng không thể hủy vì đã quá thời hạn cho phép.");
-            }
-            orderService.cancelOrder(order);
-            return new ResponseEntity<>("Order number " + orderId + " cancelled.", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+
 
     @GetMapping("/{orderId}")
       public ResponseEntity<?> getOrderById(@PathVariable long orderId) {
