@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfiguration {
     @Autowired
-    AuthenticationProvider authenticationProvider;
+    AuthenticationProvider daoAuthenticationProvider;
     @Autowired
     JwtFilter jwtFilter;
     @Bean
@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                         authorizeRequests.anyRequest().permitAll())
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
+                .authenticationProvider(daoAuthenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 

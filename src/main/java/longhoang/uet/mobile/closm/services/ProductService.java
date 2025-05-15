@@ -9,6 +9,7 @@ import longhoang.uet.mobile.closm.models.ProductItem;
 import longhoang.uet.mobile.closm.repositories.BaseProductRepository;
 import longhoang.uet.mobile.closm.repositories.ProductItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -25,9 +26,11 @@ public class ProductService {
     @Autowired
     private ProductItemRepository ProductItemRepository;
 
+    @Cacheable(value = "categories", key = "1")
     public List<String> getAllCategories() {
         return productRepository.findAllProductCategories();
     }
+
 
     public List<ProductItemInfo> getAllProductItemsByCategory(String category) {
         Optional<BaseProduct> product = productRepository.findByCategory(category);
@@ -46,6 +49,7 @@ public class ProductService {
             return ans;
         }).orElse(Collections.emptyList());
     }
+
 
     public List<ItemOverviewDTO> getLimitedVariantsByCategory(String category) {
         Optional<BaseProduct> productOpt = productRepository.findByCategory(category);
@@ -66,8 +70,9 @@ public class ProductService {
         }
         return dtos;
     }
-
+    @Cacheable(value = "productOverview", key = "#category")
     public ProductOverviewDTO getProductOverview(String category) {
+        log.debug("getProductOverview from db");
         ProductOverviewDTO dto = new ProductOverviewDTO();
         dto.setCategory(category);
         List<ItemOverviewDTO> variants = getLimitedVariantsByCategory(category);
@@ -79,7 +84,7 @@ public class ProductService {
         dto.setVariants(variants);
         return dto;
     }
-
+    @Cacheable(value = "productDetails", key = "#category")
     public ProductDetailsDTO getProductDetails(String category) {
         Optional<BaseProduct> productOpt = productRepository.findByCategory(category);
 
