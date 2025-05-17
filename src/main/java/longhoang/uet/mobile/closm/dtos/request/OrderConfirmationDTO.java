@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import longhoang.uet.mobile.closm.enums.OrderStatus;
+import longhoang.uet.mobile.closm.enums.PaymentMethod;
 import longhoang.uet.mobile.closm.enums.PaymentStatus;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class OrderConfirmationDTO {
     private SummaryOrderPrice summaryOrderPrice;
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
 }
 

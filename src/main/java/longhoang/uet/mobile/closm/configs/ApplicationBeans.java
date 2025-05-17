@@ -22,7 +22,7 @@ public class ApplicationBeans {
     }
 
     @Bean
-    AuthenticationProvider authenticationProvider() {
+    AuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);

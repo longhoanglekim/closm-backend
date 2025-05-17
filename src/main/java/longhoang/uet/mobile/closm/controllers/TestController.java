@@ -3,7 +3,7 @@ package longhoang.uet.mobile.closm.controllers;
 import longhoang.uet.mobile.closm.dtos.response.Location;
 import longhoang.uet.mobile.closm.models.BaseProduct;
 import longhoang.uet.mobile.closm.models.ProductItem;
-import longhoang.uet.mobile.closm.repositories.ProductRepository;
+import longhoang.uet.mobile.closm.repositories.BaseProductRepository;
 import longhoang.uet.mobile.closm.utils.EvnLoader;
 import longhoang.uet.mobile.closm.utils.LocationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequestMapping("/test")
 public class TestController {
     @Autowired
-    private ProductRepository productRepository;
+    private BaseProductRepository productRepository;
     @GetMapping("/variants")
     public List<ProductItem> getVariants(@RequestParam(required = false) String category) {
         Optional<BaseProduct> product = productRepository.findByCategory(category);
