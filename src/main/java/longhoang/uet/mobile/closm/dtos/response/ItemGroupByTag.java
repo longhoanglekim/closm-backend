@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemGroupByTag {
-    private String tag;
-    List<ProductItemInfo> itemList;
+    private String category;
+    List<TopTaggedItemByCategory> itemList;
 }
