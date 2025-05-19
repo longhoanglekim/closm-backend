@@ -10,6 +10,7 @@ import longhoang.uet.mobile.closm.services.UserDetailsServiceImpl;
 import longhoang.uet.mobile.closm.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -36,8 +37,11 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = jwtUtil.extractUsername(token);
         if (username != null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            for (GrantedAuthority authority : userDetails.getAuthorities()) {
+                log.info("Authority: " + authority.getAuthority());
+            }
             if (jwtUtil.isTokenValid(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, null);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

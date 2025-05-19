@@ -11,7 +11,8 @@ CREATE TABLE users (
                        full_name VARCHAR(255) NOT NULL,
                        email VARCHAR(255) UNIQUE NOT NULL,
                        password VARCHAR(255) NOT NULL,
-                       phone VARCHAR(255) UNIQUE NOT NULL
+                       phone VARCHAR(255) UNIQUE NOT NULL,
+                       role VARCHAR(255) not null default 'ROLE_USER'
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 2. Tạo bảng base_products
@@ -86,8 +87,9 @@ INSERT INTO discounts (id,description, discount_percentage, discount_type, start
                                                                                                      (10,'End of Season',     14.00, 'HOLIDAY', '2025-04-17', '2025-06-25');
 
 -- 8. Chèn dữ liệu mẫu users
-INSERT INTO users (id,full_name, email, password, phone) VALUES
-    (1,'DungBeo', 'dung@gmail.com', '$2a$10$P/JowkpBHojSdwce5pKtfufi4OVMaYl1XisH.Kk8hFna60DSKQs4W', '0901234567');
+INSERT INTO users (id,full_name, email, password, phone, role) VALUES
+                                                                   (1,'DungBeo', 'dung@gmail.com', '$2a$10$P/JowkpBHojSdwce5pKtfufi4OVMaYl1XisH.Kk8hFna60DSKQs4W', '0901234567', 'ROLE_USER'),
+                                                                   (2,'LongHoang', 'long@gmail.com', '$2a$10$Cldi2H9mNhRfOe/AVsNgxOSi0JUSpQkr8jfNCr2h5efGF.lZjfuKq', '0901234561', 'ROLE_ADMIN');
 
 -- 9. Chèn dữ liệu mẫu base_products
 INSERT INTO base_products (id,name, category) VALUES

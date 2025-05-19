@@ -33,6 +33,7 @@ public interface ProductItemRepository extends JpaRepository<ProductItem, Long> 
     Limit 2)
     select bst.tag,bst.sold_quantity, (select i.image_url from product_items i
                                         join orders_items oi on i.id = oi.product_item_id
+                                        where i.tag = bst.tag
                                         group by oi.product_item_id
                                         order by sum(oi.quantity)
                                        limit 1) as image_url

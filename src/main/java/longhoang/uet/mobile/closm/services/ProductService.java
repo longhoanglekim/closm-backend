@@ -25,6 +25,10 @@ public class ProductService {
     private BaseProductRepository productRepository;
     @Autowired
     private ProductItemRepository ProductItemRepository;
+    @Autowired
+    private BaseProductRepository baseProductRepository;
+    @Autowired
+    private ProductItemRepository productItemRepository;
 
     @Cacheable(value = "categories", key = "1")
     public List<String> getAllCategories() {

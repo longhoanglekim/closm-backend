@@ -19,38 +19,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
     private UserRepository userRepository;
-    public Optional<User> login(LoginInput loginInput) throws Exception {
-        Optional<User> user = userRepository.findByEmailAndPassword(loginInput.getEmail(), loginInput.getPassword());
-        if (user.isPresent()) {
-            return user;
-        }
-        throw new Exception("Invalid email or password");
-    }
-
-    public User register(RegisterInput registerInput)  throws Exception {
-        Optional<User> user = userRepository.findByEmail(registerInput.getEmail());
-        if (user.isPresent()) {
-            throw new Exception("User already exists");
-        }
-        User newUser = new User();
-        newUser.setEmail(registerInput.getEmail());
-        newUser.setPassword(passwordEncoder.encode(registerInput.getPassword()));
-        newUser.setFullName(registerInput.getFullName());
-        newUser.setPhone(registerInput.getPhone());
-        return userRepository.save(newUser);
-    }
-    public User authenticate(LoginInput loginInput) throws BadCredentialsException {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginInput.getEmail(), loginInput.getPassword()));
-        if (authentication.isAuthenticated()) {
-            return userRepository.findByEmail(loginInput.getEmail()).get();
-        }
-        throw new BadCredentialsException("Invalid email or password");
-    }
 
     public UserInfoDTO getUserDTO(String email) throws Exception {
         Optional<User> userOpt = userRepository.findByEmail(email);

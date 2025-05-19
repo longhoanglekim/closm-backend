@@ -1,6 +1,7 @@
 package longhoang.uet.mobile.closm.services;
 
 import lombok.extern.slf4j.Slf4j;
+import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
 import longhoang.uet.mobile.closm.dtos.response.ItemGroupByTag;
 import longhoang.uet.mobile.closm.dtos.response.TopTaggedItemByCategory;
 import longhoang.uet.mobile.closm.dtos.response.VariantGroupDTO;
@@ -42,5 +43,22 @@ public class ProductItemService {
 
         }
         return ans;
+    }
+
+    public long createProductItem(ProductItemInfo productItemInfo) {
+        ProductItem productItem = ProductItemMapper.mapToProductItem(productItemInfo, baseProductRepository);
+        productItemRepository.save(productItem);
+        return productItem.getId();
+    }
+
+    public long updateProductItem(ProductItemInfo productItemInfo) {
+        ProductItem productItem = ProductItemMapper.mapToProductItem(productItemInfo, baseProductRepository);
+        productItemRepository.save(productItem);
+        return productItem.getId();
+    }
+
+    public long deleteProductItem(long id) {
+        productItemRepository.deleteById(id);
+        return id;
     }
 }
