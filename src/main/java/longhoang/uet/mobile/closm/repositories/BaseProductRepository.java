@@ -13,6 +13,11 @@ import java.util.Optional;
 public interface BaseProductRepository extends JpaRepository<BaseProduct, Long> {
     @Query(value = "SELECT DISTINCT category FROM base_products", nativeQuery = true)
     List<String> findAllProductCategories();
+    @Query(value = "SELECT DISTINCT id FROM base_products", nativeQuery = true)
+    List<Long> findAllProductCategoriesId();
 
+    @Query(value = "SELECT category FROM base_products where id = :id", nativeQuery = true)
+    String getCategoryNameById(Long id);
+    @Query
     Optional<BaseProduct> findByCategory(String category);
 }

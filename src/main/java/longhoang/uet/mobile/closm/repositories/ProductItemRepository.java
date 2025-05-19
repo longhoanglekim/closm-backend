@@ -1,5 +1,6 @@
 package longhoang.uet.mobile.closm.repositories;
 
+import longhoang.uet.mobile.closm.dtos.response.TopTaggedItemByCategory;
 import longhoang.uet.mobile.closm.models.ProductItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,13 +22,23 @@ public interface ProductItemRepository extends JpaRepository<ProductItem, Long> 
 
     List<ProductItem> findAllByTag(String tag);
 
-    @Query(value = "select i.* " +
-            "from product_items i " +
-            "join orders_items oi on i.id = oi.product_item_id " +
-            "where i.tag = :tag " +
-        "group by oi.product_item_id, i.id, i.description " +
-            "order by sum(oi.quantity) desc",
-    nativeQuery = true)
-    List<ProductItem> getTopProductByTag(String tag);
+    @Query(value = """
+
+            with bestSellingTags as (
+    select i.tag,sum(oi.quantity) as sold_quantity from product_items i
+    join orders_items oi on i.id = oi.product_item_id
+    where i.base_product_id = :id
+    group by i.tag
+   order by sum(oi.quantity) desc
+    Limit 2)
+    select bst.tag,bst.sold_quantity, (select i.image_url from product_items i
+                                        join orders_items oi on i.id = oi.product_item_id
+                                        group by oi.product_item_id
+                                        order by sum(oi.quantity)
+                                       limit 1) as image_url
+   from bestSellingTags bst
+    """, nativeQuery = true)
+    List<TopTaggedItemByCategory> getTopProductByTagGroupedByBaseProduct(long id);
+
 
 }
