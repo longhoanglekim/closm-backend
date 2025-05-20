@@ -27,7 +27,7 @@ public class ProductItemController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getVariantDetails(@PathVariable long id) {
-        Optional<ProductItem> ProductItem = productService.findProductItemById(id);
+        Optional<ProductItem> ProductItem = productItemService.findProductItemById(id);
         if (ProductItem.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -65,10 +65,10 @@ public class ProductItemController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PutMapping("/update-item")
-    public ResponseEntity<?> updateItem(@RequestBody ProductItemInfo productItemInfo) {
+    @PutMapping("/update-item/{id}")
+    public ResponseEntity<?> updateItem(@RequestBody ProductItemInfo productItemInfo, long id) {
         try {
-            return ResponseEntity.ok().body(productItemService.updateProductItem(productItemInfo));
+            return ResponseEntity.ok().body(productItemService.updateProductItem(productItemInfo, id));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());

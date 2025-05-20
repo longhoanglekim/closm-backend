@@ -2,6 +2,7 @@ package longhoang.uet.mobile.closm.services;
 
 import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
+import longhoang.uet.mobile.closm.dtos.request.BaseProductInput;
 import longhoang.uet.mobile.closm.dtos.response.*;
 import longhoang.uet.mobile.closm.mappers.ProductItemMapper;
 import longhoang.uet.mobile.closm.models.BaseProduct;
@@ -27,8 +28,6 @@ public class ProductService {
     private ProductItemRepository ProductItemRepository;
     @Autowired
     private BaseProductRepository baseProductRepository;
-    @Autowired
-    private ProductItemRepository productItemRepository;
 
     @Cacheable(value = "categories", key = "1")
     public List<String> getAllCategories() {
@@ -108,11 +107,26 @@ public class ProductService {
         return new ProductDetailsDTO(category, totalQuantity, variantDistinctByTagDTOS);
     }
     
-
-    public Optional<ProductItem> findProductItemById(Long id) {
-        return ProductItemRepository.findById(id);
+    public long createBaseProduct(BaseProductInput baseProductInput) {
+        BaseProduct product = new BaseProduct();
+        product.setCategory(baseProductInput.getCategory());
+        product.setImageUrl(baseProductInput.getImageUrl());
+        productRepository.save(product);
+        return product.getId();
     }
 
+    public long updateBaseProduct(long id, BaseProductInput baseProductInput) throws Exception{
+        BaseProduct product = baseProductRepository.findById(id).get();
+        product.setCategory(baseProductInput.getCategory());
+        product.setImageUrl(baseProductInput.getImageUrl());
+        productRepository.save(product);
+        return product.getId();
+    }
 
+    public long deleteBaseProduct(long id) {
+        BaseProduct product = baseProductRepository.findById(id).get();
+        productRepository.delete(product);
+        return product.getId();
+    }
 }
 

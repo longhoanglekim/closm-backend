@@ -18,8 +18,8 @@ CREATE TABLE users (
 -- 2. Tạo bảng base_products
 CREATE TABLE base_products (
                                id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                               name VARCHAR(255) NOT NULL,
-                               category VARCHAR(255) NOT NULL
+                               category VARCHAR(255) NOT NULL,
+                               image_url varchar(255) not null
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 3. Tạo bảng orders
@@ -92,14 +92,14 @@ INSERT INTO users (id,full_name, email, password, phone, role) VALUES
                                                                    (2,'LongHoang', 'long@gmail.com', '$2a$10$Cldi2H9mNhRfOe/AVsNgxOSi0JUSpQkr8jfNCr2h5efGF.lZjfuKq', '0901234561', 'ROLE_ADMIN');
 
 -- 9. Chèn dữ liệu mẫu base_products
-INSERT INTO base_products (id,name, category) VALUES
-                                                  (1,'Basic T-Shirt', 'T-Shirt'),
-                                                  (2,'Hoodie',        'Hoodie'),
-                                                  (3,'High Socks',    'Socks'),
-                                                  (4,'Turtleneck Sweater','Sweater'),
-                                                  (5,'Kaki Shorts',   'Shorts'),
-                                                  (6,'Ripped Jeans',  'Jeans'),
-                                                  (7,'Winter Pants',  'Winter Pants');
+INSERT INTO base_products (id,category, image_url) VALUES
+                                                  (1, 'T-Shirt','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147982/cac-mau-ao-t-shirt-copy_ixklfd.jpg'),
+                                                  (2,'Hoodie', 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743155560/vn-11134207-7r98o-lks529c5wgxse3_b03ond.jpg'),
+                                                  (3,'Socks', 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154009/11892--kem-chi-tiet-1_xwypdn.jpg'),
+                                                  (4,'Sweater','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154604/ebd4c49798f79e7aef89eb3776268b92_jkc8yq.jpg'),
+                                                  (5,'Shorts','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154349/z3393358070033_bc1188db1776db4643142ecf5bd004ad_fe3b82444f984b568246dcfdb05f2dab_master_qm1syz.webp'),
+                                                  (6,'Jeans','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154590/Sandro_SFPJE00467-4785_V_1_k8tae3.webp'),
+                                                  (7, 'Winter Pants','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154579/winter-lam-nguoi-mau-cho-new-balance2-696x869_momymg.jpg');
 
 -- 10. Chèn dữ liệu mẫu product_items (full)
 INSERT INTO product_items (id,base_product_id, price, image_url, size, color, quantity, tag, description) VALUES
