@@ -143,6 +143,49 @@ INSERT INTO product_items (id,base_product_id, price, image_url, size, color, qu
                                                                                                               (33,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154578/images_qb4qfg.jpg', 'L', 'Gray', 15, 'Winter Winter Pants', 'Soft and cozy winter pants'),
                                                                                                               (34,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154578/images_2_zawzxf.jpg', 'XL', 'Olive Green', 10, 'Wind-resistant Winter Pants', 'Wind-resistant warm pants'),
                                                                                                               (35,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154577/images_1_nq9woy.jpg', 'S', 'Brown', 8, 'Lightly-lined Winter Pants', 'Lightly lined winter pants');
+                                                                                                              (36, 2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148505/hoodie_red_model.jpg', 'M', 'Red', 22, 'Classic Hoodie', 'Classic style hoodie'),
+    (37, 2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148506/hoodie_white_model.jpg', 'L', 'White', 20, 'Casual Hoodie', 'Casual everyday hoodie'),
+    (38, 2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148506/hoodie_green_model.jpg', 'XL', 'Green', 18, 'Sport Hoodie', 'Lightweight sport hoodie'),
+    (39, 2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148506/hoodie_blue_model.jpg', 'S', 'Blue', 17, 'Light Hoodie', 'Perfect for mild weather'),
+    (40, 2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148507/hoodie_grey_model.jpg', 'M', 'Gray', 21, 'Urban Hoodie', 'Modern urban style'),
+    (41, 2, 399000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743148507/hoodie_black_model.jpg', 'L', 'Black', 24, 'Premium Hoodie', 'Soft and warm premium hoodie');
+
+    (42, 3, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154010/socks_red_model.jpg', 'M', 'Red', 15, 'Running Socks', 'Comfortable socks for running'),
+    (43, 3, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154010/socks_white_model.jpg', 'L', 'White', 16, 'Casual Socks', 'Perfect for daily wear'),
+    (44, 3, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154011/socks_blue_model.jpg', 'XL', 'Blue', 12, 'Winter Socks', 'Warm socks for winter'),
+    (45, 3, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154011/socks_black_model.jpg', 'S', 'Black', 10, 'Sports Socks', 'Breathable sports socks'),
+    (46, 3, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154011/socks_gray_model.jpg', 'M', 'Gray', 14, 'Everyday Socks', 'Durable and comfortable'),
+    (47, 3, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154012/socks_green_model.jpg', 'L', 'Green', 13, 'Fashion Socks', 'Trendy design socks');
+
+    (48, 4, 299000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154605/sweater_red_model.jpg', 'M', 'Red', 20, 'Knitted Sweater', 'Warm knitted sweater'),
+    (49, 4, 299000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154606/sweater_black_model.jpg', 'L', 'Black', 18, 'Classic Sweater', 'Classic and cozy'),
+    (50, 4, 299000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154607/sweater_beige_model.jpg', 'XL', 'Beige', 22, 'Comfort Sweater', 'Soft and warm'),
+    (51, 4, 299000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154607/sweater_gray_model.jpg', 'S', 'Gray', 16, 'Casual Sweater', 'Casual and stylish'),
+    (52, 4, 299000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154608/sweater_blue_model.jpg', 'M', 'Blue', 15, 'Fashion Sweater', 'Trendy fashion sweater'),
+    (53, 4, 299000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154609/sweater_white_model.jpg', 'L', 'White', 17, 'Minimal Sweater', 'Minimalist style sweater');
+
+    (54, 5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154350/shorts_black_model.jpg', 'M', 'Black', 40, 'Casual Shorts', 'Comfortable casual shorts'),
+    (55, 5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154351/shorts_beige_model.jpg', 'L', 'Beige', 35, 'Beach Shorts', 'Lightweight beach shorts'),
+    (56, 5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154351/shorts_green_model.jpg', 'XL', 'Green', 30, 'Sport Shorts', 'Cool and breathable'),
+    (57, 5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154352/shorts_gray_model.jpg', 'S', 'Gray', 28, 'Summer Shorts', 'Perfect for summer'),
+    (58, 5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154352/shorts_blue_model.jpg', 'M', 'Blue', 25, 'Everyday Shorts', 'Durable everyday wear'),
+    (59, 5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154353/shorts_navy_model.jpg', 'L', 'Navy', 20, 'Fashion Shorts', 'Trendy and stylish');
+
+    (60, 6, 499000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154591/jeans_black_model.jpg', '32', 'Black', 25, 'Classic Jeans', 'Timeless style jeans'),
+    (61, 6, 499000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154592/jeans_blue_model.jpg', '34', 'Blue', 30, 'Casual Jeans', 'Everyday casual jeans'),
+    (62, 6, 499000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154593/jeans_light_blue_model.jpg', '30', 'Light Blue', 20, 'Light Jeans', 'Lightweight and comfortable'),
+    (63, 6, 499000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154594/jeans_white_model.jpg', '28', 'White', 18, 'Fashion Jeans', 'Trendy white jeans'),
+    (64, 6, 499000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154595/jeans_grey_model.jpg', '36', 'Gray', 22, 'Slim Fit Jeans', 'Slim fit and stylish'),
+    (65, 6, 499000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154596/jeans_dark_blue_model.jpg', '38', 'Dark Blue', 15, 'Dark Denim', 'Deep color denim jeans');
+
+    (66, 7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154580/winter_pants_blue_model.jpg', 'M', 'Blue', 18, 'Heavy Winter Pants', 'Extra warm for cold weather'),
+    (67, 7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154581/winter_pants_black_model.jpg', 'L', 'Black', 22, 'Waterproof Pants', 'Waterproof and warm'),
+    (68, 7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154582/winter_pants_gray_model.jpg', 'XL', 'Gray', 14, 'Insulated Pants', 'Well insulated for winter'),
+    (69, 7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154583/winter_pants_brown_model.jpg', 'S', 'Brown', 12, 'Light Winter Pants', 'Lightweight for mild winters'),
+    (70, 7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154584/winter_pants_olive_model.jpg', 'M', 'Olive', 10, 'Windproof Pants', 'Windproof and cozy'),
+    (71, 7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154585/winter_pants_navy_model.jpg', 'L', 'Navy', 8, 'Thermal Pants', 'Thermal lined for extra warmth');
+
+
 -- Thêm vào bảng orders
 INSERT INTO orders (id, user_id, order_code,order_date, order_status, discount_amount, deliver_payment, final_price, payment_status, payment_method, deliver_address, cancelable_date)
 VALUES
