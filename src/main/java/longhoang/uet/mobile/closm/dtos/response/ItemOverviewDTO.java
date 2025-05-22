@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItemOverviewDTO {
     private Long id;
-    private String name;
+    private String tag;
     private int quantity;
     private String imageUrl;
 }

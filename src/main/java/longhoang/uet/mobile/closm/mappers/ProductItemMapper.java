@@ -32,7 +32,7 @@ public class ProductItemMapper {
     public static ItemOverviewDTO mapToItemOverviewDTO(ProductItem ProductItem) {
         ItemOverviewDTO variantOverviewDTO = new ItemOverviewDTO();
         variantOverviewDTO.setId(ProductItem.getId());
-        variantOverviewDTO.setName(ProductItem.getTag());
+        variantOverviewDTO.setTag(ProductItem.getTag());
         variantOverviewDTO.setImageUrl(ProductItem.getImageUrl());
         variantOverviewDTO.setQuantity(ProductItem.getQuantity());
         return variantOverviewDTO;
