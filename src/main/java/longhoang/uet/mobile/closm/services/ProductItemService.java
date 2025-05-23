@@ -1,6 +1,7 @@
 package longhoang.uet.mobile.closm.services;
 
 import lombok.extern.slf4j.Slf4j;
+import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
 import longhoang.uet.mobile.closm.dtos.response.ItemGroupByTag;
 import longhoang.uet.mobile.closm.dtos.response.TopTaggedItemByCategory;
 import longhoang.uet.mobile.closm.dtos.response.VariantGroupDTO;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -22,6 +24,10 @@ public class ProductItemService {
     private ProductItemRepository productItemRepository;
     @Autowired
     private BaseProductRepository baseProductRepository;
+
+    public Optional<ProductItem> findProductItemById(Long id) {
+        return productItemRepository.findById(id);
+    }
 
     public VariantGroupDTO findByProductName(String Name) {
         List<ProductItem> ProductItems = productItemRepository.findDistinctByTag(Name);
@@ -42,5 +48,33 @@ public class ProductItemService {
 
         }
         return ans;
+    }
+
+    public long createProductItem(ProductItemInfo productItemInfo) {
+        ProductItem productItem = ProductItemMapper.mapToProductItem(productItemInfo, baseProductRepository);
+        productItemRepository.save(productItem);
+        return productItem.getId();
+    }
+
+    public long updateProductItem(ProductItemInfo productItemInfo, long id) throws Exception {
+        ProductItem productItem =  productItemRepository.findById(id).orElse(null);
+        if (productItem != null) {
+            productItem.setBaseProduct(baseProductRepository.findByCategory(productItemInfo.getCategory()).orElse(null));
+            productItem.setDescription(productItemInfo.getDescription());
+            productItem.setTag(productItemInfo.getTag());
+            productItem.setSize(productItemInfo.getSize());
+            productItem.setPrice(productItemInfo.getPrice());
+            productItem.setColor(productItemInfo.getColor());
+            productItem.setImageUrl(productItemInfo.getImageUrl());
+            productItem.setQuantity(productItemInfo.getQuantity());
+            productItemRepository.save(productItem);
+            return productItem.getId();
+        }
+        throw new Exception("Item not found");
+    }
+
+    public long deleteProductItem(long id) {
+        productItemRepository.deleteById(id);
+        return id;
     }
 }

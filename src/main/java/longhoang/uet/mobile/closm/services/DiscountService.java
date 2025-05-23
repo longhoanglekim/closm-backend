@@ -17,4 +17,39 @@ public class DiscountService {
         return discountRepository.findValidDiscounts(LocalDate.now());
     }
 
+    public List<Discount> findAllDiscounts() throws Exception {
+        return discountRepository.findAll();
+    }
+
+    public Discount findDiscountById(long id) throws Exception {
+        return discountRepository.findById(id).orElse(null);
+    }
+
+    public long createDiscount(Discount discountInfo) throws Exception {
+        Discount discount = discountRepository.save(discountInfo);
+        return discount.getId();
+    }
+
+
+    public long updateDiscount(long id,Discount discountInfo) throws Exception {
+        Discount discount = discountRepository.findById(id).orElse(null);
+        if (discount != null) {
+            discount.setDiscountType(discountInfo.getDiscountType());
+            discount.setDiscountPercentage(discountInfo.getDiscountPercentage());
+            discount.setDescription(discountInfo.getDescription());
+            discount.setStartDate(discountInfo.getStartDate());
+            discount.setEndDate(discountInfo.getEndDate());
+            return discount.getId();
+        }
+        throw new Exception("Discount not found");
+    }
+
+    public long deleteDiscount(long id) throws Exception {
+        Discount discount = discountRepository.findById(id).orElse(null);
+        if (discount != null) {
+            discountRepository.delete(discount);
+            return discount.getId();
+        }
+        throw new Exception("Discount not found");
+    }
 }

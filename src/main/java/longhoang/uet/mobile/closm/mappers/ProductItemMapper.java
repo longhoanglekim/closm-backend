@@ -1,14 +1,20 @@
 package longhoang.uet.mobile.closm.mappers;
 
 
+import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
 import longhoang.uet.mobile.closm.dtos.mappers.ItemInfo;
 import longhoang.uet.mobile.closm.dtos.response.*;
+import longhoang.uet.mobile.closm.models.BaseProduct;
 import longhoang.uet.mobile.closm.models.ProductItem;
+import longhoang.uet.mobile.closm.repositories.BaseProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
+@Component
 public class ProductItemMapper {
     public static ItemDetailsDTO mapToItemDetailsDTO(ProductItem ProductItem) {
         ItemDetailsDTO variantDetailsDTO = new ItemDetailsDTO();
@@ -77,7 +83,9 @@ public class ProductItemMapper {
     }
 
     public static ProductItemInfo mapToProductItemInfo(ProductItem productItem) {
+        log.debug("mapToProductItemInfo");
         ProductItemInfo productItemInfo = new ProductItemInfo();
+        productItemInfo.setCategory(productItem.getBaseProduct().getCategory());
         productItemInfo.setId(productItem.getId());
         productItemInfo.setPrice(productItem.getPrice());
         productItemInfo.setImageUrl(productItem.getImageUrl());
@@ -89,11 +97,16 @@ public class ProductItemMapper {
         return productItemInfo;
     }
 
-    public static List<ProductItemInfo> mapToProductItemInfos(List<ProductItem> ProductItem) {
-        List<ProductItemInfo> productItemInfos = new ArrayList<ProductItemInfo>();
-        for (ProductItem productItem : ProductItem) {
-            productItemInfos.add(mapToProductItemInfo(productItem));
-        }
-        return productItemInfos;
+    public static ProductItem mapToProductItem(ProductItemInfo productItemInfo, BaseProductRepository repository) {
+        ProductItem productItem = new ProductItem();
+        productItem.setBaseProduct(repository.findByCategory(productItemInfo.getCategory()).orElse(null));
+        productItem.setDescription(productItemInfo.getDescription());
+        productItem.setColor(productItemInfo.getColor());
+        productItem.setQuantity(productItemInfo.getQuantity());
+        productItem.setImageUrl(productItemInfo.getImageUrl());
+        productItem.setSize(productItemInfo.getSize());
+        productItem.setPrice(productItemInfo.getPrice());
+        productItem.setTag(productItemInfo.getTag());
+        return productItem;
     }
 }

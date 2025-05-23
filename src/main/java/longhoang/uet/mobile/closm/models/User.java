@@ -22,4 +22,5 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
+    private String role = "ROLE_USER";
 }

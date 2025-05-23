@@ -11,14 +11,15 @@ CREATE TABLE users (
                        full_name VARCHAR(255) NOT NULL,
                        email VARCHAR(255) UNIQUE NOT NULL,
                        password VARCHAR(255) NOT NULL,
-                       phone VARCHAR(255) UNIQUE NOT NULL
+                       phone VARCHAR(255) UNIQUE NOT NULL,
+                       role VARCHAR(255) not null default 'ROLE_USER'
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 2. Tạo bảng base_products
 CREATE TABLE base_products (
                                id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                               name VARCHAR(255) NOT NULL,
-                               category VARCHAR(255) NOT NULL
+                               category VARCHAR(255) NOT NULL,
+                               image_url varchar(255) not null
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 3. Tạo bảng orders
@@ -86,18 +87,19 @@ INSERT INTO discounts (id,description, discount_percentage, discount_type, start
                                                                                                      (10,'End of Season',     14.00, 'HOLIDAY', '2025-04-17', '2025-06-25');
 
 -- 8. Chèn dữ liệu mẫu users
-INSERT INTO users (id,full_name, email, password, phone) VALUES
-    (1,'DungBeo', 'dung@gmail.com', '$2a$10$P/JowkpBHojSdwce5pKtfufi4OVMaYl1XisH.Kk8hFna60DSKQs4W', '0901234567');
+INSERT INTO users (id,full_name, email, password, phone, role) VALUES
+                                                                   (1,'DungBeo', 'dung@gmail.com', '$2a$10$P/JowkpBHojSdwce5pKtfufi4OVMaYl1XisH.Kk8hFna60DSKQs4W', '0901234567', 'ROLE_USER'),
+                                                                   (2,'LongHoang', 'long@gmail.com', '$2a$10$Cldi2H9mNhRfOe/AVsNgxOSi0JUSpQkr8jfNCr2h5efGF.lZjfuKq', '0901234561', 'ROLE_ADMIN');
 
 -- 9. Chèn dữ liệu mẫu base_products
-INSERT INTO base_products (id,name, category) VALUES
-                                                  (1,'Basic T-Shirt', 'T-Shirt'),
-                                                  (2,'Hoodie',        'Hoodie'),
-                                                  (3,'High Socks',    'Socks'),
-                                                  (4,'Turtleneck Sweater','Sweater'),
-                                                  (5,'Kaki Shorts',   'Shorts'),
-                                                  (6,'Ripped Jeans',  'Jeans'),
-                                                  (7,'Winter Pants',  'Winter Pants');
+INSERT INTO base_products (id,category, image_url) VALUES
+                                                  (1, 'T-Shirt','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147982/cac-mau-ao-t-shirt-copy_ixklfd.jpg'),
+                                                  (2,'Hoodie', 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743155560/vn-11134207-7r98o-lks529c5wgxse3_b03ond.jpg'),
+                                                  (3,'Socks', 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154009/11892--kem-chi-tiet-1_xwypdn.jpg'),
+                                                  (4,'Sweater','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154604/ebd4c49798f79e7aef89eb3776268b92_jkc8yq.jpg'),
+                                                  (5,'Shorts','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154349/z3393358070033_bc1188db1776db4643142ecf5bd004ad_fe3b82444f984b568246dcfdb05f2dab_master_qm1syz.webp'),
+                                                  (6,'Jeans','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154590/Sandro_SFPJE00467-4785_V_1_k8tae3.webp'),
+                                                  (7, 'Winter Pants','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154579/winter-lam-nguoi-mau-cho-new-balance2-696x869_momymg.jpg');
 
 -- 10. Chèn dữ liệu mẫu product_items (full)
 INSERT INTO product_items (id,base_product_id, price, image_url, size, color, quantity, tag, description) VALUES
@@ -137,7 +139,6 @@ INSERT INTO product_items (id,base_product_id, price, image_url, size, color, qu
                                                                                                               (29,6, 499000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154590/quan-jeans-nam1_ourhpx.jpg', '34', 'Dark Blue', 25, 'Slim-fit Jeans', 'Slim-fit stylish jeans'),
                                                                                                               (30,6, 499000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154589/quan-jean-nam-rach-ta-toi-04_u0zqqn.jpg', '30', 'Light Blue', 20, 'Straight-leg Jeans', 'Straight-leg trendy jeans'),
                                                                                                               (31,6, 499000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154588/pvl-z-cac-mau-jean-nam-8_e6ac1f2fc78e4a37990f83a713c58c9f_owlarr.jpg', '28', 'White', 18, 'Basic Jeans', 'Basic jeans for easy matching'),
-
 
                                                                                                               (32,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154579/winter-lam-nguoi-mau-cho-new-balance2-696x869_momymg.jpg', 'M', 'Black', 20, 'Thermal Winter Pants', 'Thermal pants for winter'),
                                                                                                               (33,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154578/images_qb4qfg.jpg', 'L', 'Gray', 15, 'Winter Winter Pants', 'Soft and cozy winter pants'),

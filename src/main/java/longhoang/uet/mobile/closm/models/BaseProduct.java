@@ -18,7 +18,7 @@ public class BaseProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String imageUrl;
     private String category;
 
     @OneToMany(mappedBy = "baseProduct")

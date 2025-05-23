@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductItemInfo {
     private Long id;
+    private String category;
     private BigDecimal price;
     private String imageUrl;
     private String tag;
