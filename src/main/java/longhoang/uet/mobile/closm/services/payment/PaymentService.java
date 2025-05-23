@@ -3,7 +3,7 @@ package longhoang.uet.mobile.closm.services.payment;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import longhoang.uet.mobile.closm.configs.payment.VNPAYConfig;
-import longhoang.uet.mobile.closm.dtos.response.PaymentDTO;
+import longhoang.uet.mobile.closm.dtos.response.payment.PaymentDTO;
 import longhoang.uet.mobile.closm.utils.payment.VNPayUtil;
 import org.springframework.stereotype.Service;
 

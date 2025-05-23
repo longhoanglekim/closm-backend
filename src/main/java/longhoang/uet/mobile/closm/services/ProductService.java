@@ -3,7 +3,10 @@ package longhoang.uet.mobile.closm.services;
 import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
 import longhoang.uet.mobile.closm.dtos.request.BaseProductInput;
-import longhoang.uet.mobile.closm.dtos.response.*;
+import longhoang.uet.mobile.closm.dtos.response.baseProduct.ProductDetailsDTO;
+import longhoang.uet.mobile.closm.dtos.response.baseProduct.ProductOverviewDTO;
+import longhoang.uet.mobile.closm.dtos.response.itemDTO.ItemOverviewDTO;
+import longhoang.uet.mobile.closm.dtos.response.itemDTO.TaggedVariantOverviewDTO;
 import longhoang.uet.mobile.closm.mappers.ProductItemMapper;
 import longhoang.uet.mobile.closm.models.BaseProduct;
 import longhoang.uet.mobile.closm.models.ProductItem;
@@ -28,6 +31,10 @@ public class ProductService {
     private ProductItemRepository ProductItemRepository;
     @Autowired
     private BaseProductRepository baseProductRepository;
+    @Autowired
+    private ProductItemService productItemService;
+    @Autowired
+    private ProductItemRepository productItemRepository;
 
     @Cacheable(value = "categories", key = "1")
     public List<String> getAllCategories() {
@@ -75,15 +82,17 @@ public class ProductService {
     }
     @Cacheable(value = "productOverview", key = "#category")
     public ProductOverviewDTO getProductOverview(String category) {
+        Long baseProductId = productRepository.findByCategory(category).get().getId();
         log.debug("getProductOverview from db");
         ProductOverviewDTO dto = new ProductOverviewDTO();
         dto.setCategory(category);
-        List<ItemOverviewDTO> variants = getLimitedVariantsByCategory(category);
-        int totalQuantity = 0;
-        for (ItemOverviewDTO variant : variants) {
-            totalQuantity += variant.getQuantity();
+        List<Long> itemIds =  productItemRepository.getMinIdProductGroupByTag(productRepository.findByCategory(category).get().getId());
+        List<ItemOverviewDTO> variants = new ArrayList<>();
+        for (Long itemId : itemIds) {
+            ProductItem productItem = productItemRepository.findById(itemId).get();
+            variants.add(ProductItemMapper.mapToItemOverviewDTO(productItem));
         }
-        dto.setQuantity(totalQuantity);
+        dto.setQuantity(productItemRepository.getSumProductByBaseProductId(baseProductId));
         dto.setVariants(variants);
         return dto;
     }

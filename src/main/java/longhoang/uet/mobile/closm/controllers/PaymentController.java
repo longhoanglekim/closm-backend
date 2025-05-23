@@ -3,7 +3,7 @@ package longhoang.uet.mobile.closm.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import longhoang.uet.mobile.closm.dtos.response.PaymentDTO;
+import longhoang.uet.mobile.closm.dtos.response.payment.PaymentDTO;
 import longhoang.uet.mobile.closm.dtos.response.ResponseObject;
 import longhoang.uet.mobile.closm.services.payment.PaymentService;
 import org.springframework.http.HttpStatus;

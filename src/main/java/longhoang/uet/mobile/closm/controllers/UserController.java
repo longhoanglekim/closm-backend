@@ -1,6 +1,6 @@
 package longhoang.uet.mobile.closm.controllers;
 
-import longhoang.uet.mobile.closm.dtos.response.OrderListByStatus;
+import longhoang.uet.mobile.closm.dtos.response.orderDTO.OrderListByStatus;
 import longhoang.uet.mobile.closm.enums.OrderStatus;
 import longhoang.uet.mobile.closm.models.Order;
 import longhoang.uet.mobile.closm.services.OrderService;

@@ -3,7 +3,7 @@ package longhoang.uet.mobile.closm.mappers;
 import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.mappers.OrderInfoDTO;
 
-import longhoang.uet.mobile.closm.dtos.response.OrderItemInfoDTO;
+import longhoang.uet.mobile.closm.dtos.response.orderDTO.OrderItemInfoDTO;
 import longhoang.uet.mobile.closm.models.Order;
 import longhoang.uet.mobile.closm.models.OrderItem;
 import longhoang.uet.mobile.closm.models.ProductItem;
@@ -41,7 +41,7 @@ public class OrderMapper {
         return orderItemInfoList;
     }
 
-    public static OrderItemInfoDTO mapToOrderItemInfo(ProductItem productItem, int quantity) {
+    private static OrderItemInfoDTO mapToOrderItemInfo(ProductItem productItem, int quantity) {
         OrderItemInfoDTO dto = new OrderItemInfoDTO();
         dto.setId(productItem.getId());
         dto.setId(productItem.getId());
@@ -54,4 +54,6 @@ public class OrderMapper {
         dto.setOrderedQuantity(quantity);
         return dto;
     }
+
+
 }

@@ -1,12 +1,11 @@
 package longhoang.uet.mobile.closm.repositories;
 
-import longhoang.uet.mobile.closm.dtos.response.TopTaggedItemByCategory;
+import longhoang.uet.mobile.closm.dtos.response.itemDTO.TopTaggedItemByCategory;
 import longhoang.uet.mobile.closm.models.ProductItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductItemRepository extends JpaRepository<ProductItem, Long> {
     
@@ -41,5 +40,9 @@ public interface ProductItemRepository extends JpaRepository<ProductItem, Long> 
     """, nativeQuery = true)
     List<TopTaggedItemByCategory> getTopProductByTagGroupedByBaseProduct(long id);
 
+    @Query(value = "SELECT min(id) from product_items where base_product_id = :baseProductId group by tag  limit 4", nativeQuery = true)
+    List<Long> getMinIdProductGroupByTag(Long baseProductId);
 
+    @Query(value = "select sum(quantity) from product_items where base_product_id = :baseProductId group by base_product_id", nativeQuery = true)
+    Integer getSumProductByBaseProductId(Long baseProductId);
 }

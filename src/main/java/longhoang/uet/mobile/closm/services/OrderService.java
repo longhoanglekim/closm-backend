@@ -7,14 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.mappers.OrderInfoDTO;
 import longhoang.uet.mobile.closm.dtos.request.OrderConfirmationDTO;
 
-import longhoang.uet.mobile.closm.dtos.response.OrderListByStatus;
-import longhoang.uet.mobile.closm.dtos.response.ProductOverviewDTO;
+import longhoang.uet.mobile.closm.dtos.response.orderDTO.OrderItemInfoDTO;
+import longhoang.uet.mobile.closm.dtos.response.orderDTO.OrderListByStatus;
 import longhoang.uet.mobile.closm.enums.OrderStatus;
 import longhoang.uet.mobile.closm.enums.PaymentMethod;
 import longhoang.uet.mobile.closm.enums.PaymentStatus;
 import longhoang.uet.mobile.closm.mappers.OrderMapper;
 import longhoang.uet.mobile.closm.models.*;
-import longhoang.uet.mobile.closm.repositories.DiscountRepository;
+import longhoang.uet.mobile.closm.repositories.OrderItemRepository;
 import longhoang.uet.mobile.closm.repositories.OrderRepository;
 import longhoang.uet.mobile.closm.repositories.ProductItemRepository;
 
@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -42,6 +42,8 @@ public class OrderService {
     UserService userService;
     @Autowired
     private ProductItemRepository productItemRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
 
     @Transactional
@@ -122,5 +124,55 @@ public class OrderService {
         orderListByStatus.setStatus(orderStatus);
         orderListByStatus.setOrders(orderInfoDTOList);
         return orderListByStatus;
+    }
+
+    public List<OrderInfoDTO> getAllOrderInfo() {
+        List<Order> orderList = orderRepository.findAll();
+        return  orderList.stream().map(OrderMapper::mapToOrderInfoDTO).collect(Collectors.toList());
+    }
+
+    public long updateOrder(long id, OrderInfoDTO updateOrderInfo) throws Exception {
+        Order order = mapToOrder(updateOrderInfo);
+        order.setId(id);
+        return orderRepository.save(order).getId();
+    }
+
+
+    private Order mapToOrder(OrderInfoDTO dto) throws Exception {
+        Order order = new Order();
+        order.setOrderCode(dto.getOrderCode());
+        order.setOrderDate(dto.getOrderDate());
+        order.setOrderStatus(dto.getOrderStatus());
+        order.setCancelableDate(dto.getCancelableDate());
+        order.setUser(userService.getUserByEmail(dto.getUserEmail()).orElseThrow(() -> new Exception("User not found")));
+        order.setPaymentMethod(dto.getPaymentMethod());
+        order.setPaymentStatus(dto.getPaymentStatus());
+        order.setDeliverAddress(dto.getDeliverAddress());
+        order.setDeliverPayment(dto.getDeliverPayment());
+        order.setFinalPrice(dto.getFinalPrice());
+        order.setDiscountAmount(dto.getDiscountAmount());
+        order.setOrderItems(dto.getOrderItemList().stream()
+                .map(value -> {
+                    try {
+                        return mapToOrderItem(value, order);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList()));
+        return order;
+    }
+
+    private OrderItem mapToOrderItem(OrderItemInfoDTO dto, Order order) throws Exception {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrder(order);
+        orderItem.setProductItem(productItemRepository.findById(dto.getId()).orElseThrow(() ->  new Exception("Item not found")));
+        orderItem.setQuantity(orderItem.getQuantity());
+        return orderItem;
+    }
+
+    public long deleteOrder(long id) {
+        orderRepository.deleteById(id);
+        return id;
     }
 }
