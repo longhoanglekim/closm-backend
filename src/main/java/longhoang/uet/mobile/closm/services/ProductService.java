@@ -83,7 +83,7 @@ public class ProductService {
     @Cacheable(value = "productOverview", key = "#category")
     public ProductOverviewDTO getProductOverview(String category) {
         Long baseProductId = productRepository.findByCategory(category).get().getId();
-        log.debug("getProductOverview from db");
+//        log.debug("getProductOverview from db");
         ProductOverviewDTO dto = new ProductOverviewDTO();
         dto.setCategory(category);
         List<Long> itemIds =  productItemRepository.getMinIdProductGroupByTag(productRepository.findByCategory(category).get().getId());

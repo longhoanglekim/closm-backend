@@ -36,7 +36,6 @@ public class ProductItemService {
     public List<ItemGroupByTag> getGroupTopItemByTag() throws Exception {
         List<ItemGroupByTag> ans = new ArrayList<>();
         for (long id : baseProductRepository.findAllProductCategoriesId()) {
-            log.debug(String.valueOf(id));
             List<TopTaggedItemByCategory> foundItems = productItemRepository.getTopProductByTagGroupedByBaseProduct(id);
             ItemGroupByTag group = new ItemGroupByTag();
             if (!foundItems.isEmpty()) {
