@@ -6,14 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import longhoang.uet.mobile.closm.enums.OrderStatus;
-import longhoang.uet.mobile.closm.enums.PaymentMethod;
+import longhoang.uet.mobile.closm.models.PaymentMethod;
 import longhoang.uet.mobile.closm.enums.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 @Entity
@@ -47,9 +47,9 @@ public class Order {
     @Column(name = "payment_status", nullable = false)
     private PaymentStatus paymentStatus = PaymentStatus.UNPAID;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "payment_method", nullable = false)
-    private PaymentMethod paymentMethod = PaymentMethod.CASH;
+    @JoinColumn(name = "payment_method_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PaymentMethod paymentMethod;
 
     private String deliverAddress;
     private LocalDate cancelableDate;

@@ -29,7 +29,7 @@ public class OrderInfoDTO {
 
     private PaymentStatus paymentStatus;
 
-    private PaymentMethod paymentMethod;
+    private String paymentMethod;
 
     private String deliverAddress;
     private LocalDate cancelableDate;

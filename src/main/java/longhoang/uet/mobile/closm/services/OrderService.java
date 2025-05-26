@@ -16,6 +16,7 @@ import longhoang.uet.mobile.closm.mappers.OrderMapper;
 import longhoang.uet.mobile.closm.models.*;
 import longhoang.uet.mobile.closm.repositories.OrderItemRepository;
 import longhoang.uet.mobile.closm.repositories.OrderRepository;
+import longhoang.uet.mobile.closm.repositories.PaymentMethodRepository;
 import longhoang.uet.mobile.closm.repositories.ProductItemRepository;
 
 import longhoang.uet.mobile.closm.utils.CodeGenerator;
@@ -44,7 +45,8 @@ public class OrderService {
     private ProductItemRepository productItemRepository;
     @Autowired
     private OrderItemRepository orderItemRepository;
-
+    @Autowired
+    private PaymentMethodRepository paymentMethodRepository;
 
     @Transactional
     public Order confirmOrder(OrderConfirmationDTO orderConfirmationDTO) throws Exception {
@@ -58,8 +60,8 @@ public class OrderService {
         order.setOrderCode(CodeGenerator.generateOrderCode());
         order.setCancelableDate(LocalDate.now().minusDays(10));
         if (orderConfirmationDTO.getPaymentMethod() == null) {
-            order.setPaymentMethod(PaymentMethod.CASH);
-        } else order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
+            order.setPaymentMethod(paymentMethodRepository.findById((long) 1).get());
+        } else order.setPaymentMethod(paymentMethodRepository.findByMethod(orderConfirmationDTO.getPaymentMethod().toString()));
         if (orderConfirmationDTO.getPaymentStatus() == null) {
             order.setPaymentStatus(PaymentStatus.UNPAID);
         } else order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
@@ -145,7 +147,7 @@ public class OrderService {
         order.setOrderStatus(dto.getOrderStatus());
         order.setCancelableDate(dto.getCancelableDate());
         order.setUser(userService.getUserByEmail(dto.getUserEmail()).orElseThrow(() -> new Exception("User not found")));
-        order.setPaymentMethod(dto.getPaymentMethod());
+        order.setPaymentMethod(paymentMethodRepository.findByMethod(dto.getPaymentMethod().toString()));
         order.setPaymentStatus(dto.getPaymentStatus());
         order.setDeliverAddress(dto.getDeliverAddress());
         order.setDeliverPayment(dto.getDeliverPayment());

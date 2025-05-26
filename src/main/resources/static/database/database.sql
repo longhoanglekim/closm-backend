@@ -22,7 +22,16 @@ CREATE TABLE base_products (
                                image_url varchar(255) not null
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+CREATE TABLE payment_method (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    method varchar(255) not null unique
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+INSERT INTO payment_method values (1, 'CASH'),
+                                  (2, 'BANK_TRANSFER'),
+                                  (3, 'MOMO'),
+                                  (4, 'VNPAY');
 -- 3. Tạo bảng orders
+
 CREATE TABLE orders (
                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
                         user_id BIGINT NOT NULL,
@@ -33,7 +42,7 @@ CREATE TABLE orders (
                         deliver_payment DECIMAL(19,2),
                         final_price DECIMAL(19,2),
                         payment_status VARCHAR(50) NOT NULL DEFAULT 'UNPAID',
-                        payment_method VARCHAR(50) NOT NULL DEFAULT 'CASH',
+                        payment_method_id bigint NOT NULL DEFAULT 1,
                         deliver_address TEXT,
                         cancelable_date DATE NOT NULL,
                         CONSTRAINT fk_order_user FOREIGN KEY (user_id) REFERENCES users(id)
@@ -145,9 +154,9 @@ INSERT INTO product_items (id,base_product_id, price, image_url, size, color, qu
                                                                                                               (34,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154578/images_2_zawzxf.jpg', 'XL', 'Olive Green', 10, 'Wind-resistant Winter Pants', 'Wind-resistant warm pants'),
                                                                                                               (35,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154577/images_1_nq9woy.jpg', 'S', 'Brown', 8, 'Lightly-lined Winter Pants', 'Lightly lined winter pants');
 -- Thêm vào bảng orders
-INSERT INTO orders (id, user_id, order_code,order_date, order_status, discount_amount, deliver_payment, final_price, payment_status, payment_method, deliver_address, cancelable_date)
+INSERT INTO orders (id, user_id, order_code,order_date, order_status, discount_amount, deliver_payment, final_price, payment_status, payment_method_id, deliver_address, cancelable_date)
 VALUES
-    (1, 1, '20250503124530',NOW(), 'PENDING', 0, 20000, 418000, 'UNPAID', 'CASH', '123 Example Street', CURDATE() + INTERVAL 10 DAY);
+    (1, 1, '20250503124530',NOW(), 'PENDING', 0, 20000, 418000, 'UNPAID', 1, '123 Example Street', CURDATE() + INTERVAL 10 DAY);
 
 -- Thêm vào bảng orders_items
 INSERT INTO orders_items (id, order_id, product_item_id, quantity)
