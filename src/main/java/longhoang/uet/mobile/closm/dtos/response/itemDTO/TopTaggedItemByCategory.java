@@ -1,4 +1,4 @@
-package longhoang.uet.mobile.closm.dtos.response;
+package longhoang.uet.mobile.closm.dtos.response.itemDTO;
 
 public interface TopTaggedItemByCategory {
     String getTag();

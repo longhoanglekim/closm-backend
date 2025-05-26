@@ -4,14 +4,14 @@ package longhoang.uet.mobile.closm.mappers;
 import lombok.extern.slf4j.Slf4j;
 import longhoang.uet.mobile.closm.dtos.mappers.ProductItemInfo;
 import longhoang.uet.mobile.closm.dtos.mappers.ItemInfo;
-import longhoang.uet.mobile.closm.dtos.response.*;
-import longhoang.uet.mobile.closm.models.BaseProduct;
+import longhoang.uet.mobile.closm.dtos.response.itemDTO.ItemDetailsDTO;
+import longhoang.uet.mobile.closm.dtos.response.itemDTO.ItemOverviewDTO;
+import longhoang.uet.mobile.closm.dtos.response.itemDTO.TaggedVariantOverviewDTO;
+import longhoang.uet.mobile.closm.dtos.response.itemDTO.VariantGroupDTO;
 import longhoang.uet.mobile.closm.models.ProductItem;
 import longhoang.uet.mobile.closm.repositories.BaseProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 @Component
@@ -32,7 +32,7 @@ public class ProductItemMapper {
     public static ItemOverviewDTO mapToItemOverviewDTO(ProductItem ProductItem) {
         ItemOverviewDTO variantOverviewDTO = new ItemOverviewDTO();
         variantOverviewDTO.setId(ProductItem.getId());
-        variantOverviewDTO.setName(ProductItem.getTag());
+        variantOverviewDTO.setTag(ProductItem.getTag());
         variantOverviewDTO.setImageUrl(ProductItem.getImageUrl());
         variantOverviewDTO.setQuantity(ProductItem.getQuantity());
         return variantOverviewDTO;

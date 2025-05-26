@@ -1,20 +1,16 @@
   package longhoang.uet.mobile.closm.controllers;
 
 import jakarta.transaction.Transactional;
-import longhoang.uet.mobile.closm.dtos.response.OrderConfirmResponse;
+import longhoang.uet.mobile.closm.dtos.mappers.OrderInfoDTO;
+import longhoang.uet.mobile.closm.dtos.response.orderDTO.OrderConfirmResponse;
 import longhoang.uet.mobile.closm.dtos.request.OrderConfirmationDTO;
-import longhoang.uet.mobile.closm.dtos.response.OrderListByStatus;
-import longhoang.uet.mobile.closm.enums.OrderStatus;
 import longhoang.uet.mobile.closm.models.Order;
 import longhoang.uet.mobile.closm.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
   @RestController
 @RequestMapping("/order")
@@ -41,7 +37,7 @@ public class OrderController {
 
 
     @GetMapping("/{orderId}")
-      public ResponseEntity<?> getOrderById(@PathVariable long orderId) {
+    public ResponseEntity<?> getOrderById(@PathVariable long orderId) {
         try {
             return ResponseEntity.ok().body(orderService.getOrderInfo(orderId));
         } catch (Exception e) {
@@ -49,4 +45,38 @@ public class OrderController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-}
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping("/get-all-orders")
+    public ResponseEntity<?> getAllOrders() {
+        try {
+            return ResponseEntity.ok().body(orderService.getAllOrderInfo());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+      @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+      @PostMapping("/update-order/{id}")
+      public ResponseEntity<?> updateOrder(@PathVariable long id, @RequestBody OrderInfoDTO updateOrderInfoDTO) {
+          try {
+              return ResponseEntity.ok().body(orderService.updateOrder(id, updateOrderInfoDTO));
+          } catch (Exception e) {
+              e.printStackTrace();
+              return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+          }
+      }
+
+      @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+      @DeleteMapping("/delete-order/{id}")
+      public ResponseEntity<?> deleteOrder(@PathVariable long id) {
+          try {
+              return ResponseEntity.ok().body(orderService.deleteOrder(id));
+          } catch (Exception e) {
+              e.printStackTrace();
+              return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+          }
+      }
+
+  }

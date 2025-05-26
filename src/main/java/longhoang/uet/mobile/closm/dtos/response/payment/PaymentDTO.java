@@ -1,4 +1,4 @@
-package longhoang.uet.mobile.closm.dtos.response;
+package longhoang.uet.mobile.closm.dtos.response.payment;
 
 
 import lombok.Builder;
