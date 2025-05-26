@@ -66,25 +66,25 @@ CREATE TABLE orders_items (
 -- 6. Tạo bảng discounts
 CREATE TABLE discounts (
                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                           description VARCHAR(255) NOT NULL,
+                           name VARCHAR(255) NOT NULL,
                            discount_percentage DECIMAL(5,2) NOT NULL,
                            discount_type VARCHAR(255) NOT NULL,
                            start_date DATE NOT NULL,
+                           image_url varchar(255) not null,
                            end_date   DATE NOT NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 7. Chèn dữ liệu mẫu vào discounts
-INSERT INTO discounts (id,description, discount_percentage, discount_type, start_date, end_date) VALUES
-                                                                                                     (1,'Spring Sale',      10.00, 'HOLIDAY', '2025-04-17', '2025-05-10'),
-                                                                                                     (2,'Flash Sale',       30.00, 'HOLIDAY', '2025-04-17', '2025-06-01'),
-                                                                                                     (3,'Summer Kickoff',    15.00, 'HOLIDAY', '2025-04-17', '2025-06-05'),
-                                                                                                     (4,'Holiday Discount',  20.00, 'HOLIDAY', '2025-04-17', '2025-05-25'),
-                                                                                                     (5,'Early Bird Special',25.00,'HOLIDAY','2025-04-17', '2025-06-20'),
-                                                                                                     (6,'Weekend Deals',     12.50, 'HOLIDAY', '2025-04-17', '2025-06-15'),
-                                                                                                     (7,'Exclusive Offer',   18.00, 'HOLIDAY', '2025-04-17', '2025-06-10'),
-                                                                                                     (8,'Mid-Year Sale',     22.00, 'HOLIDAY', '2025-04-17', '2025-06-30'),
-                                                                                                     (9,'Spring Frenzy',     17.50, 'HOLIDAY', '2025-04-17', '2025-06-20'),
-                                                                                                     (10,'End of Season',     14.00, 'HOLIDAY', '2025-04-17', '2025-06-25');
+INSERT INTO discounts (id,name, discount_percentage, discount_type, start_date, end_date, image_url) VALUES
+                                                                                                                (1,'Spring Sale', 10.00, 'HOLIDAY', '2025-04-17', '2025-05-10', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbHcMwgO7An5UjnJu9WMqgA2yOZwwq-DmIzQ&s'),
+                                                                                                                (2,'Flash Sale', 30.00, 'HOLIDAY', '2025-04-17', '2025-06-01', 'https://img.freepik.com/premium-vector/discounts-30-percent-off_573652-2667.jpg'),
+                                                                                                                (3,'Summer Kickoff',  15.00, 'HOLIDAY', '2025-04-17', '2025-06-05','https://file.hstatic.net/200000489263/article/21-3107_sieu_sale_20__160x60__1140___788_px___3__d4a74fa6d89a44cdbcf833d72f7d8382.png'),
+                                                                                                                (4,'Christmas Sale', 20.00, 'HOLIDAY', '2025-04-17', '2025-05-25', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg5W23BMRoMiNNmxlSZORLYya676OFn4PnYA&s'),
+                                                                                                                (5,'Early Bird Special',25.00,'HOLIDAY','2025-04-17', '2025-06-20','https://www.shutterstock.com/image-vector/early-bird-offer-vector-icon-260nw-2357846379.jpg'),
+                                                                                                                (6,'Weekend Deals',     12.50, 'HOLIDAY', '2025-04-17', '2025-06-15', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHcwhgLv6Ydg-gXJ9ueiOK5_sYSAhMvT9aNA&s'),
+                                                                                                                (7,'Mid-Year Sale',     22.00, 'HOLIDAY', '2025-04-17', '2025-06-30', 'https://static.vecteezy.com/system/resources/previews/006/897/064/non_2x/mid-year-sale-poster-free-vector.jpg'),
+                                                                                                                (8,'Spring Frenzy',     17.50, 'HOLIDAY', '2025-04-17', '2025-06-20', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmLHjrKBxPJeEtzPtlAKAzK-zSOYr3AFZYIg&s');
+
 
 -- 8. Chèn dữ liệu mẫu users
 INSERT INTO users (id,full_name, email, password, phone, role) VALUES
@@ -93,13 +93,13 @@ INSERT INTO users (id,full_name, email, password, phone, role) VALUES
 
 -- 9. Chèn dữ liệu mẫu base_products
 INSERT INTO base_products (id,category, image_url) VALUES
-                                                  (1, 'T-Shirt','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147982/cac-mau-ao-t-shirt-copy_ixklfd.jpg'),
-                                                  (2,'Hoodie', 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743155560/vn-11134207-7r98o-lks529c5wgxse3_b03ond.jpg'),
-                                                  (3,'Socks', 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154009/11892--kem-chi-tiet-1_xwypdn.jpg'),
-                                                  (4,'Sweater','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154604/ebd4c49798f79e7aef89eb3776268b92_jkc8yq.jpg'),
-                                                  (5,'Shorts','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154349/z3393358070033_bc1188db1776db4643142ecf5bd004ad_fe3b82444f984b568246dcfdb05f2dab_master_qm1syz.webp'),
-                                                  (6,'Jeans','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154590/Sandro_SFPJE00467-4785_V_1_k8tae3.webp'),
-                                                  (7, 'Winter Pants','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154579/winter-lam-nguoi-mau-cho-new-balance2-696x869_momymg.jpg');
+                                                       (1, 'T-Shirt','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743147982/cac-mau-ao-t-shirt-copy_ixklfd.jpg'),
+                                                       (2,'Hoodie', 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743155560/vn-11134207-7r98o-lks529c5wgxse3_b03ond.jpg'),
+                                                       (3,'Socks', 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154009/11892--kem-chi-tiet-1_xwypdn.jpg'),
+                                                       (4,'Sweater','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154604/ebd4c49798f79e7aef89eb3776268b92_jkc8yq.jpg'),
+                                                       (5,'Shorts','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154349/z3393358070033_bc1188db1776db4643142ecf5bd004ad_fe3b82444f984b568246dcfdb05f2dab_master_qm1syz.webp'),
+                                                       (6,'Jeans','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154590/Sandro_SFPJE00467-4785_V_1_k8tae3.webp'),
+                                                       (7, 'Winter Pants','https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154579/winter-lam-nguoi-mau-cho-new-balance2-696x869_momymg.jpg');
 
 -- 10. Chèn dữ liệu mẫu product_items (full)
 INSERT INTO product_items (id,base_product_id, price, image_url, size, color, quantity, tag, description) VALUES
