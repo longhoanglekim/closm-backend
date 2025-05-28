@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-
 @RestController
 @Slf4j
 @RequestMapping("/items")
@@ -66,7 +65,9 @@ public class ProductItemController {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping("/update-item/{id}")
-    public ResponseEntity<?> updateItem(@RequestBody ProductItemInfo productItemInfo, long id) {
+    public ResponseEntity<?> updateItem(
+            @RequestBody ProductItemInfo productItemInfo,
+            @PathVariable("id") Long id) {
         try {
             return ResponseEntity.ok().body(productItemService.updateProductItem(productItemInfo, id));
         } catch (Exception e) {
