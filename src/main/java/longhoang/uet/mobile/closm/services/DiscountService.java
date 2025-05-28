@@ -1,5 +1,7 @@
 package longhoang.uet.mobile.closm.services;
 
+import longhoang.uet.mobile.closm.dtos.mappers.DiscountInfoDTO;
+import longhoang.uet.mobile.closm.mappers.DiscountMapper;
 import longhoang.uet.mobile.closm.models.Discount;
 import longhoang.uet.mobile.closm.repositories.DiscountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DiscountService {
@@ -17,8 +20,8 @@ public class DiscountService {
         return discountRepository.findValidDiscounts(LocalDate.now());
     }
 
-    public List<Discount> findAllDiscounts() throws Exception {
-        return discountRepository.findAll();
+    public List<DiscountInfoDTO> findAllDiscounts() throws Exception {
+        return discountRepository.findAll().stream().map(DiscountMapper::mapDiscountInfoDTO).collect(Collectors.toList());
     }
 
     public Discount findDiscountById(long id) throws Exception {
@@ -36,7 +39,7 @@ public class DiscountService {
         if (discount != null) {
             discount.setDiscountType(discountInfo.getDiscountType());
             discount.setDiscountPercentage(discountInfo.getDiscountPercentage());
-            discount.setDescription(discountInfo.getDescription());
+            discount.setName(discountInfo.getName());
             discount.setStartDate(discountInfo.getStartDate());
             discount.setEndDate(discountInfo.getEndDate());
             return discount.getId();

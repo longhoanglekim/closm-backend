@@ -19,10 +19,10 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    private String description;
+    private String name;
     @Column(name = "discount_percentage", precision = 5, scale = 2)
     private BigDecimal discountPercentage;
-
+    private String imageUrl;
     @Enumerated(EnumType.STRING)
     private DiscountType discountType;
     private LocalDate startDate;

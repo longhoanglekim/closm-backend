@@ -8,7 +8,12 @@ public class DiscountMapper {
         DiscountInfoDTO discountInfoDTO = new DiscountInfoDTO();
         discountInfoDTO.setId(discount.getId());
         discountInfoDTO.setDiscountType(discount.getDiscountType());
-        discountInfoDTO.setDescription(discount.getDescription());
+        discountInfoDTO.setName(discount.getName());
+        discountInfoDTO.setDiscountPercentage(discount.getDiscountPercentage());
+        discountInfoDTO.setDiscountType(discount.getDiscountType());
+        discountInfoDTO.setImageUrl(discount.getImageUrl());
+        discountInfoDTO.setStartDate(discount.getStartDate());
+        discountInfoDTO.setEndDate(discount.getEndDate());
         return discountInfoDTO;
     }
 }

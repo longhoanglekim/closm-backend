@@ -25,7 +25,7 @@ public class OrderMapper {
         dto.setDeliverAddress(order.getDeliverAddress());
         dto.setDiscountAmount(order.getDiscountAmount());
         dto.setFinalPrice(order.getFinalPrice());
-        dto.setPaymentMethod(order.getPaymentMethod());
+        dto.setPaymentMethod(order.getPaymentMethod().getMethod());
         dto.setPaymentStatus(order.getPaymentStatus());
         dto.setOrderItemList(getProductItemList(order.getOrderItems()));
         dto.setOrderCode(order.getOrderCode());
