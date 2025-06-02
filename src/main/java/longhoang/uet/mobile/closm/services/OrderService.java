@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -50,37 +51,72 @@ public class OrderService {
 
     @Transactional
     public Order confirmOrder(OrderConfirmationDTO orderConfirmationDTO) throws Exception {
+        // 1. Tạo đơn hàng mới
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
-        order.setUser(userService.getUserByEmail(orderConfirmationDTO.getUserEmail()).orElseThrow(() -> new Exception("User not found"))); // Handle potential null user
+
+        // 2. Lấy thông tin người dùng
+        User user = userService.getUserByEmail(orderConfirmationDTO.getUserEmail())
+                .orElseThrow(() -> new Exception("User not found"));
+        order.setUser(user);
+
+        // 3. Gán thông tin địa chỉ & thanh toán
         order.setDeliverAddress(orderConfirmationDTO.getAddress());
         order.setDeliverPayment(orderConfirmationDTO.getSummaryOrderPrice().getDeliveryAmount());
         order.setDiscountAmount(orderConfirmationDTO.getSummaryOrderPrice().getDiscountAmount());
         order.setFinalPrice(orderConfirmationDTO.getSummaryOrderPrice().getFinalPrice());
         order.setOrderCode(CodeGenerator.generateOrderCode());
         order.setCancelableDate(LocalDate.now().minusDays(10));
+
+        // 4. Phương thức thanh toán
         if (orderConfirmationDTO.getPaymentMethod() == null) {
-            order.setPaymentMethod(paymentMethodRepository.findById((long) 1).get());
-        } else order.setPaymentMethod(paymentMethodRepository.findByMethod(orderConfirmationDTO.getPaymentMethod().toString()));
+            order.setPaymentMethod(paymentMethodRepository.findById(1L)
+                    .orElseThrow(() -> new Exception("Default payment method not found")));
+        } else {
+            order.setPaymentMethod(paymentMethodRepository.findByMethod(
+                    orderConfirmationDTO.getPaymentMethod().toString()));
+        }
+
+        // 5. Trạng thái thanh toán
         if (orderConfirmationDTO.getPaymentStatus() == null) {
             order.setPaymentStatus(PaymentStatus.UNPAID);
-        } else order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
+        } else {
+            order.setPaymentStatus(orderConfirmationDTO.getPaymentStatus());
+        }
+
+        // 6. Lưu đơn hàng trước để có order_id
         Order savedOrder = orderRepository.save(order);
 
-        for (Long id : orderConfirmationDTO.getItemIdsMap().keySet()) {
-            OrderItem orderItem = new OrderItem();
-            int quantityOrdered = orderConfirmationDTO.getItemIdsMap().get(id);
-            ProductItem productItem = ProductItemRepository.findById(id).orElseThrow(() -> new Exception("Product variant not found with ID: " + id)); // Handle potential null product variant
+        // 7. Duyệt qua từng item trong đơn hàng
+        for (Map.Entry<Long, Integer> entry : orderConfirmationDTO.getItemIdsMap().entrySet()) {
+            Long productItemId = entry.getKey();
+            int quantityOrdered = entry.getValue();
+
+            // 7.1. Lấy ProductItem
+            ProductItem productItem = ProductItemRepository.findById(productItemId)
+                    .orElseThrow(() -> new Exception("Product variant not found with ID: " + productItemId));
+
+            // 7.2. Cập nhật tồn kho
+            if (productItem.getQuantity() < quantityOrdered) {
+                throw new Exception("Not enough stock for item ID: " + productItemId);
+            }
             productItem.setQuantity(productItem.getQuantity() - quantityOrdered);
-            orderItem.setProductItem(productItem);
-            orderItem.setOrder(savedOrder);
-            orderItem.setQuantity(quantityOrdered);
-            productItem.getOrderItems().add(orderItem);
             ProductItemRepository.save(productItem);
-            savedOrder.getOrderItems().add(orderItem);
+
+            // 7.3. Tạo OrderItem
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(savedOrder);
+            orderItem.setProductItem(productItem);
+            orderItem.setQuantity(quantityOrdered);
+
+            // 7.4. Lưu OrderItem
+            orderItemRepository.save(orderItem);
         }
-        return orderRepository.save(savedOrder);
+
+        // 8. Trả về đơn hàng đã lưu
+        return savedOrder;
     }
+
 
     public Order getOrder(long orderId) throws Exception {
         Optional<Order> order = orderRepository.findById(orderId);

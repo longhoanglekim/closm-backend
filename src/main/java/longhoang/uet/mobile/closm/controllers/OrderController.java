@@ -58,7 +58,7 @@ public class OrderController {
     }
 
       @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-      @PostMapping("/update-order/{id}")
+      @PutMapping("/update-order/{id}")
       public ResponseEntity<?> updateOrder(@PathVariable long id, @RequestBody OrderInfoDTO updateOrderInfoDTO) {
           try {
               return ResponseEntity.ok().body(orderService.updateOrder(id, updateOrderInfoDTO));
