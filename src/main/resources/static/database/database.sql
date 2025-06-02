@@ -23,8 +23,8 @@ CREATE TABLE base_products (
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE payment_method (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    method varchar(255) not null unique
+                                id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                method varchar(255) not null unique
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 INSERT INTO payment_method values (1, 'CASH'),
                                   (2, 'BANK_TRANSFER'),
@@ -85,14 +85,14 @@ CREATE TABLE discounts (
 
 -- 7. Chèn dữ liệu mẫu vào discounts
 INSERT INTO discounts (id,name, discount_percentage, discount_type, start_date, end_date, image_url) VALUES
-                                                                                                                (1,'Spring Sale', 10.00, 'HOLIDAY', '2025-04-17', '2025-05-10', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbHcMwgO7An5UjnJu9WMqgA2yOZwwq-DmIzQ&s'),
-                                                                                                                (2,'Flash Sale', 30.00, 'HOLIDAY', '2025-04-17', '2025-06-01', 'https://img.freepik.com/premium-vector/discounts-30-percent-off_573652-2667.jpg'),
-                                                                                                                (3,'Summer Kickoff',  15.00, 'HOLIDAY', '2025-04-17', '2025-06-05','https://file.hstatic.net/200000489263/article/21-3107_sieu_sale_20__160x60__1140___788_px___3__d4a74fa6d89a44cdbcf833d72f7d8382.png'),
-                                                                                                                (4,'Christmas Sale', 20.00, 'HOLIDAY', '2025-04-17', '2025-05-25', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg5W23BMRoMiNNmxlSZORLYya676OFn4PnYA&s'),
-                                                                                                                (5,'Early Bird Special',25.00,'HOLIDAY','2025-04-17', '2025-06-20','https://www.shutterstock.com/image-vector/early-bird-offer-vector-icon-260nw-2357846379.jpg'),
-                                                                                                                (6,'Weekend Deals',     12.50, 'HOLIDAY', '2025-04-17', '2025-06-15', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHcwhgLv6Ydg-gXJ9ueiOK5_sYSAhMvT9aNA&s'),
-                                                                                                                (7,'Mid-Year Sale',     22.00, 'HOLIDAY', '2025-04-17', '2025-06-30', 'https://static.vecteezy.com/system/resources/previews/006/897/064/non_2x/mid-year-sale-poster-free-vector.jpg'),
-                                                                                                                (8,'Spring Frenzy',     17.50, 'HOLIDAY', '2025-04-17', '2025-06-20', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmLHjrKBxPJeEtzPtlAKAzK-zSOYr3AFZYIg&s');
+                                                                                                         (1,'Spring Sale', 10.00, 'HOLIDAY', '2025-04-17', '2025-05-10', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbHcMwgO7An5UjnJu9WMqgA2yOZwwq-DmIzQ&s'),
+                                                                                                         (2,'Flash Sale', 30.00, 'HOLIDAY', '2025-04-17', '2025-06-01', 'https://img.freepik.com/premium-vector/discounts-30-percent-off_573652-2667.jpg'),
+                                                                                                         (3,'Summer Kickoff',  15.00, 'HOLIDAY', '2025-04-17', '2025-06-05','https://file.hstatic.net/200000489263/article/21-3107_sieu_sale_20__160x60__1140___788_px___3__d4a74fa6d89a44cdbcf833d72f7d8382.png'),
+                                                                                                         (4,'Christmas Sale', 20.00, 'HOLIDAY', '2025-04-17', '2025-05-25', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg5W23BMRoMiNNmxlSZORLYya676OFn4PnYA&s'),
+                                                                                                         (5,'Early Bird Special',25.00,'HOLIDAY','2025-04-17', '2025-06-20','https://www.shutterstock.com/image-vector/early-bird-offer-vector-icon-260nw-2357846379.jpg'),
+                                                                                                         (6,'Weekend Deals',     12.50, 'HOLIDAY', '2025-04-17', '2025-06-15', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHcwhgLv6Ydg-gXJ9ueiOK5_sYSAhMvT9aNA&s'),
+                                                                                                         (7,'Mid-Year Sale',     22.00, 'HOLIDAY', '2025-04-17', '2025-06-30', 'https://static.vecteezy.com/system/resources/previews/006/897/064/non_2x/mid-year-sale-poster-free-vector.jpg'),
+                                                                                                         (8,'Spring Frenzy',     17.50, 'HOLIDAY', '2025-04-17', '2025-06-20', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmLHjrKBxPJeEtzPtlAKAzK-zSOYr3AFZYIg&s');
 
 
 -- 8. Chèn dữ liệu mẫu users
@@ -141,6 +141,7 @@ INSERT INTO product_items (id,base_product_id, price, image_url, size, color, qu
 
                                                                                                               (23,5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154349/z3393358070033_bc1188db1776db4643142ecf5bd004ad_fe3b82444f984b568246dcfdb05f2dab_master_qm1syz.webp', 'M', 'Beige', 40, 'Kaki Shorts', 'Trendy kaki shorts'),
                                                                                                               (24,5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154349/short-jean_mekkjg.webp', 'L', 'Green', 35, 'Summer Shorts', 'Comfortable shorts for summer'),
+                                                                                                              (25,5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154349/short-jean_mekkjg.webp', 'XL', 'Green', 35, 'Summer Shorts', 'Comfortable shorts for summer'),
                                                                                                               (26,5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154348/Sandro_SHPBE00067-30_V_1_1_gstthy.webp', 'XL', 'Black', 25, 'Sports Shorts', 'Cooling sports shorts'),
                                                                                                               (27,5, 199000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154347/images_pxtez4.jpg', 'S', 'Brown', 28, 'Beach Shorts', 'Beach shorts'),
 
@@ -154,12 +155,73 @@ INSERT INTO product_items (id,base_product_id, price, image_url, size, color, qu
                                                                                                               (34,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154578/images_2_zawzxf.jpg', 'XL', 'Olive Green', 10, 'Wind-resistant Winter Pants', 'Wind-resistant warm pants'),
                                                                                                               (35,7, 599000, 'https://res.cloudinary.com/dwddrjz3b/image/upload/v1743154577/images_1_nq9woy.jpg', 'S', 'Brown', 8, 'Lightly-lined Winter Pants', 'Lightly lined winter pants');
 -- Thêm vào bảng orders
-INSERT INTO orders (id, user_id, order_code,order_date, order_status, discount_amount, deliver_payment, final_price, payment_status, payment_method_id, deliver_address, cancelable_date)
+INSERT INTO orders (user_id, order_code, order_date, order_status, discount_amount, deliver_payment, final_price, payment_status, payment_method_id, deliver_address, cancelable_date)
 VALUES
-    (1, 1, '20250503124530',NOW(), 'PENDING', 0, 20000, 418000, 'UNPAID', 1, '123 Example Street', CURDATE() + INTERVAL 10 DAY);
+    (1, '20250501100000', NOW(), 'PENDING', 50000, 20000, 550000, 'UNPAID', 1, '123 Main St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250502110000', NOW(), 'COMPLETED', 0, 15000, 400000, 'PAID', 2, '456 Elm St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250503123000', NOW(), 'DELIVERED', 10000, 25000, 620000, 'PAID', 1, '789 Oak St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250504100000', NOW(), 'PENDING', 0, 20000, 480000, 'UNPAID', 1, '321 Pine St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250505153000', NOW(), 'CANCELLED', 20000, 30000, 530000, 'UNPAID', 2, '654 Maple St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250506120000', NOW(), 'SHIPPED', 0, 10000, 360000, 'PAID', 1, '987 Birch St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250507140000', NOW(), 'PROCESSING', 15000, 15000, 410000, 'UNPAID', 2, '123 Main St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250508113000', NOW(), 'DELIVERED', 0, 20000, 450000, 'PAID', 1, '456 Elm St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250509100000', NOW(), 'PENDING', 10000, 25000, 500000, 'UNPAID', 2, '789 Oak St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250510150000', NOW(), 'COMPLETED', 0, 10000, 380000, 'PAID', 1, '321 Pine St', CURDATE() + INTERVAL 7 DAY),
+
+    (1, '20250511120000', NOW(), 'PENDING', 5000, 20000, 420000, 'UNPAID', 1, '654 Maple St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250512133000', NOW(), 'SHIPPED', 0, 25000, 460000, 'PAID', 2, '987 Birch St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250513100000', NOW(), 'DELIVERED', 20000, 15000, 480000, 'PAID', 1, '123 Main St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250514143000', NOW(), 'PENDING', 0, 20000, 430000, 'UNPAID', 2, '456 Elm St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250515120000', NOW(), 'CANCELLED', 10000, 10000, 390000, 'UNPAID', 1, '789 Oak St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250516100000', NOW(), 'PROCESSING', 0, 15000, 440000, 'PAID', 2, '321 Pine St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250517143000', NOW(), 'DELIVERED', 5000, 20000, 470000, 'PAID', 1, '654 Maple St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250518120000', NOW(), 'PENDING', 0, 25000, 410000, 'UNPAID', 2, '987 Birch St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250519100000', NOW(), 'COMPLETED', 10000, 10000, 460000, 'PAID', 1, '123 Main St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250520143000', NOW(), 'SHIPPED', 0, 15000, 430000, 'PAID', 2, '456 Elm St', CURDATE() + INTERVAL 7 DAY),
+
+    (1, '20250521120000', NOW(), 'PENDING', 5000, 20000, 440000, 'UNPAID', 1, '789 Oak St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250522100000', NOW(), 'DELIVERED', 0, 10000, 480000, 'PAID', 2, '321 Pine St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250523143000', NOW(), 'PROCESSING', 10000, 15000, 470000, 'UNPAID', 1, '654 Maple St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250524120000', NOW(), 'CANCELLED', 0, 20000, 390000, 'UNPAID', 2, '987 Birch St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250525100000', NOW(), 'COMPLETED', 5000, 10000, 460000, 'PAID', 1, '123 Main St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250526143000', NOW(), 'PENDING', 0, 25000, 420000, 'UNPAID', 2, '456 Elm St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250527120000', NOW(), 'DELIVERED', 10000, 15000, 490000, 'PAID', 1, '789 Oak St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250528100000', NOW(), 'PROCESSING', 0, 20000, 430000, 'UNPAID', 2, '321 Pine St', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250529143000', NOW(), 'COMPLETED', 5000, 10000, 470000, 'PAID', 1, '654 Maple St', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250530120000', NOW(), 'PENDING', 0, 15000, 410000, 'UNPAID', 2, '987 Birch St', CURDATE() + INTERVAL 7 DAY);
 
 -- Thêm vào bảng orders_items
-INSERT INTO orders_items (id, order_id, product_item_id, quantity)
+INSERT INTO orders_items (order_id, product_item_id, quantity)
 VALUES
-    (1, 1, 1, 2),
-    (2, 1, 2, 1);
+    (1, 1, 2),
+    (1, 2, 1),
+    (2, 3, 1),
+    (3, 4, 2),
+    (4, 15, 1),
+    (5, 16, 3),
+    (6, 11, 1),
+    (7, 12, 2),
+    (8, 23, 1),
+    (9, 14, 1),
+    (10, 5, 2),
+    (11, 1, 1),
+    (12, 2, 3),
+    (13, 13, 2),
+    (14, 4, 1),
+    (15, 5, 1),
+    (16, 6, 2),
+    (17, 1, 1),
+    (18, 2, 1),
+    (19, 33, 2),
+    (20, 4, 1),
+    (21, 25, 1),
+    (22, 6, 2),
+    (23, 1, 2),
+    (24, 22, 1),
+    (25, 3, 1),
+    (26, 4, 3),
+    (27, 5, 1),
+    (28, 6, 1),
+    (29, 1, 2),
+    (30, 22, 1);
+
