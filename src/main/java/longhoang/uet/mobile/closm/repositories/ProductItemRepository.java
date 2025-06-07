@@ -34,7 +34,7 @@ public interface ProductItemRepository extends JpaRepository<ProductItem, Long> 
                                         join orders_items oi on i.id = oi.product_item_id
                                         where i.tag = bst.tag
                                         group by oi.product_item_id
-                                        order by sum(oi.quantity)
+                                        order by sum(oi.quantity) desc 
                                        limit 1) as image_url
    from bestSellingTags bst
     """, nativeQuery = true)
