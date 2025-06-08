@@ -66,7 +66,7 @@ public class OrderService {
         order.setDiscountAmount(orderConfirmationDTO.getSummaryOrderPrice().getDiscountAmount());
         order.setFinalPrice(orderConfirmationDTO.getSummaryOrderPrice().getFinalPrice());
         order.setOrderCode(CodeGenerator.generateOrderCode());
-        order.setCancelableDate(LocalDate.now().minusDays(10));
+        order.setCancelableDate(LocalDate.now().plusDays(10));
 
         // 4. Phương thức thanh toán
         if (orderConfirmationDTO.getPaymentMethod() == null) {

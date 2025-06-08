@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.MediaType;
+import java.util.Map;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,21 +45,31 @@ public class UserController {
         return new ResponseEntity<>(orderListByStatus, HttpStatus.OK);
     }
 
-    @PostMapping("/cancel-order")
-    public ResponseEntity<?> cancelOrder(@RequestParam Long orderId) {
-        try {
-            if (orderId == null) {
-                return new ResponseEntity<>("Order id cannot be null", HttpStatus.BAD_REQUEST);
-            }
-            Order order = orderService.getOrder(orderId);
-            if (LocalDate.now().isAfter(order.getCancelableDate())) {
-                throw new Exception("Đơn hàng không thể hủy vì đã quá thời hạn cho phép.");
-            }
-            orderService.cancelOrder(order);
-            return new ResponseEntity<>("Order number " + orderId + " cancelled.", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    @PostMapping(
+    value    = "/cancel-order",
+    produces = MediaType.APPLICATION_JSON_VALUE
+)
+public ResponseEntity<Map<String,Object>> cancelOrder(@RequestParam Long orderId) {
+    try {
+        if (orderId == null) {
+            return ResponseEntity
+              .badRequest()
+              .body(Map.of("success", false, "error", "Order id cannot be null"));
         }
+        Order order = orderService.getOrder(orderId);
+        if (LocalDate.now().isAfter(order.getCancelableDate())) {
+            return ResponseEntity
+              .status(HttpStatus.BAD_REQUEST)
+              .body(Map.of("success", false, "error", "Quá hạn hủy đơn"));
+        }
+        orderService.cancelOrder(order);
+        return ResponseEntity
+          .ok(Map.of("success", true, "message", "Order number " + orderId + " cancelled."));
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body(Map.of("success", false, "error", e.getMessage()));
     }
+}
 }
