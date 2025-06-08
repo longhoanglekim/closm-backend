@@ -201,19 +201,19 @@ INSERT INTO product_items (id,base_product_id, price, image_url, size, color, qu
 INSERT INTO orders (user_id, order_code, order_date, order_status, discount_amount, deliver_payment, final_price, payment_status, payment_method_id, deliver_address, cancelable_date)
 VALUES
     (1, '20250501100000', NOW(), 'PENDING', 50000, 20000, 550000, 'UNPAID', 1, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
-    (2, '20250502110000', NOW(), 'COMPLETED', 0, 15000, 400000, 'PAID', 2, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250502110000', NOW(), 'CONFIRMED', 0, 15000, 400000, 'PAID', 2, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
     (1, '20250503123000', NOW(), 'DELIVERED', 10000, 25000, 620000, 'PAID', 1, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
     (2, '20250504100000', NOW(), 'PENDING', 0, 20000, 480000, 'UNPAID', 1, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
 
 
     (1, '20250511120000', NOW(), 'PENDING', 5000, 20000, 420000, 'UNPAID', 1, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
-    (2, '20250512133000', NOW(), 'SHIPPED', 0, 25000, 460000, 'PAID', 2, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
+    (2, '20250512133000', NOW(), 'DELIVERED', 0, 25000, 460000, 'PAID', 2, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
     (1, '20250513100000', NOW(), 'DELIVERED', 20000, 15000, 480000, 'PAID', 1, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
 
 
     (1, '20250521120000', NOW(), 'PENDING', 5000, 20000, 440000, 'UNPAID', 1, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
     (2, '20250522100000', NOW(), 'DELIVERED', 0, 10000, 480000, 'PAID', 2, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
-    (1, '20250523143000', NOW(), 'PROCESSING', 10000, 15000, 470000, 'UNPAID', 1, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
+    (1, '20250523143000', NOW(), 'PENDING', 10000, 15000, 470000, 'UNPAID', 1, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY),
     (2, '20250524120000', NOW(), 'CANCELLED', 0, 20000, 390000, 'UNPAID', 2, '144 Xuan Thuy, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Thành phố Hà Nội', CURDATE() + INTERVAL 7 DAY);
 
 -- Thêm vào bảng orders_items
